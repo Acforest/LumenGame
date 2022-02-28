@@ -5,9 +5,9 @@
         <div class="login-box" v-if="!isActive">
           <h4>登录界面</h4>
           <div class="form-item">
-            <input type="text" placeholder="账号" v-model="loginForm.user_name" v-focus>
+            <input type="text" placeholder="账号" v-model="loginForm.user_id" v-focus>
             <transition name="fade">
-              <span class="error" v-show="loginRules.user_name">请输入账号</span>
+              <span class="error" v-show="loginRules.user_id">请输入账号</span>
             </transition>
           </div>
           <div class="form-item" :class="{'form-item-error':loginRules.password}">
@@ -25,9 +25,9 @@
         <div class="register-box" v-else>
           <h4>注册界面</h4>
           <div class="form-item">
-            <input type="text" placeholder="用户名" v-model="registerForm.user_name">
+            <input type="text" placeholder="账号" v-model="registerForm.user_id">
             <transition name="fade">
-              <span class="error" v-show="registerRules.user_name">请输入用户名</span>
+              <span class="error" v-show="registerRules.user_id">请输入账号</span>
             </transition>
           </div>
           <div class="form-item">
@@ -87,22 +87,22 @@ export default {
     return {
       isActive: false,
       loginForm: {
-        user_name: '',
+        user_id: '',
         password: ''
       },
       loginRules: {
-        user_name: false,
+        user_id: false,
         password: false
       },
       registerForm: {
-        user_name: '',
+        user_id: '',
         phone: '',
         email: '',
         qq: '',
         password: ''
       },
       registerRules: {
-        user_name: false,
+        user_id: false,
         email: false,
         phone: false,
         qq: false,
@@ -146,24 +146,24 @@ export default {
     // 登录
     async login() {
       if (this.validate(this.loginForm, this.loginRules)) {
-        // const { success, data } = await _login(convertParams(this.loginForm))
-        // if (success) {
-        //   this.$message.success('登录成功')
-        //   this.setCurrentUser(data)
-        //   if (data.level === 1 || data.level === 2) {
-        //     this.$router.push('/admin')
-        //   } else {
-        //     this.$router.push('/home')
-        //   }
-        // } else {
-        //   this.$message.error('账号或密码错误')
-        // }
-        this.$message.success('登录成功')
-        this.setCurrentUser({
-          name: 'admin',
-          avatarImgUrl: 'https://cn.vuejs.org/images/logo.svg'
-        })
-        this.$router.push('/home')
+        const { status, message, data } = await _login(convertParams(this.loginForm))
+        console.log(status, message, data)
+        if (status) {
+          this.$message.success('登录成功')
+          console.log(data['user_id'])
+          this.setCurrentUser({
+            user_id: data['user_id'],
+            avatarImgUrl: 'https://cn.vuejs.org/images/logo.svg'
+          })
+          this.$router.push('/home')
+          // if (data.level === 1 || data.level === 2) {
+          //   this.$router.push('/admin')
+          // } else {
+          //   this.$router.push('/home')
+          // }
+        } else {
+          this.$message.error('账号或密码错误')
+        }
       }
     },
     // 重置
@@ -176,13 +176,13 @@ export default {
     // 注册
     async register() {
       if (this.validate(this.registerForm, this.registerRules)) {
-        const form = Object.assign(this.registerForm)
-        console.log(form)
-        const { status, message } = await _register(form)
+        const { status, message, data } = await _register(convertParams(this.registerForm))
+        console.log(status, message, data)
         if (status) {
           this.$message.success('注册成功')
           this.reset(this.registerForm, this.registerRules)
           this.isActive = false
+          this.loginForm.user_id = data['user_id']
         } else {
           this.$message.error(message)
         }

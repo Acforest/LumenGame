@@ -1,4 +1,5 @@
 import marked from 'marked'
+import qs from 'qs'
 
 export function convertParams (params) {
     const result = []
@@ -6,6 +7,10 @@ export function convertParams (params) {
         result.push(`${key}=${params[key]}`)
     }
     return result.join('&')
+}
+
+export function qsStringify(params) {
+    return qs.stringify(params)
 }
 
 export function bindURL (url) {

@@ -6,7 +6,7 @@ const MODEL_RESTFUL = 1
 const MODEL_NO = 2
 
 // login
-const _login = _post('/user/login/', MODEL_NO)
+const _login = _post('/user/login/')
 // register
 const _register = _post('/user/register/')
 // user
@@ -29,16 +29,16 @@ const _getCategory = _get('/gameType/list/')
 const _getCategoryList = _get('/gameType/page/')
 const _addCategory = _post('/gameType/insert/')
 const _editCategory = _put('/gameType/updateIgnoreNull/')
-const _deleteCategory = _delete('/gameType/delete/', MODEL_TRADITION)
+const _deleteCategory = _delete('/gameType/delete/')
 // log
 const _getLogList = _get('/logs/page/')
-const _deleteLog = _delete('/logs/delete/', MODEL_TRADITION)
+const _deleteLog = _delete('/logs/delete/')
 // upload
 const _uploadFile = _post('/uploadfile/')
 // star
 const _getStar = _get('/likeGame/list/')
 const _addStar = _post('/likeGame/insert/')
-const _deleteStar = _delete('/likeGame/delete/', MODEL_TRADITION)
+const _deleteStar = _delete('/likeGame/delete/')
 export {
     // login
     _login,

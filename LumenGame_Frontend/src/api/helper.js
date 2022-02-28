@@ -1,11 +1,13 @@
 import axios from 'axios'
 
-const BASEURL = 'http://127.0.0.1:80/app/'
+const BASEURL = 'http://127.0.0.1:8080/api/'
+
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 const $http = axios.create({
     baseURL: BASEURL,
     timeout: 2000,
-    withCredentials: true // 不允许携带cookie
+    withCredentials: false // 不允许携带cookie
 })
 
 export function _get (url) {
