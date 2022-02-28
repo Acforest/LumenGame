@@ -25,7 +25,7 @@ python manage.py runserver 127.0.0.1:8080
 ```bash
 npm run build
 ```
-然后将生成的 `static` 文件夹拷贝至 ``LumenGame_Backend` 目录下，`index.html` 和 `favicon.ico` 文件拷贝至 `LumenGame_Backend/templates` 目录下。
+然后将生成的 `static` 文件夹拷贝至 `LumenGame_Backend` 目录下，`index.html` 和 `favicon.ico` 文件拷贝至 `LumenGame_Backend/templates` 目录下。
 ### 后端 (Django)
 待补充
 ### 代理服务器 (Nginx)
