@@ -5,9 +5,9 @@
         <div class="login-box" v-if="!isActive">
           <h4>登录界面</h4>
           <div class="form-item">
-            <input type="text" placeholder="账号" v-model="loginForm.user_id" v-focus>
+            <input type="text" placeholder="用户名" v-model="loginForm.username" v-focus>
             <transition name="fade">
-              <span class="error" v-show="loginRules.user_id">请输入账号</span>
+              <span class="error" v-show="loginRules.username">请输入用户名</span>
             </transition>
           </div>
           <div class="form-item" :class="{'form-item-error':loginRules.password}">
@@ -25,9 +25,9 @@
         <div class="register-box" v-else>
           <h4>注册界面</h4>
           <div class="form-item">
-            <input type="text" placeholder="账号" v-model="registerForm.user_id">
+            <input type="text" placeholder="用户名" v-model="registerForm.username">
             <transition name="fade">
-              <span class="error" v-show="registerRules.user_id">请输入账号</span>
+              <span class="error" v-show="registerRules.username">请输入用户名</span>
             </transition>
           </div>
           <div class="form-item">
@@ -87,22 +87,22 @@ export default {
     return {
       isActive: false,
       loginForm: {
-        user_id: '',
+        username: '',
         password: ''
       },
       loginRules: {
-        user_id: false,
+        username: false,
         password: false
       },
       registerForm: {
-        user_id: '',
+        username: '',
         phone: '',
         email: '',
         qq: '',
         password: ''
       },
       registerRules: {
-        user_id: false,
+        username: false,
         email: false,
         phone: false,
         qq: false,
@@ -150,10 +150,13 @@ export default {
         console.log(status, message, data)
         if (status) {
           this.$message.success('登录成功')
-          console.log(data['user_id'])
+          console.log(data['username'])
           this.setCurrentUser({
-            user_id: data['user_id'],
-            avatarImgUrl: 'https://cn.vuejs.org/images/logo.svg'
+            username: data['username'],
+            phone: data['phone'],
+            qq: data['qq'],
+            email: data['email'],
+            avatarImgUrl: data['photo']
           })
           this.$router.push('/home')
           // if (data.level === 1 || data.level === 2) {
@@ -182,7 +185,7 @@ export default {
           this.$message.success('注册成功')
           this.reset(this.registerForm, this.registerRules)
           this.isActive = false
-          this.loginForm.user_id = data['user_id']
+          this.loginForm.username = data['username']
         } else {
           this.$message.error(message)
         }

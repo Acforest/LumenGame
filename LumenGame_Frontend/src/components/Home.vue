@@ -11,9 +11,9 @@
             <template slot="title"><i class="el-icon-s-home"></i>首页</template>
             <el-menu-item-group>
               <el-menu-item index="index"><i class="el-icon-s-home"></i>首页</el-menu-item>
-              <el-menu-item index="game"><i class="el-icon-star-on"></i>推荐</el-menu-item>
-              <el-menu-item index="info"><i class="el-icon-s-goods"></i>特惠</el-menu-item>
-              <el-menu-item index="rank"><i class="el-icon-sell"></i>最新发售</el-menu-item>
+              <el-menu-item index="game"><i class="el-icon-star-on"></i>个人推荐</el-menu-item>
+              <el-menu-item index="info"><i class="el-icon-s-goods"></i>个人中心</el-menu-item>
+              <el-menu-item index="rank"><i class="el-icon-sell"></i>热门推荐</el-menu-item>
               <el-menu-item index="share"><i class="el-icon-folder-opened"></i>游戏库</el-menu-item>
             </el-menu-item-group>
           </el-submenu>

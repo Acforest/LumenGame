@@ -2,13 +2,13 @@
   <div class="edit-info">
     <el-form :model="userInfoForm" :rules="userInfoRules" ref="userInfoForm"
       label-width="100px" size="small" :hide-required-asterisk="true">
-      <el-form-item prop="username">
-        <span slot="label">账号</span>
-        <el-input v-model="userInfoForm.username" disabled></el-input>
+      <el-form-item prop="id">
+        <span slot="label">ID</span>
+        <el-input v-model="userInfoForm.id" disabled></el-input>
       </el-form-item>
-      <el-form-item prop="name">
-        <span slot="label">昵称</span>
-        <el-input v-model="userInfoForm.name"></el-input>
+      <el-form-item prop="username">
+        <span slot="label">用户名</span>
+        <el-input v-model="userInfoForm.username"></el-input>
       </el-form-item>
       <el-form-item prop="phone">
         <span slot="label">手机号码</span>
@@ -23,10 +23,10 @@
         <el-input v-model="userInfoForm.email"></el-input>
       </el-form-item>
       <el-form-item prop="avatarImgUrl">
-        <span slot="label"></i>头像</span>
+        <span slot="label">头像</span>
         <el-upload class="avatar-uploader" :action="bindURL('uploadfile')"
           :show-file-list="false" :on-success="handleEditAvatarSuccess" name="files">
-          <img v-if="userInfoForm.avatarImgUrl" :src="bindURL(userInfoForm.avatarImgUrl)"
+          <img v-if="userInfoForm.avatarImgUrl" :src="userInfoForm.avatarImgUrl"
             class="avatar" ref="preview" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
@@ -45,6 +45,7 @@
 
 <script>
 import { bindURL, validateEmail, validatePhone, convertDeepCopy } from '@utils'
+import { _getUserInfo } from '@api'
 export default {
   props: {
     data: {
@@ -89,6 +90,8 @@ export default {
     }
   },
   created() {
+    const { status, message, data } = _getUserInfo(convertParams(this.registerForm))
+    console.log(message)
     this.userInfoForm = convertDeepCopy(this.data)
   }
 }

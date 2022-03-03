@@ -6,11 +6,13 @@ const MODEL_RESTFUL = 1
 const MODEL_NO = 2
 
 // login
-const _login = _post('/user/login/')
+const _login = _post('/user/signin/')
+// logout
+const _logout = _post('/user/signout/')
 // register
 const _register = _post('/user/register/')
 // user
-const _getUser = _get('/user/getUserByID/')
+const _getUserInfo = _get('/user/get_user_info/')
 const _deleteUser = _delete('/user/deleteUserByID/')
 const _changePassword = _post('/user/changePasswordByID/')
 const _editUser = _put('/user/updateUserByID/')
@@ -42,10 +44,12 @@ const _deleteStar = _delete('/likeGame/delete/')
 export {
     // login
     _login,
+    // logout
+    _logout,
     // register
     _register,
     // user
-    _getUser,
+    _getUserInfo,
     _deleteUser,
     _changePassword,
     _editUser,

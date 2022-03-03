@@ -4,9 +4,9 @@
       <el-col :span="5" :offset="2">
         <!-- 用户信息 -->
         <el-card class="user-info">
-          <img :src="bindURL(currentUser.avatarImgUrl)" alt="" />
+          <img :src="currentUser.avatarImgUrl" alt="" />
           <div class="desc">
-            <h4 class="username">{{ currentUser.name }}</h4>
+            <h4 class="username">{{ currentUser.username }}</h4>
             <p>{{ currentUser.description }}</p>
           </div>
         </el-card>
@@ -87,8 +87,8 @@ export default {
     // 修改密码
     async editPwd(val) {
       console.log(val)
-      const { success } = await _changePassword(val)
-      if (success) {
+      const { status, message, data } = await _changePassword(val)
+      if (status) {
         this.$message.success('修改成功')
       } else {
         this.$message.error('修改失败')
@@ -147,11 +147,11 @@ export default {
       }
     }
   },
-  created() {
-    if (this.allGame === null) {
-      this.fetchAllGame()
-    }
-  }
+  // created() {
+  //   if (this.allGame === null) {
+  //     this.fetchAllGame()
+  //   }
+  // }
 }
 </script>
 

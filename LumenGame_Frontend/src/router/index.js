@@ -108,15 +108,15 @@ router.beforeEach((to, from, next) => {
       window.sessionStorage.setItem('hCurrentIndex', path)
       break
   }
-  next()
-  // if (sessionStorage.getItem('currentUser') === null) {
-  //   if (to.path === '/login') {
-  //     next()
-  //   } else {
-  //     next('/login')
-  //   }
-  // } else {
-  //   next()
-  // }
+  // next()
+  if (sessionStorage.getItem('currentUser') === null) {
+    if (to.path === '/login') {
+      next()
+    } else {
+      next('/login')
+    }
+  } else {
+    next()
+  }
 })
 export default router
