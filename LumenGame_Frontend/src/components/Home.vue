@@ -3,62 +3,74 @@
     <el-container class="main">
       <el-menu-item class="logo">
           <img src="../assets/logo.png" alt="">
-        </el-menu-item>
-      <el-aside width="200px" style="text-align: left">
-        
-        <el-menu :default-active="currentIndex" router>
-          <el-submenu index="1">
-            <template slot="title"><i class="el-icon-s-home"></i>首页</template>
-            <el-menu-item-group>
-              <el-menu-item index="index"><i class="el-icon-s-home"></i>首页</el-menu-item>
-              <el-menu-item index="game"><i class="el-icon-star-on"></i>个人推荐</el-menu-item>
-              <el-menu-item index="info"><i class="el-icon-s-goods"></i>个人中心</el-menu-item>
-              <el-menu-item index="rank"><i class="el-icon-sell"></i>热门推荐</el-menu-item>
-              <el-menu-item index="share"><i class="el-icon-folder-opened"></i>游戏库</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-          <!-- <el-menu-item class="logo">
-            <img src="../assets/logo.png" alt="">
-          </el-menu-item>
-          <el-menu-item index="/index">主页</el-menu-item>
-          <el-menu-item index="/game">游戏中心</el-menu-item>
-          <el-menu-item index="/rank">排行榜</el-menu-item>
-          <el-menu-item index="/share">游戏论坛</el-menu-item>
-          <el-menu-item index="/info">个人中心</el-menu-item>
-          <el-submenu index="2" class="user-info">
-            <template slot="title">
-              <el-avatar size="large" :src="bindURL(currentUser.avatarImgUrl)">
-              </el-avatar>
-            </template>
-            <el-menu-item index="/info"><i class="iconfont icon-user1">个人信息</i>
-            </el-menu-item>
-            <el-menu-item index="/admin"><i class="iconfont icon-home">前往后台</i>
-            </el-menu-item>
-            <el-menu-item @click="logout()"> <i class="iconfont icon-logout">退出系统</i>
-            </el-menu-item>
-          </el-submenu> -->
-        </el-menu>
-      </el-aside>
+      </el-menu-item>
+
+      <!-- <el-container> -->
+      <el-header style="text-align: right">
+        <div>
+          <img src="../assets/logo.png" alt="" height="50px"/>
+          <span>LumenGame</span>
+        </div>
+
+        <el-dropdown style="color: #1AA6B7">
+          <i class="el-icon-setting" style="margin-right: 15px"></i>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>查看</el-dropdown-item>
+            <el-dropdown-item>新增</el-dropdown-item>
+            <el-dropdown-item>删除</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-header>    
+      <!-- </el-container> -->
 
       <el-container>
-        <el-header style="text-align: right; font-size: 12px">
-          <el-dropdown>
-            <i class="el-icon-setting" style="margin-right: 15px"></i>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>查看</el-dropdown-item>
-              <el-dropdown-item>新增</el-dropdown-item>
-              <el-dropdown-item>删除</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <!-- <span>王小虎</span> -->
-        </el-header>
-
+        <el-aside width="200px" style="text-align: left">
+          <el-menu :default-active="currentIndex" router>
+            <!-- <el-menu-item index="index">
+              <template slot="title"><i class="el-icon-s-home"></i>首页</template>
+              <el-menu-item-group>
+                <el-menu-item index="index"><i class="el-icon-s-home"></i>首页</el-menu-item>
+                <el-menu-item index="game"><i class="el-icon-star-on"></i>个人推荐</el-menu-item>
+                <el-menu-item index="info"><i class="el-icon-s-goods"></i>个人中心</el-menu-item>
+                <el-menu-item index="rank"><i class="el-icon-sell"></i>热门推荐</el-menu-item>
+                <el-menu-item index="share"><i class="el-icon-folder-opened"></i>游戏库</el-menu-item>
+              </el-menu-item-group>
+            </el-menu-item> -->
+            <el-menu-item index="index"><i class="el-icon-s-home"></i>首页</el-menu-item>
+            <el-menu-item index="game"><i class="el-icon-star-on"></i>个人推荐</el-menu-item>
+            <el-menu-item index="info"><i class="el-icon-s-goods"></i>个人中心</el-menu-item>
+            <el-menu-item index="rank"><i class="el-icon-sell"></i>热门推荐</el-menu-item>
+            <el-menu-item index="share"><i class="el-icon-folder-opened"></i>游戏库</el-menu-item>
+            <!-- <el-menu-item class="logo">
+              <img src="../assets/logo.png" alt="">
+            </el-menu-item>
+            <el-menu-item index="/index">主页</el-menu-item>
+            <el-menu-item index="/game">游戏中心</el-menu-item>
+            <el-menu-item index="/rank">排行榜</el-menu-item>
+            <el-menu-item index="/share">游戏论坛</el-menu-item>
+            <el-menu-item index="/info">个人中心</el-menu-item>
+            <el-submenu index="2" class="user-info">
+              <template slot="title">
+                <el-avatar size="large" :src="bindURL(currentUser.avatarImgUrl)">
+                </el-avatar>
+              </template>
+              <el-menu-item index="/info"><i class="iconfont icon-user1">个人信息</i>
+              </el-menu-item>
+              <el-menu-item index="/admin"><i class="iconfont icon-home">前往后台</i>
+              </el-menu-item>
+              <el-menu-item @click="logout()"> <i class="iconfont icon-logout">退出系统</i>
+              </el-menu-item>
+            </el-submenu> -->
+          </el-menu>
+        </el-aside>
         <el-main>
           <div>
             <router-view></router-view>
           </div>
         </el-main>
       </el-container>
+
+
     </el-container>
 
   </div>
@@ -128,9 +140,27 @@ export default {
   //   border-bottom: none;
   // }
   .el-header {
-    background-color: #B3C0D1;
+    background-color: #00202e;
     color: #333;
     line-height: 60px;
+    width: 100%;
+
+    font-size: 12px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 10px;
+    align-items: center;
+    > div {
+      display: flex;
+      align-items: center;
+      span {
+        margin-left: 15px;
+        font-size: 30px;
+        color: #1AA6B7;
+      }
+    }
+
   }
   // header <<<
   // main >>>

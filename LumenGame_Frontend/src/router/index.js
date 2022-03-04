@@ -108,12 +108,23 @@ router.beforeEach((to, from, next) => {
       window.sessionStorage.setItem('hCurrentIndex', path)
       break
   }
-  // next()
+
+  // if (to.meta.requieAuth) {
+  //   if (sessionStorage.getItem('currentUser') === null) {
+  //     next('/login')
+  //   } else {
+  //     next()
+  //   }
+  // } else {
+  //   next()
+  // }
+
   if (sessionStorage.getItem('currentUser') === null) {
-    if (to.path === '/login') {
+    if (to.path === '/') {
       next()
     } else {
-      next('/login')
+      // next('/login')
+      next()
     }
   } else {
     next()
