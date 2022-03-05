@@ -18,7 +18,8 @@ def register(request):
             user = User(username=username)
             user.set_password(password)
             user.save()
-            models.Player.objects.create(user=user, photo="https://img2.baidu.com/it/u=2161949891,656888789&fm=26&fmt=auto", phone=phone, email=email, qq=qq)
+            models.Player.objects.create(user=user, photo="https://img2.baidu.com/it/u=2161949891,656888789&fm=26&fmt=auto",
+                                         phone=phone, email=email, qq=qq)
             return json_response(1, '注册成功', {'username': username})
     elif request.method == 'GET':
         return json_response(0, 'GET不到', {})
@@ -31,7 +32,10 @@ def signin(request):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            return json_response(1, '登陆成功', {'username': username})
+            player = models.Player.objects.get(user=user)
+            return json_response(1, '登陆成功', 
+                                {'id': user.id, 'username': username, 'photo': player.photo,
+                                 'phone': player.phone, 'email': player.email, 'qq': player.qq})
         else:
             return json_response(0, '用户名不存在或密码错误', {})
     elif request.method == 'GET':
@@ -50,22 +54,43 @@ def signout(request):
         return json_response(0, 'GET不到', {})
 
 
-def get_user_info(request):
-    if request.method == 'POST':
-        user = request.user
-        if user.is_authenticated:
-            player = models.Player.objects.get(user=user)
-            return json_response(1, '获取用户信息成功', {
-                'username': player.user.username,
-                'photo': player.photo,
-                'phone': player.phone,
-                'email': player.email,
-                'qq': player.qq,
-            })
+def user_info(request):
+    if request.method == 'GET':  # 获取用户信息
+        pass
+        # player = models.Player.objects.get(user=user)
+        # return json_response(1, '获取用户信息成功', {
+        #     'username': player.user.username,
+        #     'photo': player.photo,
+        #     'phone': player.phone,
+        #     'email': player.email,
+        #     'qq': player.qq,
+        # })
+    elif request.method == 'POST':  # 修改用户密码
+        username = request.POST['username']
+        old_password = request.POST['old_password']
+        new_password = request.POST['new_password']
+        user = authenticate(username=username, password=old_password)
+        if user:
+            user.set_password(new_password)
+            user.save()
+            return json_response(1, '修改用户密码成功', {})
         else:
-            return json_response(0, '用户未登录', {})
-    elif request.method == 'GET':
-        return json_response(0, 'GET不到', {})
+            return json_response(0, '原密码错误', {})
+    elif request.method == 'PUT':  # 修改用户信息
+        username = request.POST['username']
+        photo = request.POST['photo']
+        phone = request.POST['phone']
+        email = request.POST['email']
+        user_query = User.objects.filter(username=username)
+        if user_query.exists():
+            return json_response(0, '用户名已经存在', {})
+        else:
+            models.Player.objects.filter(username=username).update(
+                username=username, photo=photo,
+                phone=phone, email=email
+            )
+        return json_response(1, '修改用户信息成功', {})
+
 
 
 def change_password(request):
