@@ -30,3 +30,19 @@ npm run build
 待补充
 ### 代理服务器 (Nginx)
 待补充
+
+### 数据库
+将`sql`文件夹中的`game_info.sql`，`recommend1.sql`，`recommend1.sql`，`reposity.sql`,`user.sql`导入数据库。
+修改`/LumenGame_Backend/LumenGame_Backend/settings.py`中的数据库配置。
+在`LumenGame_Backend`目录下输入命令
+```bash
+python manage.py inspectdb > models.py
+```
+将`LumenGame_Backend`目录下新生成的`models.py`中的model替换或添加到`/LumenGame_Backend/api/models.py`中的model。
+将`meta class`中的`managed ＝ False`修改为True(user可以不导入，将账号密码数据迁移到auth_user即可)。
+删除新生成的models.py，输入如下命令。
+```bash
+python manage.py migrate
+```
+
+
