@@ -61,9 +61,11 @@ export default {
     submitPwd() {
       this.$refs.passwordForm.validate((valid) => {
         if (!valid) return
+        console.log(this.username)
         this.$emit('submit-pwd', {
-          id: this.uid,
-          password: this.passwordForm.confirmPassword
+          username: this.username,
+          old_password: this.passwordForm.oldPassword,
+          new_password: this.passwordForm.confirmPassword
         })
         this.$refs.passwordForm.resetFields()
       })

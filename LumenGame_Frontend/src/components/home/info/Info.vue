@@ -76,12 +76,12 @@ export default {
     // 修改用户
     async editUser(val) {
       const v = convertDeepCopy(val)
-      const { success } = await _editUser(v)
-      if (success) {
+      const { status, message, data } = await _editUser(v)
+      if (status) {
         this.setCurrentUser(v)
-        console.log('edit user success')
+        this.$message.success('修改成功')
       } else {
-        console.log('edit user error')
+        this.$message.error('修改失败')
       }
     },
     // 修改密码

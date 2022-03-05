@@ -150,8 +150,8 @@ export default {
         console.log(status, message, data)
         if (status) {
           this.$message.success('登录成功')
-          console.log(data['username'])
           this.setCurrentUser({
+            id: data['id'],
             username: data['username'],
             phone: data['phone'],
             qq: data['qq'],

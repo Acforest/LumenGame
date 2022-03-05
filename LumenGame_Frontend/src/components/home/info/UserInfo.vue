@@ -90,8 +90,6 @@ export default {
     }
   },
   created() {
-    const { status, message, data } = _getUserInfo(convertParams(this.registerForm))
-    console.log(message)
     this.userInfoForm = convertDeepCopy(this.data)
   }
 }

@@ -12,10 +12,9 @@ const _logout = _post('/user/signout/')
 // register
 const _register = _post('/user/register/')
 // user
-const _getUserInfo = _get('/user/get_user_info/')
-const _deleteUser = _delete('/user/deleteUserByID/')
-const _changePassword = _post('/user/changePasswordByID/')
-const _editUser = _put('/user/updateUserByID/')
+const _getUserInfo = _get('/user/user_info/')
+const _changePassword = _post('/user/user_info/')
+const _editUserInfo = _put('/user/user_info/')
 // game
 const _getGame = _get('/game/getGameByGameID/')
 const _getRecommendGame = _get('/game/getRecommendGameByUserID/')
@@ -50,9 +49,8 @@ export {
     _register,
     // user
     _getUserInfo,
-    _deleteUser,
     _changePassword,
-    _editUser,
+    _editUserInfo,
     // game
     _getGame,
     _getRecommendGame,
