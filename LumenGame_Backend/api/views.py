@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.core import serializers
 from . import models
 from .utils import json_response
 
@@ -106,6 +107,15 @@ def change_password(request):
     elif request.method == 'GET':
         return json_response(0, 'GET不到', {})
 
+
+def get_banner(request):
+    if request.method == 'GET':
+        page = request.GET['page']
+        size = request.GET['size']
+        banner_query = models.Banner.objects.all()[:int(size)]
+        banner_json = serializers.serialize('json', banner_query)
+        return json_response(1, '获取banner成功', banner_json)
+            
 
 
 def recommend_by_user_id(request):

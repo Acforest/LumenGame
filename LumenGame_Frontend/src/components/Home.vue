@@ -1,9 +1,6 @@
 <template>
   <div>
     <el-container class="main">
-      <el-menu-item class="logo">
-          <img src="../assets/logo.png" alt="">
-      </el-menu-item>
 
       <!-- <el-container> -->
       <el-header style="text-align: right">
@@ -12,14 +9,14 @@
           <span>LumenGame</span>
         </div>
 
-        <el-dropdown style="color: #1AA6B7">
+        <!-- <el-dropdown style="color: #1AA6B7">
           <i class="el-icon-setting" style="margin-right: 15px"></i>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>查看</el-dropdown-item>
             <el-dropdown-item>新增</el-dropdown-item>
             <el-dropdown-item>删除</el-dropdown-item>
           </el-dropdown-menu>
-        </el-dropdown>
+        </el-dropdown> -->
       </el-header>    
       <!-- </el-container> -->
 

@@ -4,13 +4,13 @@
     <el-carousel :interval="3000" type="card" height="300px" @change="handleChange($event)">
       <el-carousel-item v-for="(item,index) in noticeList" :key="item.id">
         <div class="container" @click="showNotice(item,index)">
-          <img :src="item.url" alt="">
+          <img :src="item.fields.url" alt="">
           <transition name="fade">
             <div class="banner" v-show="currentIndex === index">
               <div class="title">
-                {{item.title}}</div>
+                {{item.fields.title}}</div>
               <div class="desc">
-                {{item.comment}}</div>
+                {{item.fields.comment}}</div>
             </div>
           </transition>
         </div>
@@ -46,7 +46,7 @@
 
 <script>
 // 公告对话框形式
-import { _getNoticeList } from '@api'
+import { _getBannerList } from '@api'
 import { bindURL, convertDeepCopy } from '@utils'
 
 export default {
@@ -56,14 +56,7 @@ export default {
         page: 1,
         size: 5
       },
-      noticeList: [
-        {
-          id: 1,
-          url: 'https://media.st.dl.pinyuncloud.com/steam/apps/1245620/header.jpg?t=1645830889',
-          title: 'good job',
-          comment: 'holy shit',
-        }
-      ],
+      noticeList: [],
       currentIndex: 0,
       content: [
         {
@@ -93,8 +86,11 @@ export default {
     bindURL,
     // 获取公告
     async fetchNotice() {
-      const { list } = await _getNoticeList(this.query)
-      this.noticeList = list
+      console.log(this.noticeList)
+      const { status, message, data } = await _getBannerList(this.query)
+      console.log(data)
+      this.noticeList = JSON.parse(data)
+      console.log(this.noticeList)
     },
     handleChange(index) {
       this.currentIndex = index

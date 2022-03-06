@@ -1,3 +1,4 @@
+from statistics import mode
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -20,6 +21,17 @@ class Game(models.Model):
     # 数据库有问题这里还没写
     class Meta:
         db_table = 'game_info'
+
+
+class Banner(models.Model):
+    url = models.URLField(max_length=255, blank=True)
+    title = models.CharField(max_length=255, blank=True)
+    comment = models.CharField(max_length=255, blank=True)
+    class Meta:
+        db_table = 'banner'
+
+    def __str__(self):
+        return str(self.title)
 
 
 class Repository(models.Model):

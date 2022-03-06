@@ -16,10 +16,10 @@ const _getUserInfo = _get('/user/user_info/')
 const _changePassword = _post('/user/user_info/')
 const _editUserInfo = _put('/user/user_info/')
 // game
-const _getGame = _get('/game/getGameByGameID/')
-const _getRecommendGame = _get('/game/getRecommendGameByUserID/')
+const _getGame = _get('/game/get_game/')
+const _getRecommendGame = _get('/game/get_rec_game/')
 // banner
-const _getBannerList = _get('/banner/getBannerList/')
+const _getBannerList = _get('/banner/get_banner/')
 const _getBannerDetail = _get('/banner/getBannerDetailByBannerID/')
 // comment
 const _addComment = _post('/comment/addCommentByUserID/')
