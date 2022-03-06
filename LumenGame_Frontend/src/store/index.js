@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { _getUser, _getPostList, _getCategory, _getStar, _getGame } from '@api'
+import { _getUser, _getPostList, _getCategory, _getStar, _getGame, _getRank } from '@api'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -121,8 +121,8 @@ export default new Vuex.Store({
       commit('setAllStar', res)
     },
     async fetchAllGame ({ commit }) {
-      const res = await _getGame()
-      commit('setAllGame', res)
+      const { status, message, data } = await _getRank()
+      commit('setAllGame', JSON.parse(data))
     }
   },
   modules: {

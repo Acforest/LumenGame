@@ -1,8 +1,12 @@
+from django.db.models import Value, CharField
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core import serializers
 from . import models
 from .utils import json_response
+import re
+import os
+import urllib.request
 
 
 def register(request):
@@ -93,41 +97,63 @@ def user_info(request):
         return json_response(1, '修改用户信息成功', {})
 
 
-
-def change_password(request):
-    if request.method == 'POST':
-        user_id = request.POST['user_id']
-        password = request.POST['password']
-        user_qs = User.objects.filter(user_id=user_id, password=password)
-        if user_qs.exists():
-            # TODO 修改数据库密码
-            return json_response(1, '密码修改成功', {'user_id': user_id})
-        else:
-            return json_response(0, '用户名和密码校验失败', {})
-    elif request.method == 'GET':
-        return json_response(0, 'GET不到', {})
-
-
 def get_banner(request):
     if request.method == 'GET':
-        page = request.GET['page']
         size = request.GET['size']
         banner_query = models.Banner.objects.all()[:int(size)]
         banner_json = serializers.serialize('json', banner_query)
         return json_response(1, '获取banner成功', banner_json)
-            
 
 
-def recommend_by_user_id(request):
-    # TODO GET方法：根据 user_id 获取 推荐游戏 返回值为JSON格式的游戏数据
-    if request.method == 'POST':
-        pass
-    elif request.method == 'GET':
-        user_id = request.GET['user_id']
-        # 下面根据封装好的推荐算法完成接口
-        # game_query = models.Game.objects.filter(user_id=user_id)
-        # ...
-        return json_response(1, '推荐成功', {}) # 这里放游戏数据（字典格式）
+def get_game(request):
+    def open_url(url):
+        req = urllib.request.Request(url) # 将Request类实例化并传入url为初始值，然后赋值给req
+        # 添加header，伪装成浏览器
+        req.add_header('User-Agent',
+        'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 SE 2.X MetaSr 1.0')
+        # 访问url，并将页面的二进制数据赋值给page
+        page = urllib.request.urlopen(req)
+        # 将page中的内容转换为utf-8编码
+        html = page.read().decode('utf-8')
+        return html
+
+    def get_img(html):
+        # [^"]+\.jpg 匹配除"以外的所有字符多次,后面跟上转义的.和png
+        p = r'<img class="game_header_image_full" src="(.*?)">'
+        # 返回正则表达式在字符串中所有匹配结果的列表
+        imglist = re.findall(p, html)
+        return imglist[0] if imglist else ''
+
+    if request.method == 'GET':
+        game_query = models.GameInfo.objects.all()[:50]
+        # for item in game_query:
+        #     item.url = get_img(open_url(item.url))
+        game_json = serializers.serialize('json', game_query)
+        return json_response(1, '获取game成功', game_json)
+
+
+def get_rank(request):
+    if request.method == 'GET':
+        rank_query = models.GameRank.objects.all()
+        rank_json = serializers.serialize('json', rank_query)
+        return json_response(1, '获取rank成功', rank_json)
         
 
 
+# def bulk(request):
+#     from django.contrib.auth.hashers import make_password
+#     if request.method == 'GET':
+#         module_dir = os.path.dirname(__file__)
+#         dir = os.path.join(module_dir, 'user.csv')
+#         with open(dir) as f:
+#             User.objects.bulk_create([
+#                 User(
+#                     id=idx,
+#                     username=f'test_{idx}',
+#                     password=make_password('123456'),
+#                     is_active=True,
+#                 ) for idx in f.read().splitlines()
+#             ])
+#         return json_response(1, '导入成功', {})
+#     else:
+#         return json_response(0, '导入失败', {})

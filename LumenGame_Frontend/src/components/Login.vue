@@ -80,7 +80,7 @@
 
 <script>
 import { _login, _register } from '@api'
-import { convertParams } from '@utils'
+import { convertParams, validateEmail, validatePhone } from '@utils'
 import { mapMutations } from 'vuex'
 export default {
   data() {
@@ -103,11 +103,28 @@ export default {
       },
       registerRules: {
         username: false,
-        email: false,
         phone: false,
+        email: false,
         qq: false,
         password: false
-      }
+        // username: [
+        //   { required: true, message: '输入用户名', trigger: 'blur' },
+        //   { min: 2, max: 15, message: '长度在 2 到 15 个字符', trigger: 'blur' }
+        // ],
+        // username: [
+        //   { required: true, message: '输入密码', trigger: 'blur' },
+        //   { min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur' }
+        // ],
+        // phone: [
+        //   { required: true, message: '输入电话号码', trigger: 'blur' },
+        //   { validator: validatePhone, trigger: 'blur' }
+        // ],
+        // qq: [{ required: true, message: '输入QQ号码', trigger: 'blur' }],
+        // email: [
+        //   { required: true, message: '输入电子邮箱', trigger: 'blur' },
+        //   { validator: validateEmail, trigger: 'blur' }
+        // ],
+      },
     }
   },
   methods: {

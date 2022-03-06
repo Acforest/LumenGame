@@ -86,11 +86,8 @@ export default {
     bindURL,
     // 获取公告
     async fetchNotice() {
-      console.log(this.noticeList)
       const { status, message, data } = await _getBannerList(this.query)
-      console.log(data)
       this.noticeList = JSON.parse(data)
-      console.log(this.noticeList)
     },
     handleChange(index) {
       this.currentIndex = index

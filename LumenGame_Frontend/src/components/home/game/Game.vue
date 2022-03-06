@@ -32,7 +32,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import { convertDeepCopy } from '@utils'
-import { _getGameList } from '@api'
+import { _getGame } from '@api'
 
 import gameItem from './GameItem'
 import gameTab from './GameTab'
@@ -57,151 +57,57 @@ export default {
         keyword: null
       },
       gameList: [
-        {
-          id: 1,
-          name: 'Elden Ring',
-          photo: 'https://media.st.dl.pinyuncloud.com/steam/apps/1245620/header.jpg?t=1645830889',
-          url: 'https://store.steampowered.com/app/1245620/_/',
-          release_date: "May 12, 2016",
-          developer: 'FromSoftware Inc.',
-          publisher: ['FromSoftware Inc.', 'BANDAI NAMCO Entertainment'],
-          popular_tags: ['角色扮演', 'Gore', 'Action', 'Demons', 'Shooter', 'First-Person', 'Great Soundtrack', 'Multiplayer', 'Singleplayer', 'Fast-Paced', 'Sci-fi', 'Horror', 'Classic', 'Atmospheric', 'Difficult', 'Blood', 'Remake', 'Zombies', 'Co-op', 'Memes'],
-          game_details: '',
-          languages: ['English', 'Korean', 'Simplified Chinese', 'French', 'German', 'Spanish - Spain', 'Arabic', 'Japanese', 'Polish', 'Portuguese', 'Russian', 'Turkish', 'Thai', 'Italian', 'Portuguese - Brazil', 'Traditional Chinese', 'Ukrainian'],
-          genre: ['Action', 'Adventure', 'Massively Multiplayer'],
-          // game_description: 
-          // mature_content:
-          // minimum_requirements:
-          // recommended_requirements:
-          // original_price:
-          // discount_price:
-        },
-        {
-          id: 1,
-          name: 'Elden Ring',
-          photo: 'https://media.st.dl.pinyuncloud.com/steam/apps/1245620/header.jpg?t=1645830889',
-          url: 'https://store.steampowered.com/app/1245620/_/',
-          release_date: "May 12, 2016",
-          developer: 'FromSoftware Inc.',
-          publisher: ['FromSoftware Inc.', 'BANDAI NAMCO Entertainment'],
-          popular_tags: ['角色扮演', 'Gore', 'Action', 'Demons', 'Shooter', 'First-Person', 'Great Soundtrack', 'Multiplayer', 'Singleplayer', 'Fast-Paced', 'Sci-fi', 'Horror', 'Classic', 'Atmospheric', 'Difficult', 'Blood', 'Remake', 'Zombies', 'Co-op', 'Memes'],
-          game_details: '',
-          languages: ['English', 'Korean', 'Simplified Chinese', 'French', 'German', 'Spanish - Spain', 'Arabic', 'Japanese', 'Polish', 'Portuguese', 'Russian', 'Turkish', 'Thai', 'Italian', 'Portuguese - Brazil', 'Traditional Chinese', 'Ukrainian'],
-          genre: ['Action', 'Adventure', 'Massively Multiplayer'],
-          // game_description: 
-          // mature_content:
-          // minimum_requirements:
-          // recommended_requirements:
-          // original_price:
-          // discount_price:
-        },
-        {
-          id: 1,
-          name: 'Elden Ring',
-          photo: 'https://media.st.dl.pinyuncloud.com/steam/apps/1245620/header.jpg?t=1645830889',
-          url: 'https://store.steampowered.com/app/1245620/_/',
-          release_date: "May 12, 2016",
-          developer: 'FromSoftware Inc.',
-          publisher: ['FromSoftware Inc.', 'BANDAI NAMCO Entertainment'],
-          popular_tags: ['角色扮演', 'Gore', 'Action', 'Demons', 'Shooter', 'First-Person', 'Great Soundtrack', 'Multiplayer', 'Singleplayer', 'Fast-Paced', 'Sci-fi', 'Horror', 'Classic', 'Atmospheric', 'Difficult', 'Blood', 'Remake', 'Zombies', 'Co-op', 'Memes'],
-          game_details: '',
-          languages: ['English', 'Korean', 'Simplified Chinese', 'French', 'German', 'Spanish - Spain', 'Arabic', 'Japanese', 'Polish', 'Portuguese', 'Russian', 'Turkish', 'Thai', 'Italian', 'Portuguese - Brazil', 'Traditional Chinese', 'Ukrainian'],
-          genre: ['Action', 'Adventure', 'Massively Multiplayer'],
-          // game_description: 
-          // mature_content:
-          // minimum_requirements:
-          // recommended_requirements:
-          // original_price:
-          // discount_price:
-        },
-        {
-          id: 1,
-          name: 'Elden Ring',
-          photo: 'https://media.st.dl.pinyuncloud.com/steam/apps/1245620/header.jpg?t=1645830889',
-          url: 'https://store.steampowered.com/app/1245620/_/',
-          release_date: "May 12, 2016",
-          developer: 'FromSoftware Inc.',
-          publisher: ['FromSoftware Inc.', 'BANDAI NAMCO Entertainment'],
-          popular_tags: ['角色扮演', 'Gore', 'Action', 'Demons', 'Shooter', 'First-Person', 'Great Soundtrack', 'Multiplayer', 'Singleplayer', 'Fast-Paced', 'Sci-fi', 'Horror', 'Classic', 'Atmospheric', 'Difficult', 'Blood', 'Remake', 'Zombies', 'Co-op', 'Memes'],
-          game_details: '',
-          languages: ['English', 'Korean', 'Simplified Chinese', 'French', 'German', 'Spanish - Spain', 'Arabic', 'Japanese', 'Polish', 'Portuguese', 'Russian', 'Turkish', 'Thai', 'Italian', 'Portuguese - Brazil', 'Traditional Chinese', 'Ukrainian'],
-          genre: ['Action', 'Adventure', 'Massively Multiplayer'],
-          // game_description: 
-          // mature_content:
-          // minimum_requirements:
-          // recommended_requirements:
-          // original_price:
-          // discount_price:
-        },
-        {
-          id: 1,
-          name: 'Elden Ring',
-          photo: 'https://media.st.dl.pinyuncloud.com/steam/apps/1245620/header.jpg?t=1645830889',
-          url: 'https://store.steampowered.com/app/1245620/_/',
-          release_date: "May 12, 2016",
-          developer: 'FromSoftware Inc.',
-          publisher: ['FromSoftware Inc.', 'BANDAI NAMCO Entertainment'],
-          popular_tags: ['角色扮演', 'Gore', 'Action', 'Demons', 'Shooter', 'First-Person', 'Great Soundtrack', 'Multiplayer', 'Singleplayer', 'Fast-Paced', 'Sci-fi', 'Horror', 'Classic', 'Atmospheric', 'Difficult', 'Blood', 'Remake', 'Zombies', 'Co-op', 'Memes'],
-          game_details: '',
-          languages: ['English', 'Korean', 'Simplified Chinese', 'French', 'German', 'Spanish - Spain', 'Arabic', 'Japanese', 'Polish', 'Portuguese', 'Russian', 'Turkish', 'Thai', 'Italian', 'Portuguese - Brazil', 'Traditional Chinese', 'Ukrainian'],
-          genre: ['Action', 'Adventure', 'Massively Multiplayer'],
-          // game_description: 
-          // mature_content:
-          // minimum_requirements:
-          // recommended_requirements:
-          // original_price:
-          // discount_price:
-        },
-        {
-          id: 1,
-          name: 'Elden Ring',
-          photo: 'https://media.st.dl.pinyuncloud.com/steam/apps/1245620/header.jpg?t=1645830889',
-          url: 'https://store.steampowered.com/app/1245620/_/',
-          release_date: "May 12, 2016",
-          developer: 'FromSoftware Inc.',
-          publisher: ['FromSoftware Inc.', 'BANDAI NAMCO Entertainment'],
-          popular_tags: ['角色扮演', 'Gore', 'Action', 'Demons', 'Shooter', 'First-Person', 'Great Soundtrack', 'Multiplayer', 'Singleplayer', 'Fast-Paced', 'Sci-fi', 'Horror', 'Classic', 'Atmospheric', 'Difficult', 'Blood', 'Remake', 'Zombies', 'Co-op', 'Memes'],
-          game_details: '',
-          languages: ['English', 'Korean', 'Simplified Chinese', 'French', 'German', 'Spanish - Spain', 'Arabic', 'Japanese', 'Polish', 'Portuguese', 'Russian', 'Turkish', 'Thai', 'Italian', 'Portuguese - Brazil', 'Traditional Chinese', 'Ukrainian'],
-          genre: ['Action', 'Adventure', 'Massively Multiplayer'],
-          // game_description: 
-          // mature_content:
-          // minimum_requirements:
-          // recommended_requirements:
-          // original_price:
-          // discount_price:
-        },
-        {
-          id: 1,
-          name: 'Elden Ring',
-          photo: 'https://media.st.dl.pinyuncloud.com/steam/apps/1245620/header.jpg?t=1645830889',
-          url: 'https://store.steampowered.com/app/1245620/_/',
-          release_date: "May 12, 2016",
-          developer: 'FromSoftware Inc.',
-          publisher: ['FromSoftware Inc.', 'BANDAI NAMCO Entertainment'],
-          popular_tags: ['角色扮演', 'Gore', 'Action', 'Demons', 'Shooter', 'First-Person', 'Great Soundtrack', 'Multiplayer', 'Singleplayer', 'Fast-Paced', 'Sci-fi', 'Horror', 'Classic', 'Atmospheric', 'Difficult', 'Blood', 'Remake', 'Zombies', 'Co-op', 'Memes'],
-          game_details: '',
-          languages: ['English', 'Korean', 'Simplified Chinese', 'French', 'German', 'Spanish - Spain', 'Arabic', 'Japanese', 'Polish', 'Portuguese', 'Russian', 'Turkish', 'Thai', 'Italian', 'Portuguese - Brazil', 'Traditional Chinese', 'Ukrainian'],
-          genre: ['Action', 'Adventure', 'Massively Multiplayer'],
-          // game_description: 
-          // mature_content:
-          // minimum_requirements:
-          // recommended_requirements:
-          // original_price:
-          // discount_price:
-        },
+        // {
+        //   id: 1,
+        //   name: 'Elden Ring',
+        //   photo: 'https://media.st.dl.pinyuncloud.com/steam/apps/1245620/header.jpg?t=1645830889',
+        //   url: 'https://store.steampowered.com/app/1245620/_/',
+        //   release_date: "May 12, 2016",
+        //   developer: 'FromSoftware Inc.',
+        //   publisher: ['FromSoftware Inc.', 'BANDAI NAMCO Entertainment'],
+        //   popular_tags: ['角色扮演', 'Gore', 'Action', 'Demons', 'Shooter', 'First-Person', 'Great Soundtrack', 'Multiplayer', 'Singleplayer', 'Fast-Paced', 'Sci-fi', 'Horror', 'Classic', 'Atmospheric', 'Difficult', 'Blood', 'Remake', 'Zombies', 'Co-op', 'Memes'],
+        //   game_details: '',
+        //   languages: ['English', 'Korean', 'Simplified Chinese', 'French', 'German', 'Spanish - Spain', 'Arabic', 'Japanese', 'Polish', 'Portuguese', 'Russian', 'Turkish', 'Thai', 'Italian', 'Portuguese - Brazil', 'Traditional Chinese', 'Ukrainian'],
+        //   genre: ['Action', 'Adventure', 'Massively Multiplayer'],
+        //   // game_description: 
+        //   // mature_content:
+        //   // minimum_requirements:
+        //   // recommended_requirements:
+        //   // original_price:
+        //   // discount_price:
+        // },
+        // {
+        //   id: 2,
+        //   name: 'Elden Ring',
+        //   photo: 'https://media.st.dl.pinyuncloud.com/steam/apps/1245620/header.jpg?t=1645830889',
+        //   url: 'https://store.steampowered.com/app/1245620/_/',
+        //   release_date: "May 12, 2016",
+        //   developer: 'FromSoftware Inc.',
+        //   publisher: ['FromSoftware Inc.', 'BANDAI NAMCO Entertainment'],
+        //   popular_tags: ['角色扮演', 'Gore', 'Action', 'Demons', 'Shooter', 'First-Person', 'Great Soundtrack', 'Multiplayer', 'Singleplayer', 'Fast-Paced', 'Sci-fi', 'Horror', 'Classic', 'Atmospheric', 'Difficult', 'Blood', 'Remake', 'Zombies', 'Co-op', 'Memes'],
+        //   game_details: '',
+        //   languages: ['English', 'Korean', 'Simplified Chinese', 'French', 'German', 'Spanish - Spain', 'Arabic', 'Japanese', 'Polish', 'Portuguese', 'Russian', 'Turkish', 'Thai', 'Italian', 'Portuguese - Brazil', 'Traditional Chinese', 'Ukrainian'],
+        //   genre: ['Action', 'Adventure', 'Massively Multiplayer'],
+        //   // game_description: 
+        //   // mature_content:
+        //   // minimum_requirements:
+        //   // recommended_requirements:
+        //   // original_price:
+        //   // discount_price:
+        // },
       ],
       currentShow: 'list'
     }
   },
   methods: {
-    ...mapActions(['fetchAllCategory']),
+    ...mapActions(['fetchAllCategory', 'fetchAllGame']),
     // 获取游戏列表
-    async fetchGame() {
-      const { list, total } = await _getGameList(this.query)
-      this.gameList = list
-      this.total = total
-    },
+    // async fetchGame() {
+    //   const { status, message, data } = await _getGame(this.query)
+    //   this.gameList = data
+    //   console.log(data)
+    //   this.total = size
+    // },
     // 设置当前item
     setActiveItem(index) {
       this.currentItem = index
@@ -221,11 +127,11 @@ export default {
     // 清除搜索框
     clearSearch() {
       this.query.keyword = null
-      this.fetchGame()
+      const { status, message, data } = this.fetchAllGame()
     }
   },
   computed: {
-    ...mapState(['allCategory']),
+    ...mapState(['allCategory', 'allGame']),
     filterGame() {
       if (this.currentItem === ALL) {
         return this.gameList
@@ -252,7 +158,9 @@ export default {
       this.fetchAllCategory()
     }
     this.handleCategory()
-    await this.fetchGame()
+    // await this.fetchGame()
+    await this.fetchAllGame()
+    console.log(this.allGame)
   }
 }
 </script>

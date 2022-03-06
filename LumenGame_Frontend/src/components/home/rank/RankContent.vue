@@ -1,14 +1,15 @@
 <template>
   <div class="rank-content">
     <ul>
-      <li class="rank-item" v-for="item in filterGame" :key="item.id">
-        <a href="javascript:;" @click="goTo(item.id)">
+      <li class="rank-item" v-for="item in allGame" :key="item.fields.id">
+        <!-- <a href="javascript:;" @click="goTo(item.fields.url)"> -->
+        <a :href="item.fields.url">
           <div class="r-cover">
-            <img :src="bindURL(item.photo)" alt="">
+            <img :src="item.fields.img_url" alt="">
           </div>
           <div class="r-content">
-            <p class="r-name"> {{item.name}}</p>
-            <span class="r-lx">{{item.lxName}}</span>
+            <p class="r-name"> {{item.fields.name}}</p>
+            <span class="r-lx">{{item.fields.price}}</span>
           </div>
         </a>
         <pTips :date="item.createTime" :score="item.score" :star="item.number"
@@ -51,35 +52,36 @@ export default {
     }
   },
   computed: {
-    ...mapState(['allStar']),
+    ...mapState(['allStar', 'allGame']),
     ...mapGetters(['getStarByGameId']),
     // 过滤游戏
     filterGame() {
-      const temp = this.data.map((i) => {
-        const game = this.list.find((item) => {
-          return item.id === Number(i.lx)
-        })
-        i.lxName = (game && game.name) || '未知'
-        return i
-      })
-      if (this.tag === 'new') {
-        temp.sort((a, b) => {
-          return -(a.createTime - b.createTime)
-        })
-      } else if (this.tag === 'score') {
-        temp.sort((a, b) => {
-          return -(a.score - b.score)
-        })
-      } else if (this.tag === 'star') {
-        temp.forEach((item) => {
-          const star = this.getStarByGameId(item.id)
-          item.number = (star && star.length) || 0
-        })
-        temp.sort((a, b) => {
-          return -(a.number - b.number)
-        })
-      }
-      return temp
+      return this.allGame
+      // const temp = this.data.map((i) => {
+      //   const game = this.list.find((item) => {
+      //     return item.id === Number(i.lx)
+      //   })
+      //   i.lxName = (game && game.name) || '未知'
+      //   return i
+      // })
+      // if (this.tag === 'new') {
+      //   temp.sort((a, b) => {
+      //     return -(a.createTime - b.createTime)
+      //   })
+      // } else if (this.tag === 'score') {
+      //   temp.sort((a, b) => {
+      //     return -(a.score - b.score)
+      //   })
+      // } else if (this.tag === 'star') {
+      //   temp.forEach((item) => {
+      //     const star = this.getStarByGameId(item.id)
+      //     item.number = (star && star.length) || 0
+      //   })
+      //   temp.sort((a, b) => {
+      //     return -(a.number - b.number)
+      //   })
+      // }
+      // return temp
     }
   },
   components: {

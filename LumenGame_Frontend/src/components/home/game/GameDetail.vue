@@ -2,7 +2,7 @@
   <el-container class="g-detail">
     <el-aside width="300px">
       <div class="g-cover">
-        <img :src="bindURL(filterGame.photo)" alt="">
+        <img :src="filterGame.photo" alt="">
       </div>
     </el-aside>
     <el-main>

@@ -109,7 +109,7 @@ WSGI_APPLICATION = 'LumenGame_Backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lumen_game',
+        'NAME': 'lumengame',
         'HOST': '39.106.73.145',
         'PORT': '3306',
         'USER': 'root',

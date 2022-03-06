@@ -56,12 +56,8 @@ export default {
     return {
       userInfoRules: {
         username: [
-          { required: true, message: '输入账号', trigger: 'blur' },
-          { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
-        ],
-        name: [
           { required: true, message: '输入用户名', trigger: 'blur' },
-          { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
+          { min: 2, max: 15, message: '长度在 2 到 15 个字符', trigger: 'blur' }
         ],
         phone: [
           { required: true, message: '输入电话号码', trigger: 'blur' },

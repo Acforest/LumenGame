@@ -8,7 +8,8 @@ urlpatterns = [
     path('user/signout/', views.signout, name='signout'),
     path('user/user_info/', views.user_info, name='user_info'),
     path('banner/get_banner/', views.get_banner, name='get_banner'),
+    path('game/get_game/', views.get_game, name='get_game'),
+    path('game/get_rank/', views.get_rank, name='get_rank'),
     # TODO
-    path('game/recommend_by_user_id', views.recommend_by_user_id, name='recommend_by_user_id'),
-    # ...
+    path('bulk/', views.bulk, name='bulk'),
 ]

@@ -8,7 +8,7 @@
         </a>
       </el-aside>
       <el-main>
-        <rank-content :data="allGame" :list="miniCategoryList" :tag="currentIndex" />
+        <rank-content :data="allGame" :tag="currentIndex" />
       </el-main>
     </el-container>
   </div>
@@ -36,17 +36,17 @@ export default {
   },
   computed: {
     ...mapState(['allGame', 'allCategory']),
-    ...mapGetters(['getMiniCategoryList']),
-    miniCategoryList() {
-      return this.getMiniCategoryList()
-    }
+    // ...mapGetters(['getMiniCategoryList']),
+    // miniCategoryList() {
+    //   return this.getMiniCategoryList()
+    // }
   },
   components: {
     rankContent
   },
   async created() {
     if (this.allGame === null) {
-      await this.fetchAllGame()
+      this.fetchAllGame()
     }
     if (this.allCategory === null) {
       this.fetchAllCategory()

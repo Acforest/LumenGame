@@ -17,6 +17,7 @@ const _changePassword = _post('/user/user_info/')
 const _editUserInfo = _put('/user/user_info/')
 // game
 const _getGame = _get('/game/get_game/')
+const _getRank = _get('/game/get_rank/')
 const _getRecommendGame = _get('/game/get_rec_game/')
 // banner
 const _getBannerList = _get('/banner/get_banner/')
@@ -53,6 +54,7 @@ export {
     _editUserInfo,
     // game
     _getGame,
+    _getRank,
     _getRecommendGame,
     // banner
     _getBannerList,

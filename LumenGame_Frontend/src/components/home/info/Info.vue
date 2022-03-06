@@ -31,9 +31,9 @@
             <iPwd :uid="currentUser.id" @submit-pwd="editPwd($event)" />
           </template>
           <!-- 我的文章 -->
-          <template v-else-if="activeIndex === 3">
+          <!-- <template v-else-if="activeIndex === 3">
             <iPost :uid="currentUser.id" :data="postList" @go-to="goTo($event,3)" />
-          </template>
+          </template> -->
           <!-- 我的收藏 -->
           <template v-else-if="activeIndex === 4">
             <iStar :data="starList" :list="miniGameList" @go-to="goTo($event,4)" />
@@ -62,7 +62,7 @@ export default {
       navItems: [
         { index: 1, tag: '个人信息' },
         { index: 2, tag: '更改密码' },
-        { index: 3, tag: '帖子记录' },
+        // { index: 3, tag: '帖子记录' },
         { index: 4, tag: '我的收藏' }
       ],
       postList: [],
