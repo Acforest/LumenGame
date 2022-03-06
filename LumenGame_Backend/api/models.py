@@ -16,11 +16,11 @@ class Player(models.Model):
         return str(self.user)
 
 
-class Game(models.Model):
-    name = models.CharField(max_length=255, null=False)
-    # 数据库有问题这里还没写
-    class Meta:
-        db_table = 'game_info'
+# class Game(models.Model):
+#     name = models.CharField(max_length=255, null=False)
+#     # 数据库有问题这里还没写
+#     class Meta:
+#         db_table = 'game_info'
 
 
 class Banner(models.Model):
