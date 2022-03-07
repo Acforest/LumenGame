@@ -10,6 +10,8 @@ urlpatterns = [
     path('banner/get_banner/', views.get_banner, name='get_banner'),
     path('game/get_game/', views.get_game, name='get_game'),
     path('game/get_rank/', views.get_rank, name='get_rank'),
+    path('game/get_rec_game1/', views.get_rec_game1, name='get_rec_game1'),
+    path('game/get_rec_game2/', views.get_rec_game2, name='get_rec_game2'),
     # TODO
-    path('bulk/', views.bulk, name='bulk'),
+    # path('bulk/', views.bulk, name='bulk'),
 ]

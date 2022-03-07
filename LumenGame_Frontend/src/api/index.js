@@ -18,7 +18,8 @@ const _editUserInfo = _put('/user/user_info/')
 // game
 const _getGame = _get('/game/get_game/')
 const _getRank = _get('/game/get_rank/')
-const _getRecommendGame = _get('/game/get_rec_game/')
+const _getRecGame1 = _get('/game/get_rec_game1/')
+const _getRecGame2 = _get('/game/get_rec_game2/')
 // banner
 const _getBannerList = _get('/banner/get_banner/')
 const _getBannerDetail = _get('/banner/getBannerDetailByBannerID/')
@@ -55,7 +56,8 @@ export {
     // game
     _getGame,
     _getRank,
-    _getRecommendGame,
+    _getRecGame1,
+    _getRecGame2,
     // banner
     _getBannerList,
     _getBannerDetail,

@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       ranks: [
-        { name: '最高热度', tag: 'star' },
+        { name: '最高热度', tag: 'hot' },
         { name: '口碑佳作', tag: 'score' },
         { name: '最新上架', tag: 'new' }
       ],

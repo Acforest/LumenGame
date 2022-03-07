@@ -1,7 +1,7 @@
 <template>
   <div class="rank-content">
     <ul>
-      <li class="rank-item" v-for="item in allGame" :key="item.fields.id">
+      <li class="rank-item" v-for="item in filterGame" :key="item.fields.id">
         <!-- <a href="javascript:;" @click="goTo(item.fields.url)"> -->
         <a :href="item.fields.url">
           <div class="r-cover">
@@ -12,7 +12,7 @@
             <span class="r-lx">{{item.fields.price}}</span>
           </div>
         </a>
-        <pTips :date="item.createTime" :score="item.score" :star="item.number"
+        <pTips :date="item.createTime" :score="item.score" :star="item.rank_type"
           :type="tag" />
       </li>
     </ul>
@@ -56,7 +56,10 @@ export default {
     ...mapGetters(['getStarByGameId']),
     // 过滤游戏
     filterGame() {
-      return this.allGame
+      const ret = this.allGame.find((item) => {
+        return item.rank_type === this.tag
+      })
+      return ret
       // const temp = this.data.map((i) => {
       //   const game = this.list.find((item) => {
       //     return item.id === Number(i.lx)

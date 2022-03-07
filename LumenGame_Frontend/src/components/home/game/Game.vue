@@ -32,7 +32,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import { convertDeepCopy } from '@utils'
-import { _getGame } from '@api'
+import { _getRecGame1, _getRecGame2 } from '@api'
 
 import gameItem from './GameItem'
 import gameTab from './GameTab'
@@ -40,6 +40,10 @@ const ALL = 0
 export default {
   data() {
     return {
+      query: {
+        method: 1,
+        size: 20,
+      },
       category: [
         {
           id: 1,
@@ -51,11 +55,6 @@ export default {
         }
       ],
       currentItem: 0,
-      query: {
-        page: 1,
-        size: 10,
-        keyword: null
-      },
       gameList: [
         // {
         //   id: 1,
@@ -102,12 +101,15 @@ export default {
   methods: {
     ...mapActions(['fetchAllCategory', 'fetchAllGame']),
     // 获取游戏列表
-    // async fetchGame() {
-    //   const { status, message, data } = await _getGame(this.query)
-    //   this.gameList = data
-    //   console.log(data)
-    //   this.total = size
-    // },
+    async fetchGame() {
+      const { status, message, data } = this.query.method === 1 ?
+            await _getRecGame1({user_id: this.currentUser.id}) : 
+            await _getRecGame2({user_id: this.currentUser.id})
+      
+      this.gameList = JSON.parse(data)
+      console.log(this.gameList)
+      this.total = this.gameList[0].fields.length
+    },
     // 设置当前item
     setActiveItem(index) {
       this.currentItem = index
@@ -131,7 +133,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['allCategory', 'allGame']),
+    ...mapState(['allCategory', 'allGame', 'currentUser']),
     filterGame() {
       if (this.currentItem === ALL) {
         return this.gameList
@@ -154,12 +156,11 @@ export default {
     gameTab
   },
   async created() {
-    if (this.allCategory === null) {
-      this.fetchAllCategory()
-    }
-    this.handleCategory()
-    // await this.fetchGame()
-    await this.fetchAllGame()
+    // if (this.allCategory === null) {
+    //   this.fetchAllCategory()
+    // }
+    // this.handleCategory()
+    this.fetchGame()
     console.log(this.allGame)
   }
 }

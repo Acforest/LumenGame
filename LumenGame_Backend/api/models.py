@@ -24,6 +24,7 @@ class Banner(models.Model):
 class GameInfo(models.Model):
     name = models.CharField(max_length=255)
     url = models.TextField(blank=True, null=True)
+    img_url = models.TextField(blank=True, null=True)
     types = models.CharField(max_length=255, blank=True, null=True)
     desc_snippet = models.TextField(blank=True, null=True)
     recent_reviews = models.TextField(blank=True, null=True)
@@ -135,6 +136,7 @@ class GameRank(models.Model):
     price = models.CharField(max_length=255)
     img_url = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
+    rank_type = models.CharField(max_length=255, default='hot')
 
     class Meta:
         managed = True

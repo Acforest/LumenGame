@@ -3,14 +3,14 @@
     <template v-if="allNum">
       <!-- list -->
       <ul v-if="type === 'list'" class="list">
-        <li class="g-list" v-for="item in list" :key="item.id">
+        <li class="g-list" v-for="item in list[0].fields" :key="item">
           <a href="javascript:;" @click="goGameDetail(item)">
             <div class="g-cover">
               <img :src="item.photo" alt="">
             </div>
             <div class="g-content">
-              <h3 class="g-title">{{item.name}}</h3>
-              <p class="g-company">{{item.developer}}</p>
+              <h3 class="g-title">{{item}}</h3>
+              <p class="g-company">{{item}}</p>
             </div>
           </a>
         </li>
@@ -19,15 +19,15 @@
       </ul>
       <ul v-else-if="type==='card'">
         <!-- card -->
-        <li class="g-card" v-for="item in filterList" :key="item.id">
+        <li class="g-card" v-for="item in filterList" :key="item">
           <a href="javascript:;" @click="goGameDetail(item)">
             <div class=" g-cover">
               <img :src="item.photo" alt="">
             </div>
             <div class="g-content">
-              <h3 class="g-title">{{item.name}}</h3>
-              <p class="g-company">{{item.developer}}</p>
-              <span class="g-lx" @click="handleClick(item.lx)">{{item.lxName}}</span>
+              <h3 class="g-title">{{item}}</h3>
+              <p class="g-company">{{itemr}}</p>
+              <span class="g-lx" @click="handleClick(item)">{{item}}</span>
             </div>
             <div class=" g-time">
               {{item.createTime | formatDate(1)}}

@@ -1,3 +1,4 @@
+import imp
 from django.db.models import Value, CharField
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -6,6 +7,7 @@ from . import models
 from .utils import json_response
 import re
 import os
+import json
 import urllib.request
 
 
@@ -137,7 +139,22 @@ def get_rank(request):
         rank_query = models.GameRank.objects.all()
         rank_json = serializers.serialize('json', rank_query)
         return json_response(1, '获取rank成功', rank_json)
-        
+
+
+def get_rec_game1(request):
+    if request.method == 'GET':
+        user_id = request.GET['user_id']
+        rec_query = models.Recommend1.objects.filter(user_id=user_id)
+        rank_json = serializers.serialize('json', rec_query)
+        return json_response(1, '获取推荐成功', rank_json)
+
+
+def get_rec_game2(request):
+    if request.method == 'GET':
+        user_id = request.GET['user_id']
+        # rank_json = serializers.serialize('json', rec_query)
+
+        return json_response(1, '获取推荐成功', {})
 
 
 # def bulk(request):
