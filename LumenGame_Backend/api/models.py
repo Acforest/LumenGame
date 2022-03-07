@@ -24,7 +24,7 @@ class Banner(models.Model):
 class GameInfo(models.Model):
     name = models.CharField(max_length=255)
     url = models.TextField(blank=True, null=True)
-    img_url = models.TextField(blank=True, null=True)
+    # img_url = models.TextField(blank=True, null=True)
     types = models.CharField(max_length=255, blank=True, null=True)
     desc_snippet = models.TextField(blank=True, null=True)
     recent_reviews = models.TextField(blank=True, null=True)

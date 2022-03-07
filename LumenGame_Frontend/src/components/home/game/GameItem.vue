@@ -3,21 +3,21 @@
     <template v-if="allNum">
       <!-- list -->
       <ul v-if="type === 'list'" class="list">
-        <li class="g-list" v-for="item in list[0].fields" :key="item">
+        <li class="g-list" v-for="(item, index) in list" :key="index">
           <a href="javascript:;" @click="goGameDetail(item)">
             <div class="g-cover">
               <img :src="item.photo" alt="">
             </div>
             <div class="g-content">
-              <h3 class="g-title">{{item}}</h3>
-              <p class="g-company">{{item}}</p>
+              <h3 class="g-title">{{item.fields.name}}</h3>
+              <p class="g-company">{{item.fields.publisher}}</p>
             </div>
           </a>
         </li>
         <!-- 占位 -->
         <!-- <li v-for="item in blankNum" class="g-list"></li> -->
       </ul>
-      <ul v-else-if="type==='card'">
+      <ul v-else-if="type === 'card'">
         <!-- card -->
         <li class="g-card" v-for="item in filterList" :key="item">
           <a href="javascript:;" @click="goGameDetail(item)">
@@ -25,9 +25,9 @@
               <img :src="item.photo" alt="">
             </div>
             <div class="g-content">
-              <h3 class="g-title">{{item}}</h3>
-              <p class="g-company">{{itemr}}</p>
-              <span class="g-lx" @click="handleClick(item)">{{item}}</span>
+              <h3 class="g-title">{{item.fields.name}}</h3>
+              <p class="g-company">{{item.fields.publisher}}</p>
+              <span class="g-lx" @click="handleClick(item)">{{item.fields.name}}</span>
             </div>
             <div class=" g-time">
               {{item.createTime | formatDate(1)}}
@@ -45,23 +45,13 @@
 
 <script>
 import { bindURL } from '@utils'
-import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 // list
 // card
 export default {
   props: {
-    list: {
-      type: Array,
-      default: function () {
-        return [
-          
-        ]
-      }
-    },
-    type: {
-      typeof: String,
-      default: 'list'
-    }
+    list: Array,
+    type: String,
   },
   methods: {
     bindURL,
@@ -113,17 +103,17 @@ export default {
   }
   // list
   .g-list {
-    width: 200px;
+    width: 300px;
     border-radius: 4px;
-    overflow: hidden;
+    // overflow: hidden;
     a {
       display: inline-block;
       width: 100%;
       height: 100%;
-      margin-bottom: 10px;
+      margin-bottom: 60px;
       .g-cover {
-        width: 200px;
-        height: 287px;
+        width: 300px;
+        height: 140px;
         overflow: hidden;
         img {
           width: 100%;

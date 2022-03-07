@@ -157,6 +157,15 @@ def get_rec_game2(request):
         return json_response(1, '获取推荐成功', {})
 
 
+def get_search_game(request):
+    if request.method == 'GET':
+        keyword = request.GET['keyword']
+        search_query = models.GameInfo.objects.filter(name__icontains=keyword)[:100]
+        search_json = serializers.serialize('json', search_query)
+        return json_response(1, '获取搜索成功', search_json)
+
+
+
 # def bulk(request):
 #     from django.contrib.auth.hashers import make_password
 #     if request.method == 'GET':

@@ -20,6 +20,7 @@ const _getGame = _get('/game/get_game/')
 const _getRank = _get('/game/get_rank/')
 const _getRecGame1 = _get('/game/get_rec_game1/')
 const _getRecGame2 = _get('/game/get_rec_game2/')
+const _searchGame = _get('/game/search/')
 // banner
 const _getBannerList = _get('/banner/get_banner/')
 const _getBannerDetail = _get('/banner/getBannerDetailByBannerID/')
@@ -58,6 +59,7 @@ export {
     _getRank,
     _getRecGame1,
     _getRecGame2,
+    _searchGame,
     // banner
     _getBannerList,
     _getBannerDetail,

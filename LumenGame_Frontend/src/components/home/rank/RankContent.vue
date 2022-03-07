@@ -1,7 +1,7 @@
 <template>
   <div class="rank-content">
     <ul>
-      <li class="rank-item" v-for="item in filterGame" :key="item.fields.id">
+      <li class="rank-item" v-for="(item, index) in filtedGames" :key="index">
         <!-- <a href="javascript:;" @click="goTo(item.fields.url)"> -->
         <a :href="item.fields.url">
           <div class="r-cover">
@@ -12,8 +12,7 @@
             <span class="r-lx">{{item.fields.price}}</span>
           </div>
         </a>
-        <pTips :date="item.createTime" :score="item.score" :star="item.rank_type"
-          :type="tag" />
+        <pTips :type="item.fields.rank_type"/>
       </li>
     </ul>
   </div>
@@ -25,76 +24,61 @@ import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import pTips from '@/components/common/Tips'
 export default {
   props: {
-    data: {
-      type: Array
-    },
-    list: {
-      type: Array
-    },
-    tag: {
-      type: String
-    }
+    games: Array,
+    tag: String,
+    currentPage: Number,
+    pagesize: Number
   },
   data() {
-    return {}
+    return {
+      filtedGames: [],
+    }
   },
   methods: {
     ...mapMutations(['setCurrentGame', 'setHCurrentIndex']),
-    ...mapActions(['fetchAllStar']),
+    ...mapActions([]),
     bindURL,
     goTo(id) {
       this.setCurrentGame(this.currentGame(id))
       this.$router.push('/game/' + id)
       this.setHCurrentIndex()
     },
-    currentGame(id) {
-      return this.filterGame.find((item) => item.id === id)
-    }
   },
   computed: {
     ...mapState(['allStar', 'allGame']),
     ...mapGetters(['getStarByGameId']),
-    // 过滤游戏
-    filterGame() {
-      const ret = this.allGame.find((item) => {
-        return item.rank_type === this.tag
-      })
-      return ret
-      // const temp = this.data.map((i) => {
-      //   const game = this.list.find((item) => {
-      //     return item.id === Number(i.lx)
-      //   })
-      //   i.lxName = (game && game.name) || '未知'
-      //   return i
-      // })
-      // if (this.tag === 'new') {
-      //   temp.sort((a, b) => {
-      //     return -(a.createTime - b.createTime)
-      //   })
-      // } else if (this.tag === 'score') {
-      //   temp.sort((a, b) => {
-      //     return -(a.score - b.score)
-      //   })
-      // } else if (this.tag === 'star') {
-      //   temp.forEach((item) => {
-      //     const star = this.getStarByGameId(item.id)
-      //     item.number = (star && star.length) || 0
-      //   })
-      //   temp.sort((a, b) => {
-      //     return -(a.number - b.number)
-      //   })
-      // }
-      // return temp
-    }
   },
   components: {
     pTips
   },
-  // QUES>> no data [created | mounted]
-  created() {
-    if (this.allStar === null) {
-      this.fetchAllStar()
+
+  watch: {
+    tag: function(newVal, oldVal) {
+      console.log(newVal)
+      this.filtedGames = this.games.filter((item) => {
+        return item.fields.rank_type === newVal
+      })
+      this.filtedGames = this.filtedGames.slice((this.currentPage - 1) * this.pagesize, this.currentPage * this.pagesize)
+    },
+    currentPage: function(newVal, oldVal) {
+      this.filtedGames = this.games.filter((item) => {
+        return item.fields.rank_type === this.tag
+      })
+      this.filtedGames = this.filtedGames.slice((newVal - 1) * this.pagesize, newVal * this.pagesize)
+    },
+    pagesize: function(newVal, oldVal) {
+      this.filtedGames = this.games.filter((item) => {
+        return item.fields.rank_type === this.tag
+      })
+      this.filtedGames = this.filtedGames.slice((this.currentPage - 1) * newVal, this.currentPage * newVal)
     }
+  },
+
+  created() {
+    this.filtedGames = this.games.filter((item) => {
+        return item.fields.rank_type === this.tag
+    })
+    this.filtedGames = this.filtedGames.slice((this.currentPage - 1) * this.pagesize, this.currentPage * this.pagesize)
   }
 }
 </script>

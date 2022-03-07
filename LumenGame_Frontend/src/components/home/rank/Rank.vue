@@ -2,55 +2,72 @@
   <div class="rank">
     <el-container class="r-main">
       <el-aside width="160px">
-        <a href="javascript:;" class="ranks-tag" v-for="(item,index) in ranks"
+        <a href="javascript:;" class="ranks-tag" v-for="(item, index) in ranks"
           :key="index" :class="{'ranks-tag-active':item.tag === currentIndex}"
           @click="setActive(item.tag)">{{item.name}}
         </a>
       </el-aside>
       <el-main>
-        <rank-content :data="allGame" :tag="currentIndex" />
+        <rank-content v-if="flag" :games="gameList"
+                      :currentPage="currentPage" :pagesize="pagesize"
+                      :tag="currentIndex" :curPage="currentPage"/>
       </el-main>
     </el-container>
+    <el-pagination
+        @current-change="handleCurrentChange"
+        v-if="flag"
+        :total="total"
+        :page-size="pagesize"
+        layout="prev, pager, next"
+        >
+    </el-pagination>
   </div>
 </template>
 
 <script>
 import rankContent from './RankContent'
-import { mapActions, mapGetters, mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
+import { _getRank } from '@api'
 export default {
   data() {
     return {
       ranks: [
         { name: '最高热度', tag: 'hot' },
-        { name: '口碑佳作', tag: 'score' },
+        // { name: '口碑佳作', tag: 'score' },
         { name: '最新上架', tag: 'new' }
       ],
-      currentIndex: 'star'
+      currentIndex: 'hot',
+      currentPage: 1,
+      pagesize: 5,
+      gameList: [],
+      total: 0,
+      flag: false
     }
   },
   methods: {
-    ...mapActions(['fetchAllGame', 'fetchAllCategory']),
+    ...mapActions([]),
+    async fetchGameRank() {
+      const { status, message, data } = await _getRank()
+      this.gameList = JSON.parse(data)
+      this.total = this.gameList ? this.gameList[0].fields.length : 0
+      this.flag = true
+    },
     setActive(val) {
       this.currentIndex = val
+    },
+    handleCurrentChange(currentPage) {
+      this.currentPage = currentPage
     }
   },
   computed: {
-    ...mapState(['allGame', 'allCategory']),
-    // ...mapGetters(['getMiniCategoryList']),
-    // miniCategoryList() {
-    //   return this.getMiniCategoryList()
-    // }
+    ...mapState([]),
   },
   components: {
     rankContent
   },
-  async created() {
-    if (this.allGame === null) {
-      this.fetchAllGame()
-    }
-    if (this.allCategory === null) {
-      this.fetchAllCategory()
-    }
+  created() {
+    this.currentIndex = 'hot'
+    this.fetchGameRank()
   }
 }
 </script>
