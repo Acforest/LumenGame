@@ -25,9 +25,6 @@ import pTips from '@/components/common/Tips'
 export default {
   props: {
     games: Array,
-    tag: String,
-    currentPage: Number,
-    pagesize: Number
   },
   data() {
     return {
@@ -53,32 +50,16 @@ export default {
   },
 
   watch: {
-    tag: function(newVal, oldVal) {
-      console.log(newVal)
-      this.filtedGames = this.games.filter((item) => {
-        return item.fields.rank_type === newVal
-      })
-      this.filtedGames = this.filtedGames.slice((this.currentPage - 1) * this.pagesize, this.currentPage * this.pagesize)
+    games: {
+      handler(newVal, oldVal) {
+        this.filtedGames = newVal
+      },
+      immediate: true
     },
-    currentPage: function(newVal, oldVal) {
-      this.filtedGames = this.games.filter((item) => {
-        return item.fields.rank_type === this.tag
-      })
-      this.filtedGames = this.filtedGames.slice((newVal - 1) * this.pagesize, newVal * this.pagesize)
-    },
-    pagesize: function(newVal, oldVal) {
-      this.filtedGames = this.games.filter((item) => {
-        return item.fields.rank_type === this.tag
-      })
-      this.filtedGames = this.filtedGames.slice((this.currentPage - 1) * newVal, this.currentPage * newVal)
-    }
   },
 
   created() {
-    this.filtedGames = this.games.filter((item) => {
-        return item.fields.rank_type === this.tag
-    })
-    this.filtedGames = this.filtedGames.slice((this.currentPage - 1) * this.pagesize, this.currentPage * this.pagesize)
+    this.filtedGames = this.games
   }
 }
 </script>

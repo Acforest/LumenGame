@@ -30,8 +30,10 @@
     <el-pagination
         @current-change="handleCurrentChange"
         :total="total"
+        :current-page="currentPage"
         :page-size="pagesize"
-        layout="prev, pager, next"
+        layout="prev, pager, next, total, jumper"
+        background
         >
     </el-pagination>
   </div>
