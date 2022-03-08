@@ -124,7 +124,7 @@ export default {
         //   { required: true, message: '输入电子邮箱', trigger: 'blur' },
         //   { validator: validateEmail, trigger: 'blur' }
         // ],
-      },
+      }
     }
   },
   methods: {
@@ -220,12 +220,14 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f5f5f5;
+  // background-color: #f5f5f5;
+  background-image: url('../assets/login_background.jpg');
+  background-size: cover;
   .container {
     position: relative;
     width: 800px;
     height: 500px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.582);
     border-radius: 20px;
     .big-box {
       position: absolute;
@@ -250,7 +252,7 @@ export default {
       height: 100%;
       border-top-left-radius: inherit;
       border-bottom-left-radius: inherit;
-      background: linear-gradient(90deg, #1aa6b7, #002d40);
+      background: linear-gradient(90deg, #1aa7b7ad, #002d409c);
       transition: all 1s;
       &.active {
         left: 70%;
