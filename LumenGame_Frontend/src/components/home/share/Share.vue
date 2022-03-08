@@ -1,83 +1,128 @@
 <template>
-  <div class="share">
-    <el-container>
-      <el-header style="height:40px">
-        <div class="s-nav">
-          <a href="javascript:;" class="nav-item"
-            :class="{'nav-item-active':activeIndex===item.id}" v-for="item in navItem"
-            :key="item.id">{{item.tag}}</a>
-        </div>
-        <button class="s-add" @click="goAddPost()"><i
-            class="icon-news_hot iconfont"></i>写文章</button>
-      </el-header>
-      <el-main>
-        <a class="s-item" v-for="item in filterPost" :key="item.id" href="javascript:;"
-          @click="goPostDetail(item)">
-          <div class="s-info">
-            <span class="s-author">{{item.author}}</span>
-            <span class="s-date">{{item.createTime |formatDate}}</span>
-          </div>
-          <div class="s-title">{{item.title}}</div>
-          <div class="s-desc">{{item.textContent}}</div>
-        </a>
-        <el-pagination layout="prev, pager, next" :total="total"
-          @current-change="handleCurrentChange(fecthPost,$event)">
-        </el-pagination>
-      </el-main>
+  <div class="game">
+    <div class="g-search">
+      <p class="g-search-wrap">
+        <el-input type="text" v-model="query.keyword" placeholder="请输入游戏名称" @keydown.enter.native="searchGame"></el-input>
+        <span class="g-search-btn" @click="searchGame()">
+          <i class="iconfont icon-search"></i>
+        </span>
+        <i class="iconfont icon-cuohao g-search-cls" v-show="showClear"
+          @click="clearSearch()"></i>
+      </p>
+    </div>
+    <el-container class="g-container">
+      <el-container>
+        <el-header class="g-header" style="height:40px">
+          <game-tab :num="listNum" @click="changeTab($event)" />
+        </el-header>
+        <el-main class="g-main" v-if="gameList">
+          <game-item :list="gameList.slice((currentPage - 1) * pagesize, currentPage * pagesize)"
+            :type="currentShow" :curPage="currentPage"
+            @click="setActiveItem($event)" />
+        </el-main>
+      </el-container>
     </el-container>
+    <el-pagination
+        @current-change="handleCurrentChange"
+        :total="total"
+        :current-page="currentPage"
+        :page-size="pagesize"
+        layout="prev, pager, next, total, jumper"
+        background
+        >
+    </el-pagination>
   </div>
 </template>
 
 <script>
-import { _getPostList } from '@api'
-import { aMixin } from '@mixins'
-import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
+import { _getRepositoryGame } from '@api'
+
+import gameItem from './GameItem'
+import gameTab from './GameTab'
+const ALL = 0
 export default {
   data() {
     return {
-      navItem: [
-        { id: 1, tag: '热门' },
-        { id: 2, tag: '最新' }
-      ],
-      activeIndex: 1,
-      postList: []
+      query: {
+        keyword: ''
+      },
+      category: new Set(),
+      currentItem: 0,
+      currentPage: 1,
+      gameList: [],
+      pagesize: 8,
+      total: 0,
+      currentShow: 'list'
     }
   },
-  mixins: [aMixin],
   methods: {
-    ...mapActions(['fetchAllUser']),
-    ...mapMutations(['setCurrentPost']),
-    // 获取文章列表
-    async fecthPost() {
-      const { list, total } = await _getPostList(this.query)
-      this.total = total
-      this.postList = list
+    ...mapActions(['fetchAllCategory', 'fetchAllGame']),
+    // 获取游戏列表
+    async fetchGame() {
+      const { status, message, data } = await _getRepositoryGame({user_id: this.currentUser.id})
+      this.gameList = JSON.parse(data)
+      this.total = this.gameList ? this.gameList.length : 0
+      this.handleCategory()
     },
-    // 跳转到编写文章
-    goAddPost() {
-      this.$router.push('/addPost')
+    // 搜索游戏
+    searchGame() {
+      // const { status, message, data } = await _searchGame(this.query)
+      // this.gameList = JSON.parse(data)
+      // this.total = this.gameList ? this.gameList.length : 0
+      // this.handleCategory()
     },
-    // 跳转到文章详情
-    goPostDetail(row) {
-      this.setCurrentPost(row)
-      this.$router.push('/share/' + row.id)
-    }
+    // 清除搜索框
+    clearSearch() {
+      this.query.keyword = null
+    },
+    // 设置当前item
+    setActiveItem(index) {
+      this.currentItem = index
+    },
+    // 处理分类
+    handleCategory() {
+      for (const item of this.gameList) {
+        const tags = item.fields.popular_tags.split(',').slice(0, 5)
+        for (const tag of tags) {
+          this.category.add(tag)
+        }
+      }
+    },
+    // 切换列表
+    changeTab(val) {
+      this.currentShow = val
+    },
+    // 切换页面
+    handleCurrentChange(currentPage) {
+      this.currentPage = currentPage
+    },
   },
   computed: {
-    ...mapState(['allUser']),
-    ...mapGetters(['getUserNameById']),
-    filterPost() {
-      return this.postList.map((i) => {
-        i.author = this.getUserNameById(i.authorId)
-        return i
-      })
+    ...mapState(['allCategory', 'allGame', 'currentUser']),
+    filterGame(tag) {
+      if (this.currentItem === ALL) {
+        return this.gameList
+      } else {
+        return (
+          this.gameList.filter((item) => tag in item.popular_tags)
+        )
+      }
+    },
+    listNum() {
+      return this.filterGame.length
+    },
+    showClear() {
+      return this.query.keyword !== ''
     }
   },
-  created() {
-    this.fecthPost()
-    if (this.allUser === null) {
-      this.fetchAllUser()
-    }
+  components: {
+    gameItem,
+    gameTab
+  },
+  async created() {
+    this.fetchGame()
+    // console.log(this.allGame)
   }
 }
 </script>
@@ -85,110 +130,101 @@ export default {
 <style lang="less" scoped>
 @import '~@css/variables.less';
 @import '~@css/mixins.less';
-
-.el-container {
-  margin: 0 160px 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-}
-.el-header {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 0.5px solid #97979733;
-  line-height: 40px;
-  text-align: left;
-  .s-nav {
-    display: inline-block;
-  }
-  .nav-item {
+.g-search {
+  .flex-x-y();
+  height: 80px;
+  .g-search-wrap {
     position: relative;
-    display: inline-block;
-    padding: 0 10px;
-    text-align: left;
-    color: #909090;
-    font-size: 16px;
-    &:hover {
-      color: @main-green;
-    }
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1px;
-      height: 16px;
-      background-color: #97979733;
-    }
-  }
-  .nav-item-active {
-    color: @main-green;
-  }
-  // add
-  .s-add {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 9px 6px;
-    cursor: pointer;
-    background-color: @main-green;
-    border: 2px solid @main-green;
-    // border-radius: 4px;
-    color: #fff;
-    transition: all 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19);
-    letter-spacing: 0.1em;
-    i {
-      margin-right: 4px;
-    }
-    &:focus {
-      outline: none;
-    }
-    &:hover {
-      background-color: rgba(66, 185, 131, 0.8);
-      box-shadow: 0 0 0 3px rgba(66, 185, 131, 0.5);
-      transform: scale(1.05);
-    }
-  }
-}
-.el-main {
-  text-align: left;
-  padding: 0;
-  .s-item {
-    display: block;
-    border-bottom: 1px solid #97979733;
-    transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
-    padding: 8px 20px;
-    div {
-      margin-bottom: 8px;
-    }
-    .s-author,
-    .s-date {
-      color: #b2bac2;
-      font-size: 14px;
-      margin-right: 6px;
-    }
-    .s-title {
-      color: #2e3135;
-      font-size: 18px;
-      font-weight: 600;
-      &:hover {
-        text-decoration: underline;
+    margin: 0;
+    // overflow: hidden;
+    input {
+      width: 500px;
+      height: 40px;
+      border: 1px solid #c4c4c4;
+      box-sizing: border-box;
+      padding: 0 20px;
+      border-radius: 20px;
+      &:focus {
+        // border-color: @main-green;
+        box-shadow: 0 0 0 3px rgba(66, 185, 131, 0.5);
       }
     }
-    .s-desc {
-      color: #777;
-      font-size: 16px;
-      max-width: 700px;
-      .text-ellipsis-s(2);
+    span {
+      position: absolute;
+      top: 0;
+      right: 0;
+      .flex-x-y();
+      height: 40px;
+      padding: 0 16px;
+      border-left: 1px solid #ccc;
+      cursor: pointer;
+      border-radius: 0 20px 20px 0;
+      transition: all 0.2s linear;
+      &:hover {
+        background-color: @main-green;
+        color: #fff;
+      }
     }
+    .g-search-cls {
+      position: absolute;
+      top: 50%;
+      right: 56px;
+      transform: translate(0, -50%);
+      &:hover {
+        color: @main-green;
+      }
+    }
+  }
+}
+.g-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: space-around;
+  height: 100%;
+  border: 1px solid #ccc;
+  box-shadow: inset 0 0 0 1px #e4e4e4;
+  padding: 20px 0;
+  background-color: #fff;
+  .nav-item {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    margin-top: 20px;
+    background-color: #f4f4f4;
+    overflow: hidden;
+    .box-shadow-in(#e4e4e4);
+    color: #757575;
     &:hover {
-      background-color: #b2bac226;
+      background-color: #eee;
+      border-color: transparent;
     }
   }
-  .el-pagination {
-    margin: 10px 0;
-    text-align: center;
+  .nav-item:nth-child(-n + 2) {
+    margin-top: 0;
   }
+  .nav-active {
+    box-shadow: inset 0 0 0 1px @main-orange;
+    background-color: #f69c001a;
+    color: @main-orange;
+  }
+}
+.g-main {
+  background-color: #fff;
+  padding-top: 10px;
+  padding: 0;
+  margin: 20px;
+  border: 1px solid #ccc;
+}
+
+.g-header {
+  background-color: #fff;
+  padding: 0;
+  margin: 0 20px;
+}
+
+.el-input {
+  width: 500px;
 }
 </style>

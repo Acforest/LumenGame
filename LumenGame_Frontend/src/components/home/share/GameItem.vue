@@ -18,27 +18,7 @@
             </div>
           </a>
         </li>
-        <!-- 占位 -->
-        <!-- <li v-for="item in blankNum" class="g-list"></li> -->
       </ul>
-      <!-- <ul v-else-if="type === 'card'"> -->
-        <!-- card -->
-        <!-- <li class="g-card" v-for="item in filterList" :key="item"> -->
-          <!-- <a href="javascript:;" @click="goGameDetail(item)"> -->
-            <!-- <div class=" g-cover"> -->
-              <!-- <img :src="item.photo" alt=""> -->
-            <!-- </div> -->
-            <!-- <div class="g-content"> -->
-              <!-- <h3 class="g-title">{{item.fields.name}}</h3> -->
-              <!-- <p class="g-company">{{item.fields.publisher.split(',')[0]}}</p> -->
-              <!-- <span class="g-lx" @click="handleClick(item)">{{item.fields.popular_tags}}</span> -->
-            <!-- </div> -->
-            <!-- <div class="g-time">
-              {{item.createTime | formatDate(1)}}
-            </div> -->
-          <!-- </a> -->
-        <!-- </li> -->
-      <!-- </ul> -->
     </template>
     <template v-else>
       暂无游戏

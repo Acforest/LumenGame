@@ -8,6 +8,7 @@ const Game = () => import(/*  webpackChunkName: "home_game" */ '@/components/hom
 const Index = () => import(/*  webpackChunkName: "home_index" */ '@/components/home/index/Index')
 const info = () => import(/*  webpackChunkName: "home_info" */ '@/components/home/info/Info')
 const Rank = () => import(/*  webpackChunkName: "home_rank" */ '@/components/home/rank/Rank')
+// const Repository = () => import(/*  webpackChunkName: "home_repository" */ '@/components/home/repository/Repository')
 const Share = () => import(/*  webpackChunkName: "home_share" */ '@/components/home/share/Share')
 // --
 const GameDetail = () => import(/*  webpackChunkName: "home_game" */ '@/components/home/game/GameDetail')
@@ -48,6 +49,7 @@ const routes = [
       { path: '/index', component: Index },
       { path: '/info', component: info },
       { path: '/rank', component: Rank },
+      // { path: '/repository', component: Repository },
       { path: '/share', component: Share },
       { path: '/share/:id', component: PostDetail, props: true },
       { path: '/addPost', component: AddPost }
@@ -105,6 +107,7 @@ router.beforeEach((to, from, next) => {
     case '/index':
     case '/info':
     case '/rank':
+    case '/repository':
     case '/share':
       window.sessionStorage.setItem('hCurrentIndex', path)
       break

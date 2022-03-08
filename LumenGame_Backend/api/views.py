@@ -1,4 +1,5 @@
 import imp
+from unicodedata import name
 from django.db.models import Value, CharField
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -165,6 +166,14 @@ def get_search_game(request):
         return json_response(1, '获取搜索成功', search_json)
 
 
+def get_repository_game(request):
+    if request.method == 'GET':
+        user_id = request.GET['user_id']
+        repository_query = models.GameInfo.objects.raw(
+            f'SELECT game_info.* FROM game_info, repository WHERE game_info.name = repository.game_name AND repository.user_id = {user_id}'
+        )
+        repository_json = serializers.serialize('json', repository_query)
+        return json_response(1, '获取游戏库成功', repository_json)
 
 # def bulk(request):
 #     from django.contrib.auth.hashers import make_password

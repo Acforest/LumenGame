@@ -18,8 +18,8 @@
     </el-carousel>
     <!-- 功能模块 -->
     <ul class="f-main">
-      <li class="f-item" v-for="(item,index ) in content" :key="index">
-        <a :href="'#'+item.url">
+      <li class="f-item" v-for="(item, index) in content" :key="index">
+        <a :href="'#' + item.url">
           <div class="f-img">
             <img :src="item.src" alt="">
           </div>
@@ -29,6 +29,12 @@
           </div>
         </a>
       </li>
+      <!-- <div class="free">
+        <free :freegoods='freegoods'></free>
+      </div>
+      <div class="goods"><p>当下最新流行</p>
+        <goods :category1='goods.category1' :category2='goods.category2' :category3='goods.category3'></goods>
+      </div> -->
     </ul>
 
     <!-- 公告展示 -->
@@ -41,6 +47,9 @@
         <div v-html="currentNotice.comment"></div>
       </div>
     </el-dialog>
+
+    <!-- <cheap></cheap>
+    <recommend></recommend> -->
   </div>
 </template>
 
@@ -48,6 +57,8 @@
 // 公告对话框形式
 import { _getBannerList } from '@api'
 import { bindURL, convertDeepCopy } from '@utils'
+import { cheap } from '../comp/cheap.vue'
+import { recommend } from '../comp/recommend.vue'
 
 export default {
   data() {
@@ -111,7 +122,7 @@ export default {
 @import '~@css/variables.less';
 
 .el-carousel {
-  background-color: rgba(255, 255, 255, 0.445);
+  background-color: #fff;
   margin-bottom: 20px;
   border: 1px solid #ccc;
 }
@@ -161,7 +172,7 @@ export default {
 .f-main {
   display: flex;
   justify-content: space-around;
-  background-color: rgba(255, 255, 255, 0.384);
+  background-color: #fff;
   padding: 40px 20px;
   border: 1px solid #ccc;
   .f-item {

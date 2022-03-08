@@ -11,11 +11,6 @@
       </p>
     </div>
     <el-container class="g-container">
-      <el-aside class="g-nav" width="240px">
-        <a href="javascript:;" class="nav-item" v-for="item in Array.from(category).slice(0, 36)" :key="item"
-          :class="{'nav-active':currentItem === item}"
-          @click="setActiveItem(item)">{{item}}</a>
-      </el-aside>
       <el-container>
         <el-header class="g-header" style="height:40px">
           <game-tab :num="listNum" @click="changeTab($event)" />

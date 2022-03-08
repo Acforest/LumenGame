@@ -13,6 +13,6 @@ urlpatterns = [
     path('game/get_rec_game1/', views.get_rec_game1, name='get_rec_game1'),
     path('game/get_rec_game2/', views.get_rec_game2, name='get_rec_game2'),
     path('game/search/', views.get_search_game, name='get_search_game'),
-    # TODO
+    path('repository/get_repository_game/', views.get_repository_game, name='get_repository_game'),
     # path('bulk/', views.bulk, name='bulk'),
 ]

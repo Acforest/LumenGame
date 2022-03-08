@@ -166,7 +166,11 @@ export default {
         const { status, message, data } = await _login(convertParams(this.loginForm))
         console.log(status, message, data)
         if (status) {
-          this.$message.success('登录成功')
+          this.$message({
+            message: '登陆成功',
+            type: 'success',
+            offset: 350
+          })
           this.setCurrentUser({
             id: data['id'],
             username: data['username'],
