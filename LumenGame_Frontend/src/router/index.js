@@ -35,7 +35,7 @@ const routes = [
   {
     path: '/',
     name: 'Index',
-    redirect: '/login'
+    redirect: '/index'
   },
   {
     path: '/home',
@@ -89,6 +89,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const path = '/' + to.path.split('/')[1]
+  console.log(to.path, from.path, path)
   switch (path) {
     case '/_category':
     case '/_comment':
@@ -119,9 +120,13 @@ router.beforeEach((to, from, next) => {
   //   next()
   // }
 
+  // 添加未登录时跳转到登录界面
   if (sessionStorage.getItem('currentUser') === null) {
-    if (to.path === '/') {
-      next()
+    if (to.path === '/game' || to.path === '/share' || to.path === '/info') {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
     } else {
       // next('/login')
       next()

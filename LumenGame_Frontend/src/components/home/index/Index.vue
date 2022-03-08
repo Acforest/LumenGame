@@ -111,7 +111,7 @@ export default {
 @import '~@css/variables.less';
 
 .el-carousel {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.445);
   margin-bottom: 20px;
   border: 1px solid #ccc;
 }
@@ -161,7 +161,7 @@ export default {
 .f-main {
   display: flex;
   justify-content: space-around;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.384);
   padding: 40px 20px;
   border: 1px solid #ccc;
   .f-item {
