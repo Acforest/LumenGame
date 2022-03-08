@@ -2,7 +2,7 @@
   <div class="game">
     <div class="g-search">
       <p class="g-search-wrap">
-        <input type="text" v-model="query.keyword" placeholder="请输入游戏名称">
+        <el-input type="text" v-model="query.keyword" placeholder="请输入游戏名称" @keydown.enter.native="searchGame"></el-input>
         <span class="g-search-btn" @click="searchGame()">
           <i class="iconfont icon-search"></i>
         </span>
@@ -66,7 +66,7 @@ export default {
       currentItem: 0,
       currentPage: 1,
       gameList: [],
-      pagesize: 6,
+      pagesize: 8,
       total: 0,
       currentShow: 'list'
     }
@@ -234,5 +234,9 @@ export default {
   background-color: #fff;
   padding: 0;
   margin: 0 20px;
+}
+
+.el-input {
+  width: 500px;
 }
 </style>

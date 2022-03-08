@@ -12,68 +12,21 @@
           <img src="../assets/logo.png" alt="" height="50px"/>
           <span>LumenGame</span>
         </div>
+        <el-menu background-color="#00202e" mode="horizontal"
+              text-color="#fff"
+              default-active="currentIndex" router>
+          <el-menu-item index="index"><i class="el-icon-s-home"></i>首页</el-menu-item>
+          <el-menu-item index="game"><i class="el-icon-star-on"></i>个人推荐</el-menu-item>
+          <el-menu-item index="info"><i class="el-icon-s-goods"></i>个人中心</el-menu-item>
+          <el-menu-item index="rank"><i class="el-icon-sell"></i>热门推荐</el-menu-item>
+          <el-menu-item index="share"><i class="el-icon-folder-opened"></i>游戏库</el-menu-item>
+        </el-menu>
         <el-button type="success" @click="logout" id='b_log' v-if="log_status === false">登录</el-button>
         <el-button type="error" @click="logout" id='b_log' v-else>退出</el-button>
-
-
-        <!-- <el-dropdown style="color: #1AA6B7">
-          <i class="el-icon-setting" style="margin-right: 15px"></i>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown> -->
       </el-header>
       <!-- </el-container> -->
 
       <el-container>
-        <el-aside width="200px" style="text-align: left">
-          <el-menu background-color="#003030"
-          text-color="#fff"
-          default-active="currentIndex" router>
-            <!-- <el-menu-item index="index">
-              <template slot="title"><i class="el-icon-s-home"></i>首页</template>
-              <el-menu-item-group>
-                <el-menu-item index="index"><i class="el-icon-s-home"></i>首页</el-menu-item>
-                <el-menu-item index="game"><i class="el-icon-star-on"></i>个人推荐</el-menu-item>
-                <el-menu-item index="info"><i class="el-icon-s-goods"></i>个人中心</el-menu-item>
-                <el-menu-item index="rank"><i class="el-icon-sell"></i>热门推荐</el-menu-item>
-                <el-menu-item index="share"><i class="el-icon-folder-opened"></i>游戏库</el-menu-item>
-              </el-menu-item-group>
-            </el-menu-item> -->
-            <el-menu-item index="index"><i class="el-icon-s-home"></i>首页</el-menu-item>
-            <el-menu-item index="game"><i class="el-icon-star-on"></i>个人推荐</el-menu-item>
-            <el-menu-item index="info"><i class="el-icon-s-goods"></i>个人中心</el-menu-item>
-            <el-menu-item index="rank"><i class="el-icon-sell"></i>热门推荐</el-menu-item>
-            <el-menu-item index="share"><i class="el-icon-folder-opened"></i>游戏库</el-menu-item>
-            <!-- <el-menu-item class="logo">
-              <img src="../assets/logo.png" alt="">
-            </el-menu-item>
-            <el-menu-item index="/index">主页</el-menu-item>
-            <el-menu-item index="/game">游戏中心</el-menu-item>
-            <el-menu-item index="/rank">排行榜</el-menu-item>
-            <el-menu-item index="/share">游戏论坛</el-menu-item>
-            <el-menu-item index="/info">个人中心</el-menu-item>
-            <el-submenu index="2" class="user-info">
-              <template slot="title">
-                <el-avatar size="large" :src="bindURL(currentUser.avatarImgUrl)">
-                </el-avatar>
-              </template>
-              <el-menu-item index="/info"><i class="iconfont icon-user1">个人信息</i>
-              </el-menu-item>
-              <el-menu-item index="/admin"><i class="iconfont icon-home">前往后台</i>
-              </el-menu-item>
-              <el-menu-item @click="logout()"> <i class="iconfont icon-logout">退出系统</i>
-              </el-menu-item>
-            </el-submenu> -->
-          </el-menu>
-          <!-- <parallax
-            class="page-header-image"
-            style="background-image:url('../assets/temp.jpg')"
-          >
-          </parallax> -->
-        </el-aside>
         <el-main>
           <div>
             <router-view></router-view>
@@ -140,7 +93,8 @@ export default {
 }
 
 .el-menu--horizontal > .el-menu-item.is-active {
-  border-color: @main-green;
+  border-color: #409EFF;
+  color: rgb(180, 180, 180)
 }
 
 /deep/.el-submenu__icon-arrow.el-icon-arrow-down {
