@@ -62,13 +62,13 @@
       </div>
       <div class="small-box" :class="{active:!isActive}">
         <div class="login-desc" v-if="!isActive">
-          <img src="../assets/logo.png" height="50px" width="50px"/>
+          <img src="../assets/img/logo.png" height="50px" width="50px"/>
           <div>Lumen Game</div>
           <p>还没有账号吗 ? 请先注册。</p>
           <a href="javascript:;" @click="toggleLogin()">注册</a>
         </div>
         <div class="register-desc" v-else>
-          <img src="../assets/logo.png" height="50px" width="50px"/>
+          <img src="../assets/img/logo.png" height="50px" width="50px"/>
           <div>Lumen Game</div>
           <p>登录您的账号 , 探索游戏。</p>
           <a href="javascript:;" @click="toggleLogin()">登录</a>
@@ -225,7 +225,7 @@ export default {
   align-items: center;
   height: 100vh;
   // background-color: #f5f5f5;
-  background-image: url('../assets/login_background.jpg');
+  background-image: url('../assets/img/login_background.jpg');
   background-size: cover;
   .container {
     position: relative;

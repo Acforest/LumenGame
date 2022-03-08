@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <!-- 轮播图 -->
-    <el-carousel :interval="3000" type="card" height="300px" @change="handleChange($event)">
+    <!-- <el-carousel :interval="3000" type="card" height="300px" @change="handleChange($event)">
       <el-carousel-item v-for="(item,index) in noticeList" :key="item.id">
         <div class="container" @click="showNotice(item,index)">
           <img :src="item.fields.url" alt="">
@@ -15,9 +15,9 @@
           </transition>
         </div>
       </el-carousel-item>
-    </el-carousel>
+    </el-carousel> -->
     <!-- 功能模块 -->
-    <ul class="f-main">
+    <!-- <ul class="f-main">
       <li class="f-item" v-for="(item, index) in content" :key="index">
         <a :href="'#' + item.url">
           <div class="f-img">
@@ -29,16 +29,10 @@
           </div>
         </a>
       </li>
-      <!-- <div class="free">
-        <free :freegoods='freegoods'></free>
-      </div>
-      <div class="goods"><p>当下最新流行</p>
-        <goods :category1='goods.category1' :category2='goods.category2' :category3='goods.category3'></goods>
-      </div> -->
-    </ul>
+    </ul> -->
 
     <!-- 公告展示 -->
-    <el-dialog :visible.sync="noticeDialogVisible" width="30%">
+    <!-- <el-dialog :visible.sync="noticeDialogVisible" width="30%">
       <div class="d-head">
         <span class="d-title">{{currentNotice.title}}</span>
         <span class="d-date">{{currentNotice.createTime | formatDate}}</span>
@@ -46,10 +40,12 @@
       <div class="d-main">
         <div v-html="currentNotice.comment"></div>
       </div>
-    </el-dialog>
+    </el-dialog> -->
 
-    <!-- <cheap></cheap>
-    <recommend></recommend> -->
+    <!-- <cheap></cheap> -->
+    <!-- <pRecommend></pRecommend> -->
+    <pFree></pFree>
+    <!-- <pTop></pTop> -->
   </div>
 </template>
 
@@ -57,8 +53,10 @@
 // 公告对话框形式
 import { _getBannerList } from '@api'
 import { bindURL, convertDeepCopy } from '@utils'
-import { cheap } from '../comp/cheap.vue'
-import { recommend } from '../comp/recommend.vue'
+// import cheap from '../comp/Cheap'
+import pRecommend from './Recommend'
+import pFree from './Free'
+import pTop from './Top'
 
 export default {
   data() {
@@ -72,19 +70,19 @@ export default {
       content: [
         {
           url: '/game',
-          src: require('/src/assets/f-img.png'),
+          src: require('/src/assets/img/f-img.png'),
           title: '游戏中心',
           desc: '海量游戏任你游玩'
         },
         {
           url: '/rank',
-          src: require('/src/assets/f-img.png'),
+          src: require('/src/assets/img/f-img.png'),
           title: '排行榜',
           desc: '最热游戏尽在眼前'
         },
         {
           url: '/share',
-          src: require('/src/assets/f-img.png'),
+          src: require('/src/assets/img/f-img.png'),
           title: '游戏论坛',
           desc: '尽情交流游戏心得'
         }
@@ -113,6 +111,9 @@ export default {
   computed: {},
   created() {
     this.fetchNotice()
+  },
+  components: {
+    pRecommend, pTop, pFree
   }
 }
 </script>

@@ -20,7 +20,8 @@ const _getGame = _get('/game/get_game/')
 const _getRank = _get('/game/get_rank/')
 const _getRecGame1 = _get('/game/get_rec_game1/')
 const _getRecGame2 = _get('/game/get_rec_game2/')
-const _searchGame = _get('/game/search/')
+const _searchGame = _get('/game/get_search_game/')
+const _searchTag = _get('/game/get_search_tag/')
 // repository
 const _getRepositoryGame = _get('/repository/get_repository_game/')
 // banner
@@ -62,6 +63,7 @@ export {
     _getRecGame1,
     _getRecGame2,
     _searchGame,
+    _searchTag,
     // repository
     _getRepositoryGame,
     // banner

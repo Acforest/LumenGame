@@ -4,7 +4,7 @@
       <!-- 头部 -->
       <el-header class="header">
         <el-menu class="el-menu-demo" mode="horizontal">
-          <el-menu-item class="logo"> <img src="../assets/logo.png" alt="">
+          <el-menu-item class="logo"> <img src="../assets/img/logo.png" alt="">
           </el-menu-item>
           <el-menu-item index="1" class="title">
             <p>游戏推荐系统 - 后台</p>

@@ -9,10 +9,13 @@
         <p>{{ recommend.description }}</p>
         <h4>{{ "￥" + recommend.price }}</h4>
         <div class="shopping">
+          <!-- <div class="buynow" @click="gotodetail(recommend.id)"> -->
           <div class="buynow" @click="gotodetail(recommend.id)">
-            {{ recommend.price != 0 ? "立即购买" : "免费游玩" }}
+            立即购买
+            <!-- {{ recommend.price != 0 ? "立即购买" : "免费游玩" }} -->
           </div>
-          <div class="cart" @click="handleAddCart(recommend.id)">
+          <!-- <div class="cart" @click="handleAddCart(recommend.id)"> -->
+          <div class="cart">
             <img
               src="https://sanegame.oss-cn-hangzhou.aliyuncs.com/%E6%B7%BB%E5%8A%A0.png"
             />添至愿望清单
@@ -28,6 +31,17 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 export default {
+  data() {
+    return {
+      recommend: {
+        cover: '',
+        title: 'holy',
+        description: 'shit',
+        price: 20,
+        id: 10
+      }
+    }
+  },
   // setup() {
   //   const recommend = ref([]);
   //   const store = useStore();
@@ -62,7 +76,7 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
+<style lang="less" scoped>
 .container {
   position: absolute;
   top: 34%;

@@ -12,7 +12,8 @@ urlpatterns = [
     path('game/get_rank/', views.get_rank, name='get_rank'),
     path('game/get_rec_game1/', views.get_rec_game1, name='get_rec_game1'),
     path('game/get_rec_game2/', views.get_rec_game2, name='get_rec_game2'),
-    path('game/search/', views.get_search_game, name='get_search_game'),
+    path('game/get_search_game/', views.get_search_game, name='get_search_game'),
+    path('game/get_search_tag/', views.get_search_tag, name='get_search_tag'),
     path('repository/get_repository_game/', views.get_repository_game, name='get_repository_game'),
     # path('bulk/', views.bulk, name='bulk'),
 ]

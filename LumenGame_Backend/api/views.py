@@ -145,7 +145,10 @@ def get_rank(request):
 def get_rec_game1(request):
     if request.method == 'GET':
         user_id = request.GET['user_id']
-        rec_query = models.Recommend1.objects.filter(user_id=user_id)
+        rec_query = models.GameInfo.objects.raw(
+            'SELECT game_info.* FROM game_info, recommend1 WHERE game_info.name = recommend1.name AND recommend1.user_id = %s',
+            [user_id]
+        )
         rank_json = serializers.serialize('json', rec_query)
         return json_response(1, '获取推荐成功', rank_json)
 
@@ -153,15 +156,26 @@ def get_rec_game1(request):
 def get_rec_game2(request):
     if request.method == 'GET':
         user_id = request.GET['user_id']
-        # rank_json = serializers.serialize('json', rec_query)
-
-        return json_response(1, '获取推荐成功', {})
+        rec_query = models.GameInfo.objects.raw(
+            'SELECT game_info.* FROM game_info, recommend1 WHERE game_info.name = recommend1.name AND recommend1.user_id = %s',
+            [user_id]
+        )
+        rank_json = serializers.serialize('json', rec_query)
+        return json_response(1, '获取推荐成功', rank_json)
 
 
 def get_search_game(request):
     if request.method == 'GET':
         keyword = request.GET['keyword']
-        search_query = models.GameInfo.objects.filter(name__icontains=keyword)[:100]
+        search_query = models.GameInfo.objects.filter(name__icontains=keyword)[:200]
+        search_json = serializers.serialize('json', search_query)
+        return json_response(1, '获取搜索成功', search_json)
+
+
+def get_search_tag(request):
+    if request.method == 'GET':
+        keyword = request.GET['tag']
+        search_query = models.GameInfo.objects.filter(popular_tags__icontains=keyword).order_by('?')[:20]
         search_json = serializers.serialize('json', search_query)
         return json_response(1, '获取搜索成功', search_json)
 
@@ -170,7 +184,8 @@ def get_repository_game(request):
     if request.method == 'GET':
         user_id = request.GET['user_id']
         repository_query = models.GameInfo.objects.raw(
-            f'SELECT game_info.* FROM game_info, repository WHERE game_info.name = repository.game_name AND repository.user_id = {user_id}'
+            'SELECT game_info.* FROM game_info, repository WHERE game_info.name = repository.game_name AND repository.user_id = %s',
+            [user_id]
         )
         repository_json = serializers.serialize('json', repository_query)
         return json_response(1, '获取游戏库成功', repository_json)

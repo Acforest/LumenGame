@@ -2,17 +2,22 @@
   <div class="game-item">
     <template v-if="allNum">
       <!-- list -->
-      <ul v-if="type === 'list'" class="list">
+      <ul class="list">
         <li class="g-list" v-for="(item, index) in list" :key="index">
-          <a href="javascript:;" @click="goGameDetail(item.name)">
+          <!-- <a href="javascript:;" @click="goGameDetail(item.name)"> -->
+          <a>
             <div class="g-cover">
               <img :src="item.photo" alt="">
             </div>
             <div class="g-content">
               <h3 class="g-title">{{item.fields.name}}</h3>
+              <!-- <img src="../../../assets/img/like.png"/> -->
               <p class="g-company">{{item.fields.publisher.split(',')[0]}}
                 <span class="g-tag">
-                  <el-button type="mini" v-for="(tag, idx) in item.fields.popular_tags.split(',').slice(0, 5)" :key="idx">{{tag}}</el-button>
+                  <el-button type="mini" v-for="(tag, idx) in item.fields.popular_tags.split(',').slice(0, 5)"
+                    :key="idx" @click="handleClick(tag)">
+                    {{tag}}
+                  </el-button>
                 </span>
               </p>
             </div>
@@ -50,8 +55,7 @@
 <script>
 import { bindURL } from '@utils'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
-// list
-// card
+
 export default {
   props: {
     list: Array,
@@ -61,8 +65,8 @@ export default {
     bindURL,
     ...mapActions(['fetchAllCategory']),
     ...mapMutations(['setCurrentGame']),
-    handleClick(lxId) {
-      this.$emit('click', Number(lxId))
+    handleClick(tag) {
+      this.$emit('click', tag)
     },
     goGameDetail(name) {
       this.setCurrentGame(name)

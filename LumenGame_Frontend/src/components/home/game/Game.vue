@@ -22,7 +22,7 @@
         </el-header>
         <el-main class="g-main" v-if="gameList">
           <game-item :list="gameList.slice((currentPage - 1) * pagesize, currentPage * pagesize)"
-            :type="currentShow" :curPage="currentPage"
+            :curPage="currentPage"
             @click="setActiveItem($event)" />
         </el-main>
       </el-container>
@@ -41,7 +41,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import { _getRecGame1, _getRecGame2, _searchGame } from '@api'
+import { _getRecGame1, _getRecGame2, _searchGame, _searchTag } from '@api'
 
 import gameItem from './GameItem'
 import gameTab from './GameTab'
@@ -58,7 +58,7 @@ export default {
       gameList: [],
       pagesize: 8,
       total: 0,
-      currentShow: 'list'
+      // currentShow: 'list'
     }
   },
   methods: {
@@ -77,13 +77,21 @@ export default {
       this.total = this.gameList ? this.gameList.length : 0
       this.handleCategory()
     },
+    // 搜索标签
+    async searchTag(tag) {
+      const { status, message, data } = await _searchTag({'tag': tag})
+      this.gameList = JSON.parse(data)
+      this.total = this.gameList ? this.gameList.length : 0
+      this.handleCategory()
+    },
     // 清除搜索框
     clearSearch() {
       this.query.keyword = null
     },
     // 设置当前item
-    setActiveItem(index) {
-      this.currentItem = index
+    setActiveItem(item) {
+      this.searchTag(item)
+      this.currentItem = item
     },
     // 处理分类
     handleCategory() {
@@ -95,9 +103,9 @@ export default {
       }
     },
     // 切换列表
-    changeTab(val) {
-      this.currentShow = val
-    },
+    // changeTab(val) {
+    //   this.currentShow = val
+    // },
     // 切换页面
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage
@@ -105,17 +113,8 @@ export default {
   },
   computed: {
     ...mapState(['allCategory', 'allGame', 'currentUser']),
-    filterGame(tag) {
-      if (this.currentItem === ALL) {
-        return this.gameList
-      } else {
-        return (
-          this.gameList.filter((item) => tag in item.popular_tags)
-        )
-      }
-    },
     listNum() {
-      return this.filterGame.length
+      return this.gameList.length
     },
     showClear() {
       return this.query.keyword !== ''

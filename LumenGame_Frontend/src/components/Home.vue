@@ -9,20 +9,24 @@
       <!-- <el-container> -->
       <el-header style="text-align: right">
         <div>
-          <img src="../assets/logo.png" alt="" height="50px"/>
+          <img src="../assets/img/logo.png" alt="" height="50px"/>
           <span>Lumen Game</span>
         </div>
         <el-menu background-color="#00202e" mode="horizontal"
               text-color="#fff"
               default-active="currentIndex" router>
           <el-menu-item index="index"><i class="el-icon-s-home"></i>首页</el-menu-item>
-          <el-menu-item index="game"><i class="el-icon-star-on"></i>个人推荐</el-menu-item>
           <el-menu-item index="rank"><i class="el-icon-sell"></i>热门推荐</el-menu-item>
+          <el-menu-item index="game"><i class="el-icon-star-on"></i>个人推荐</el-menu-item>
           <el-menu-item index="share"><i class="el-icon-folder-opened"></i>游戏库</el-menu-item>
-          <el-menu-item index="info"><i class="el-icon-s-goods"></i>个人中心</el-menu-item>
+          <el-menu-item index="info"><i class="el-icon-user"></i>个人中心</el-menu-item>
         </el-menu>
-        <el-button type="success" @click="logout" id='b_log' v-if="log_status === false">登录</el-button>
-        <el-button type="error" @click="logout" id='b_log' v-else>退出</el-button>
+        <div>
+          <el-avatar v-if="currentUser" style="margin-right: 20px;" shape="square" :size="50" :src="currentUser.avatarImgUrl"></el-avatar>
+          <!-- <el-avatar v-else style="margin-right: 20px;" shape="square" :size="50" :src="../assets/img/logo.png"></el-avatar> -->
+          <el-button type="success" @click="logout" id='b_log' v-if="log_status === false">登录</el-button>
+          <el-button type="error" @click="logout" id='b_log' v-else>退出</el-button>
+        </div>
       </el-header>
       <!-- </el-container> -->
 
@@ -146,7 +150,7 @@ export default {
     // flex: 1;
     // background-color: rgb(6, 44, 64);
     // background-image: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0), url('../assets/login_background.jpg'))
-    background-image: url('../assets/login_background.jpg')
+    background-image: url('../assets/img/login_background.jpg')
     // 'linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0)),url(' + bgimg + ')'}"
   }
   // main <<<
