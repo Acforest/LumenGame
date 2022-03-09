@@ -89,7 +89,7 @@ export default {
   methods: {},
 };
 </script>
-<style scoped lang='scss'>
+<style lang='less' scoped>
 .top {
   position: fixed;
   top: 6.3%;

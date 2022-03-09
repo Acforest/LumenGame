@@ -37,10 +37,8 @@
           </div>
         </el-main>
       </el-container>
-
       <el-footer style="text-align: right">© 2022, Designed by Madison. Coded by Aduiduidui.</el-footer>
     </el-container>
-
   </div>
 </template>
 

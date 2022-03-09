@@ -4,6 +4,7 @@ from django.db.models import Value, CharField
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core import serializers
+from django.http import JsonResponse
 from . import models
 from .utils import json_response
 import re
@@ -167,9 +168,17 @@ def get_rec_game2(request):
 def get_search_game(request):
     if request.method == 'GET':
         keyword = request.GET['keyword']
+        user_id = request.GET['user_id']
         search_query = models.GameInfo.objects.filter(name__icontains=keyword)[:200]
         search_json = serializers.serialize('json', search_query)
-        return json_response(1, '获取搜索成功', search_json)
+        like_query = models.Repository.objects.filter(user_id=user_id)
+        like_json = serializers.serialize('json', like_query)
+        return JsonResponse({
+            'status': 1,
+            'message': '获取搜索成功',
+            'search_json': search_json,
+            'like_json': like_json
+        }, json_dumps_params={'ensure_ascii': False})
 
 
 def get_search_tag(request):
@@ -189,6 +198,29 @@ def get_repository_game(request):
         )
         repository_json = serializers.serialize('json', repository_query)
         return json_response(1, '获取游戏库成功', repository_json)
+
+
+def like_game(request):
+    if request.method == 'POST':
+        try:
+            user_id = request.POST['user_id']
+            game_name = request.POST['game_name']
+            models.Repository.objects.create(user_id=user_id, game_name=game_name,
+                                            hours=0, purchase=0, play=0)
+            return json_response(1, '喜欢游戏成功', {})
+        except:
+            return json_response(0, '喜欢游戏失败', {})
+
+def cancel_like_game(request):
+    if request.method == 'POST':
+        try:
+            user_id = request.POST['user_id']
+            game_name = request.POST['game_name']
+            models.Repository.objects.filter(user_id=user_id, game_name=game_name).delete()
+            return json_response(1, '取消喜欢游戏成功', {})
+        except:
+            return json_response(0, '取消喜欢游戏失败', {})
+
 
 # def bulk(request):
 #     from django.contrib.auth.hashers import make_password

@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <!-- 轮播图 -->
-    <!-- <el-carousel :interval="3000" type="card" height="300px" @change="handleChange($event)">
+    <el-carousel :interval="3000" type="card" height="300px" @change="handleChange($event)">
       <el-carousel-item v-for="(item,index) in noticeList" :key="item.id">
         <div class="container" @click="showNotice(item,index)">
           <img :src="item.fields.url" alt="">
@@ -15,7 +15,7 @@
           </transition>
         </div>
       </el-carousel-item>
-    </el-carousel> -->
+    </el-carousel>
     <!-- 功能模块 -->
     <!-- <ul class="f-main">
       <li class="f-item" v-for="(item, index) in content" :key="index">

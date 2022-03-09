@@ -2,7 +2,7 @@
   <div class="game">
     <div class="g-search">
       <p class="g-search-wrap">
-        <el-input type="text" v-model="query.keyword" placeholder="请输入游戏名称" @keydown.enter.native="searchGame"></el-input>
+        <el-input type="text" v-model="keyword" placeholder="请输入游戏名称" @keydown.enter.native="searchGame"></el-input>
         <span class="g-search-btn" @click="searchGame()">
           <i class="iconfont icon-search"></i>
         </span>
@@ -21,9 +21,8 @@
           <game-tab :num="listNum" @click="changeTab($event)" />
         </el-header>
         <el-main class="g-main" v-if="gameList">
-          <game-item :list="gameList.slice((currentPage - 1) * pagesize, currentPage * pagesize)"
-            :curPage="currentPage"
-            @click="setActiveItem($event)" />
+          <game-item :list="gameList.slice((currentPage - 1) * pagesize, currentPage * pagesize)" :like="likeSet"
+            @click="setActiveItem($event)" @addLike="addLike" @deleteLike="deleteLike"/>
         </el-main>
       </el-container>
     </el-container>
@@ -49,31 +48,38 @@ const ALL = 0
 export default {
   data() {
     return {
-      query: {
-        keyword: ''
-      },
+      keyword: '',
       category: new Set(),
+      likeSet: new Set(),
       currentItem: 0,
       currentPage: 1,
       gameList: [],
+      likeList: [],
       pagesize: 8,
       total: 0,
       // currentShow: 'list'
     }
   },
   methods: {
-    ...mapActions(['fetchAllCategory', 'fetchAllGame']),
+    ...mapActions([]),
     // 获取游戏列表
     async fetchGame() {
-      const { status, message, data } = await _getRecGame1({user_id: this.currentUser.id})
+      const { status, message, data } = await _getRecGame1({'user_id': this.currentUser.id})
       this.gameList = JSON.parse(data)
       this.total = this.gameList ? this.gameList.length : 0
       this.handleCategory()
     },
     // 搜索游戏
     async searchGame() {
-      const { status, message, data } = await _searchGame(this.query)
-      this.gameList = JSON.parse(data)
+      const { status, message, search_json, like_json } = await _searchGame({'keyword': this.keyword, 'user_id': this.currentUser.id})
+      this.gameList = JSON.parse(search_json)
+      this.likeList = JSON.parse(like_json)
+      this.likeSet.clear()
+      for (const like of this.likeList) {
+        this.likeSet.add(like.fields.game_name)
+      }
+      console.log(this.likeSet)
+
       this.total = this.gameList ? this.gameList.length : 0
       this.handleCategory()
     },
@@ -86,7 +92,7 @@ export default {
     },
     // 清除搜索框
     clearSearch() {
-      this.query.keyword = null
+      this.keyword = null
     },
     // 设置当前item
     setActiveItem(item) {
@@ -110,14 +116,22 @@ export default {
     handleCurrentChange(currentPage) {
       this.currentPage = currentPage
     },
+    // 收藏
+    addLike(game_name) {
+      this.likeSet.add(game_name)
+    },
+    // 取消收藏
+    deleteLike(game_name) {
+      this.likeSet.delete(game_name)
+    }
   },
   computed: {
-    ...mapState(['allCategory', 'allGame', 'currentUser']),
+    ...mapState(['currentUser']),
     listNum() {
       return this.gameList.length
     },
     showClear() {
-      return this.query.keyword !== ''
+      return this.keyword !== ''
     }
   },
   components: {
@@ -126,7 +140,6 @@ export default {
   },
   async created() {
     this.fetchGame()
-    // console.log(this.allGame)
   }
 }
 </script>
