@@ -2,80 +2,53 @@
   <el-container class="g-detail">
     <el-aside width="300px">
       <div class="g-cover">
-        <img :src="filterGame.photo" alt="">
+        <img :src="game_detail[0].fields.img_url || 
+        'https://cdn1.epicgames.com/spt-assets/a7ecccc8ca084febb744ca0d141b8061/download-amelie-offer-1tdkw.jpg?h=854&resize=1&w=640'" alt="">
+        <!-- <img src="https://cdn1.epicgames.com/spt-assets/a7ecccc8ca084febb744ca0d141b8061/download-amelie-offer-1tdkw.jpg?h=854&resize=1&w=640" alt=""> -->
       </div>
     </el-aside>
     <el-main>
       <div class="g-hd">
-        <div class="g-title">{{filterGame.name}}</div>
+        <div class="g-title">{{game_detail[0].fields.name}}</div>
       </div>
       <div class="g-bd">
-        <div class="g-desc">{{filterGame.description}}</div>
+        <div class="g-desc">{{game_detail[0].fields.desc_snippet}}</div>
       </div>
       <div class="g-tips">
-        <span class="g-lx">{{filterGame.lxName}}</span>
-        <span class="g-company icon-home iconfont">{{filterGame.company}}</span>
+        <span class="g-lx">{{game_detail[0].fields.name}}</span>
+        <span class="g-company icon-home iconfont">{{game_detail[0].fields.developer}}</span>
       </div>
       <div class="g-btn">
-        <button class="g-download" @click="download(filterGame.url)"><i
+        <button class="g-download" @click="download(game_detail[0].fields.url)"><i
             class="iconfont icon-thunderbolt"></i>下载</button>
-        <button class="g-star" @click="starGame()" :class="{'g-star-active':hasStar}"><i
-            class="iconfont icon-icon-test2"></i>{{starText}}</button>
+        <button class="g-star" @click="starGame()" :class="{'g-star-active': like}"><i
+            class="iconfont icon-icon-test2"></i>122</button>
       </div>
-      <pTime :date="filterGame.createTime"></pTime>
+      <pTime :date="game_detail[0].fields.release_date"></pTime>
       <pBack />
     </el-main>
   </el-container>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex'
-import { bindURL } from '@utils'
-import { _addStar, _deleteStar } from '@api'
+import {  mapState } from 'vuex'
+import { _getGameDetail } from '@api'
 import pTime from '@/components/common/Time'
 import pBack from '@/components/common/Back'
 export default {
-  props: {
-    id: {
-      type: String
-    }
-  },
+  // props: {
+  //   game_detail
+  // },
   data() {
     return {
-      currentStar: {}
+      like: false,
+      game_detail: null,
     }
   },
   computed: {
-    ...mapState(['currentGame', 'currentUser', 'allStar']),
-    ...mapGetters(['getMiniCategoryList', 'getStarById']),
-    // 过滤游戏
-    filterGame() {
-      const lx = this.getMiniCategoryList().find((i) => {
-        return i.id === Number(this.currentGame.lx)
-      })
-      return {
-        ...this.currentGame,
-        lxName: (lx && lx.name) || '暂无'
-      }
-    },
-    // 游戏收藏文本
-    starText() {
-      return this.hasStar ? '已收藏' : '收藏'
-    },
-    currentUserStar() {
-      return this.getStarById(this.currentUser.id)
-    },
-    hasStar() {
-      const star = this.currentUserStar.find((item) => {
-        return item.gameid === this.currentGame.id
-      })
-      this.setStar(star)
-      return star !== undefined
-    }
+    ...mapState(['currentUser']),
   },
   methods: {
-    bindURL,
-    ...mapActions(['fetchAllCategory', 'fetchAllStar']),
     // 返回
     backToLast() {
       this.$router.push('/game')
@@ -83,6 +56,12 @@ export default {
     // 下载
     download(url) {
       location.href = url
+    },
+    async getGameDetail() {
+      const { status, message, like, detail } = await _getGameDetail({'user_id': this.currentUser.id, 'game_name': this.$route.query.game_name})
+      this.like = like
+      this.game_detail = JSON.parse(detail)
+      console.log(this.game_detail)
     },
     // 收藏游戏
     async starGame() {
@@ -113,31 +92,13 @@ export default {
         console.log('star error')
       }
     },
-    setStar(data) {
-      this.currentStar = data
-    },
-    // 处理收藏
-    handleStar() {
-      return {
-        id: Date.now() % 999999999,
-        createTime: Date.now(),
-        updateTime: Date.now(),
-        userid: this.currentUser.id,
-        gameid: this.currentGame.id
-      }
-    }
   },
   components: {
     pTime,
     pBack
   },
   created() {
-    if (this.allCategory === null) {
-      this.fetchAllCategory()
-    }
-    if (this.allStar === null) {
-      this.fetchAllStar()
-    }
+    this.getGameDetail()
   }
 }
 </script>

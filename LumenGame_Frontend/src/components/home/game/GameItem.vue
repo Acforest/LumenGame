@@ -5,27 +5,27 @@
       <ul class="list">
         <li class="g-list" v-for="(item, index) in list" :key="index">
           <!-- <a href="javascript:;" @click="goGameDetail(item.name)"> -->
-          <a>
+          <a style="cursor: pointer" @click="goGameDetail(item.fields.name)">
             <div class="g-cover">
               <img :src="item.photo" alt="">
             </div>
             <div class="g-content">
               <h3 class="g-title">{{item.fields.name}}</h3>
-              <div class="g-company">{{item.fields.publisher.split(',')[0]}}
+              <div class="g-company">{{(item.fields.publisher || '').split(',')[0]}}
                 <span class="g-tag">
-                  <el-button type="mini" v-for="(tag, idx) in item.fields.popular_tags.split(',').slice(0, 5)"
-                    :key="idx" @click="handleClick(tag)">
+                  <el-button type="mini" v-for="(tag, idx) in (item.fields.popular_tags || '').split(',').slice(0, 5)"
+                    :key="idx" v-on:click.stop="handleClick(tag)">
                     {{tag}}
                   </el-button>
                 </span>
               </div>
-              <img src="../../../assets/img/like-active.png" v-if="likeSet.has(item.fields.name)" width="30px" height="30px" style="cursor: pointer" @click="handleCancelLike(item.fields.name)"/>
-              <img src="../../../assets/img/like.png" v-else width="30px" height="30px" style="cursor: pointer" @click="handleLike(item.fields.name)"/>
+              <img src="../../../assets/img/like-active.png" v-if="likeSet.has(item.fields.name)" width="30px" height="30px" style="cursor: pointer" v-on:click.stop="handleCancelLike(item.fields.name)"/>
+              <img src="../../../assets/img/like.png" v-else width="30px" height="30px" style="cursor: pointer" v-on:click.stop="handleLike(item.fields.name)"/>
             </div>
           </a>
         </li>
         <!-- 占位 -->
-        <!-- <li v-for="item in blankNum" class="g-list"></li> -->
+        <li v-for="(item, index) in blankNum" class="g-list" :key="index"></li>
       </ul>
       <!-- <ul v-else-if="type === 'card'"> -->
         <!-- card -->
@@ -70,15 +70,13 @@ export default {
     }
   },
   methods: {
-    bindURL,
     // ...mapActions(['fetchAllCategory']),
     // ...mapMutations(['setCurrentGame']),
     handleClick(tag) {
       this.$emit('click', tag)
     },
     goGameDetail(name) {
-      this.setCurrentGame(name)
-      this.$router.push('/game/' + name)
+      this.$router.push({path: '/game/' + name, query: {'game_name': name}})
     },
     async handleLike(game_name) {
       const { status, message, data } = await _likeGame(convertParams({'user_id': this.currentUser.id, 'game_name': game_name}))
@@ -126,7 +124,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getMiniCategoryList']),
     ...mapState(['currentUser']),
     blankNum() {
       return this.allNum % 4 === 0 ? 0 : 4 - (this.allNum % 4)
@@ -134,15 +131,6 @@ export default {
     allNum() {
       return this.list.length
     },
-    filterList() {
-      return this.list.map((i) => {
-        const item = this.getMiniCategoryList().find(
-          (j) => j.id === Number(i.lx)
-        )
-        i.lxName = item.name
-        return i
-      })
-    }
   },
   created() {
     this.likeSet = this.like

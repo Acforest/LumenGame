@@ -136,6 +136,22 @@ def get_game(request):
         return json_response(1, '获取game成功', game_json)
 
 
+def get_game_detail(request):
+    if request.method == 'GET':
+        user_id = request.GET['user_id']
+        game_name = request.GET['game_name']
+        game_detail_query = models.GameInfo.objects.filter(name=game_name)
+        like_query = models.Repository.objects.filter(user_id=user_id, game_name=game_name)
+        like = like_query.exists()
+        game_detail_json = serializers.serialize('json', game_detail_query)
+        return JsonResponse({
+            'status': 1,
+            'message': '获取推荐成功',
+            'like': like,
+            'detail': game_detail_json,
+        }, json_dumps_params={'ensure_ascii': False})
+
+
 def get_rank(request):
     if request.method == 'GET':
         rank_query = models.GameRank.objects.all()
@@ -143,26 +159,28 @@ def get_rank(request):
         return json_response(1, '获取rank成功', rank_json)
 
 
-def get_rec_game1(request):
+def get_rec_game(request):
     if request.method == 'GET':
         user_id = request.GET['user_id']
-        rec_query = models.GameInfo.objects.raw(
+        rec_query_1 = models.GameInfo.objects.raw(
             'SELECT game_info.* FROM game_info, recommend_1 WHERE game_info.name = recommend_1.name AND recommend_1.user_id = %s',
             [user_id]
         )
-        rank_json = serializers.serialize('json', rec_query)
-        return json_response(1, '获取推荐成功', rank_json)
-
-
-def get_rec_game2(request):
-    if request.method == 'GET':
-        user_id = request.GET['user_id']
-        rec_query = models.GameInfo.objects.raw(
-            'SELECT game_info.* FROM game_info, recommend_1 WHERE game_info.name = recommend_1.name AND recommend_1.user_id = %s',
+        rec_query_2 = models.GameInfo.objects.raw(
+            'SELECT game_info.* FROM game_info, recommend_2 WHERE game_info.name = recommend_2.name AND recommend_2.user_id = %s',
             [user_id]
         )
-        rank_json = serializers.serialize('json', rec_query)
-        return json_response(1, '获取推荐成功', rank_json)
+        rec_query_3 = models.GameInfo.objects.all().order_by('?')[:20]
+        rec_json_1 = serializers.serialize('json', rec_query_1)
+        rec_json_2 = serializers.serialize('json', rec_query_2)
+        rec_json_3 = serializers.serialize('json', rec_query_3)
+        return JsonResponse({
+            'status': 1,
+            'message': '获取推荐成功',
+            'rec1': rec_json_1,
+            'rec2': rec_json_2,
+            'rec3': rec_json_3,
+        }, json_dumps_params={'ensure_ascii': False})
 
 
 def get_search_game(request):

@@ -40,7 +40,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import { _getRecGame1, _getRecGame2, _searchGame, _searchTag } from '@api'
+import { _getRecGame, _searchGame, _searchTag } from '@api'
 
 import gameItem from './GameItem'
 import gameTab from './GameTab'
@@ -64,8 +64,18 @@ export default {
     ...mapActions([]),
     // 获取游戏列表
     async fetchGame() {
-      const { status, message, data } = await _getRecGame1({'user_id': this.currentUser.id})
-      this.gameList = JSON.parse(data)
+      const { status, message, rec1, rec2, rec3 } = await _getRecGame({'user_id': this.currentUser.id})
+      const gameList1 = JSON.parse(rec1)
+      const gameList2 = JSON.parse(rec2)
+      const gameList3 = JSON.parse(rec3)
+      if (gameList1.length != 0) {
+        this.gameList = gameList1
+      } else if (gameList2.length != 0) {
+        this.gameList = gameList2
+      } else {
+        this.gameList = gameList3
+      }
+      console.log(this.gameList)
       this.total = this.gameList ? this.gameList.length : 0
       this.handleCategory()
     },
@@ -102,7 +112,7 @@ export default {
     // 处理分类
     handleCategory() {
       for (const item of this.gameList) {
-        const tags = item.fields.popular_tags.split(',').slice(0, 5)
+        const tags = (item.fields.popular_tags || '').split(',').slice(0, 5)
         for (const tag of tags) {
           this.category.add(tag)
         }

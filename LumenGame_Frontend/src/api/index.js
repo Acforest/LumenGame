@@ -18,12 +18,12 @@ const _editUserInfo = _put('/user/user_info/')
 // game
 const _getGame = _get('/game/get_game/')
 const _getRank = _get('/game/get_rank/')
-const _getRecGame1 = _get('/game/get_rec_game1/')
-const _getRecGame2 = _get('/game/get_rec_game2/')
+const _getRecGame = _get('/game/get_rec_game/')
 const _searchGame = _get('/game/get_search_game/')
 const _searchTag = _get('/game/get_search_tag/')
 const _likeGame = _post('/game/like_game/')
 const _cancelLikeGame = _post('/game/cancel_like_game/')
+const _getGameDetail = _get('/game/get_game_detail/')
 // repository
 const _getRepositoryGame = _get('/repository/get_repository_game/')
 // banner
@@ -62,12 +62,12 @@ export {
     // game
     _getGame,
     _getRank,
-    _getRecGame1,
-    _getRecGame2,
+    _getRecGame,
     _searchGame,
     _searchTag,
     _likeGame,
     _cancelLikeGame,
+    _getGameDetail,
     // repository
     _getRepositoryGame,
     // banner
