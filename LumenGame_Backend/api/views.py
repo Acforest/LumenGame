@@ -147,7 +147,7 @@ def get_rec_game1(request):
     if request.method == 'GET':
         user_id = request.GET['user_id']
         rec_query = models.GameInfo.objects.raw(
-            'SELECT game_info.* FROM game_info, recommend1 WHERE game_info.name = recommend1.name AND recommend1.user_id = %s',
+            'SELECT game_info.* FROM game_info, recommend_1 WHERE game_info.name = recommend_1.name AND recommend_1.user_id = %s',
             [user_id]
         )
         rank_json = serializers.serialize('json', rec_query)
@@ -158,7 +158,7 @@ def get_rec_game2(request):
     if request.method == 'GET':
         user_id = request.GET['user_id']
         rec_query = models.GameInfo.objects.raw(
-            'SELECT game_info.* FROM game_info, recommend1 WHERE game_info.name = recommend1.name AND recommend1.user_id = %s',
+            'SELECT game_info.* FROM game_info, recommend_1 WHERE game_info.name = recommend_1.name AND recommend_1.user_id = %s',
             [user_id]
         )
         rank_json = serializers.serialize('json', rec_query)
