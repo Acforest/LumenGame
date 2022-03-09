@@ -16,6 +16,28 @@
         </div>
       </el-carousel-item>
     </el-carousel> -->
+
+    <div class="thumb-example">
+      <!-- swiper1 -->
+      <swiper class="swiper gallery-top" :options="swiperOptionTop" ref="swiperTop">
+        <swiper-slide class="slide-1"></swiper-slide>
+        <swiper-slide class="slide-2"></swiper-slide>
+        <swiper-slide class="slide-3"></swiper-slide>
+        <swiper-slide class="slide-4"></swiper-slide>
+        <swiper-slide class="slide-5"></swiper-slide>
+        <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
+        <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+      </swiper>
+      <!-- swiper2 Thumbs -->
+      <swiper class="swiper gallery-thumbs" :options="swiperOptionThumbs" ref="swiperThumbs">
+        <swiper-slide class="slide-1"></swiper-slide>
+        <swiper-slide class="slide-2"></swiper-slide>
+        <swiper-slide class="slide-3"></swiper-slide>
+        <swiper-slide class="slide-4"></swiper-slide>
+        <swiper-slide class="slide-5"></swiper-slide>
+      </swiper>
+    </div>
+
     <!-- 功能模块 -->
     <!-- <ul class="f-main">
       <li class="f-item" v-for="(item, index) in content" :key="index">
@@ -42,9 +64,49 @@
       </div>
     </el-dialog> -->
 
-    <!-- <cheap></cheap> -->
+    <div class="hot_index">
+          <h2 class="home_page_content_title">
+            热门推荐
+            <span class="hot_more">
+              <router-link :to="{path:'/rank'}">浏览更多</router-link>
+            </span>
+          </h2>
+          <swiper :options="swiperOption" ref="mySwiper">
+              <swiper-slide class="slide-1">1</swiper-slide>
+              <swiper-slide class="slide-2">Slide 2</swiper-slide>
+              <swiper-slide class="slide-3">Slide 3</swiper-slide>
+              <swiper-slide class="slide-4">Slide 4</swiper-slide>
+              <!-- <swiper-slide v-for="(item, index) in hotList" :key="item.id"></swiper-slide> -->
+              <div class="swiper-pagination" slot="pagination"></div>
+              <div class="swiper-button-prev" slot="button-prev"></div>
+              <div class="swiper-button-next" slot="button-next"></div>
+          </swiper>
+    </div>
+
+    <div class="hot_index">
+          <h2 class="home_page_content_title">
+            最新发布
+            <span class="hot_more">
+              <router-link :to="{path:'/rank'}">浏览更多</router-link>
+            </span>
+          </h2>
+          <swiper :options="swiperOption" ref="mySwiper">
+              <swiper-slide>Slide 1</swiper-slide>
+              <swiper-slide>Slide 2</swiper-slide>
+              <swiper-slide>Slide 3</swiper-slide>
+              <swiper-slide>Slide 4</swiper-slide>
+              <!-- <swiper-slide v-for="(item, index) in hotList" :key="item.id"></swiper-slide> -->
+              <div class="swiper-pagination" slot="pagination"></div>
+              <div class="swiper-button-prev" slot="button-prev"></div>
+              <div class="swiper-button-next" slot="button-next"></div>
+          </swiper>
+    </div>
+
     <!-- <pRecommend></pRecommend> -->
-    <pFree></pFree>
+    <!-- <div>
+      <pFree></pFree>
+    </div> -->
+    <!-- <pCheap></pCheap> -->
     <!-- <pTop></pTop> -->
   </div>
 </template>
@@ -57,6 +119,9 @@ import { bindURL, convertDeepCopy } from '@utils'
 import pRecommend from './Recommend'
 import pFree from './Free'
 import pTop from './Top'
+import pCheap from './Cheap.vue'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
 
 export default {
   data() {
@@ -88,7 +153,40 @@ export default {
         }
       ],
       noticeDialogVisible: false,
-      currentNotice: {}
+      currentNotice: {},
+      swiperOption: {
+        slidesPerView: 3,
+        spaceBetween: 10,
+        slidesPerGroup: 3,
+        loop: true,
+        loopFillGroupWithBlank: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+        }
+      },
+      swiperOptionTop: {
+          loop: true,
+          loopedSlides: 5, // looped slides should be the same
+          spaceBetween: 10,
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          }
+        },
+        swiperOptionThumbs: {
+          loop: true,
+          loopedSlides: 5, // looped slides should be the same
+          spaceBetween: 10,
+          centeredSlides: true,
+          slidesPerView: 'auto',
+          touchRatio: 0.2,
+          slideToClickedSlide: true
+        }
     }
   },
   methods: {
@@ -113,8 +211,19 @@ export default {
     this.fetchNotice()
   },
   components: {
-    pRecommend, pTop, pFree
-  }
+    pRecommend, pTop, pFree, pCheap,
+    swiper,
+    swiperSlide
+  },
+  mounted() {
+    // 顶部轮播图的方法
+      this.$nextTick(() => {
+        const swiperTop = this.$refs.swiperTop.swiper
+        const swiperThumbs = this.$refs.swiperThumbs.swiper
+        swiperTop.controller.control = swiperThumbs
+        swiperThumbs.controller.control = swiperTop
+      })
+    }
 }
 </script>
 
@@ -268,4 +377,123 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+
+// 下面推荐轮播的样式
+.hot_index {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 40px;
+
+  .home_page_content_title {
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 0 10px;
+    letter-spacing: 0.03em;
+    font-weight: normal;
+    padding-top: 2px;
+    justify-content: space-between;
+    text-align: left;
+
+    .hot_more {
+      float: right;
+      text-transform: none;
+      letter-spacing: normal;
+      display: inline-block;
+      position: relative;
+      top: -3px;
+      font-size: 14px;
+    }
+  }
+  .router-link-active {
+    text-decoration: none;
+    color: rgb(104, 105, 156);
+  }
+  a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.822);
+  }
+  .swiper-slide {
+    width: 30%;
+    line-height: 220px;
+    // background: rgb(245, 255, 225);
+    color: rgba(0, 0, 0, 0);
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+    border: 2px solid #1AA6B7;
+    border-radius: 10px ;
+
+    background-position: center;
+    background-size: cover;
+
+    &.slide-1 {
+      background-image:url('https://cdn.akamai.steamstatic.com/steam/apps/735290/header_alt_assets_2.jpg?t=1646322786')
+    }
+    &.slide-2 {
+      background-image:url('https://cdn.akamai.steamstatic.com/steam/apps/1097150/header.jpg?t=1645126741')
+    }
+    &.slide-3 {
+      background-image:url('https://cdn.akamai.steamstatic.com/steam/apps/1222140/header_schinese.jpg?t=1625648054')
+    }
+    &.slide-4 {
+      background-image:url('/src/assets/temp.jpg')
+    }
+    &.slide-5 {
+      background-image:url('/src/assets/temp.jpg')
+    }
+  }
+}
+
+// 顶部轮播图的样式
+.thumb-example {
+    height: 480px;
+    background-color: rgba(0, 0, 0, 0.37);
+    margin-bottom: 100px;
+
+    .swiper {
+    .swiper-slide {
+      background-size: contain;
+      background-position: center;
+      background-repeat:no-repeat;
+
+      &.slide-1 {
+        background-image:url('https://cdn.akamai.steamstatic.com/steam/apps/1418630/header.jpg?t=1646709871');
+      }
+      &.slide-2 {
+        background-image:url('https://cdn.akamai.steamstatic.com/steam/apps/1245620/ss_ae44317e3bd07b7690b4d62cc5d0d1df30367a91.600x338.jpg?t=1646770182');
+      }
+      &.slide-3 {
+        background-image:url('/images/example/4.jpg');
+      }
+      &.slide-4 {
+        background-image:url('/images/example/5.jpg');
+      }
+      &.slide-5 {
+        background-image:url('/images/example/6.jpg');
+      }
+    }
+
+    &.gallery-top {
+      height: 80%;
+      width: 100%;
+    }
+    &.gallery-thumbs {
+      height: 20%;
+      box-sizing: border-box;
+      padding: 0;
+    }
+    &.gallery-thumbs .swiper-slide {
+      width: 25%;
+      height: 100%;
+      opacity: 0.4;
+    }
+    &.gallery-thumbs .swiper-slide-active {
+      opacity: 1;
+    }
+  }
+}
+
 </style>

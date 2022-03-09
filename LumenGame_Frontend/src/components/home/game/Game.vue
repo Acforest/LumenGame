@@ -186,8 +186,8 @@ export default {
   justify-content: space-evenly;
   align-content: space-around;
   height: 100%;
-  border: 1px solid #ccc;
-  box-shadow: inset 0 0 0 1px #e4e4e4;
+  border: 1px solid #1AA6B7;
+  box-shadow: inset 0 0 0 1px #1AA6B7;
   padding: 20px 0;
   background-color: #fff;
   .nav-item {
@@ -196,10 +196,10 @@ export default {
     line-height: 30px;
     font-size: 14px;
     margin-top: 20px;
-    background-color: #f4f4f4;
+    background-color: #1aa7b785;      // 标签底色
     overflow: hidden;
-    .box-shadow-in(#e4e4e4);
-    color: #757575;
+    .box-shadow-in(#e4e4e400);
+    color: #ffffff;                   // 标签文字颜色
     &:hover {
       background-color: #eee;
       border-color: transparent;
@@ -215,20 +215,27 @@ export default {
   }
 }
 .g-main {
-  background-color: #fff;
+  background-color: #002d4091;     // 搜索出来的游戏结果显示的底色
   padding-top: 10px;
   padding: 0;
   margin: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #1AA6B7;
+  color: #ffffff;
 }
 
 .g-header {
-  background-color: #fff;
+  background-color: #a4ccdcc5;   // 显示搜索到内容的底色
   padding: 0;
   margin: 0 20px;
+  color: #ffffff;                 // 搜索条数字体的颜色
 }
 
 .el-input {
   width: 500px;
 }
+
+.el-aside {
+  background-color: #002D40;
+}
+
 </style>

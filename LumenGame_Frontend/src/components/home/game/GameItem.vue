@@ -131,10 +131,10 @@ export default {
       .g-content {
         box-sizing: border-box;
         width: 100%;
-        background-color: #fff;
-        border: 1px solid #eee;
+        background-color: #daebeca6;
+        border: 1px solid #daebeca6;
         border-top: none;
-        .box-shadow-tx(#eee, #eee);
+        // .box-shadow-tx(#eee, #eee);
       }
       .g-title {
         font-weight: 400;
@@ -165,7 +165,7 @@ export default {
   .g-card {
     height: 160px;
     width: 100%;
-    background-color: #fff;
+    background-color: rgb(179, 33, 33);
     border: 1px solid #eee;
     .box-shadow-tx(#eee, #eee);
     margin-bottom: 10px;
