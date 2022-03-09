@@ -73,16 +73,16 @@ export default {
     justify-content: start;
   }
   // padding: 10px 20px;
-  background-color: #fff;
+  background-color: #002d4091;
 
-  border: 1px solid #ccc;
+  border: 1px solid #1AA6B7;
   .rank-item {
     position: relative;
     box-sizing: border-box;
     padding: 10px;
     height: 140px;
     width: 100%;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #1AA6B7;
     overflow: hidden;
     transition: all 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
     a {

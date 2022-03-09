@@ -90,9 +90,9 @@ export default {
   margin: 20px 120px;
   .el-aside {
     padding: 20px 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    .box-shadow-in(#e4e4e4);
+    background-color: #002D40;
+    border: 1px solid #1AA6B7;
+    .box-shadow-in(#1AA6B7);
   }
   /deep/.el-main {
     padding: 20px 20px 20px 20px;

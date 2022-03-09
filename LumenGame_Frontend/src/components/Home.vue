@@ -22,7 +22,7 @@
           <el-menu-item index="info"><i class="el-icon-user"></i>个人中心</el-menu-item>
         </el-menu>
         <div>
-          <el-avatar v-if="currentUser" style="margin-right: 20px;" shape="square" :size="50" :src="currentUser.avatarImgUrl"></el-avatar>
+          <el-avatar v-if="currentUser" style="margin-right: 20px;" shape="circle" :size="45" :src="currentUser.avatarImgUrl"></el-avatar>
           <!-- <el-avatar v-else style="margin-right: 20px;" shape="square" :size="50" :src="../assets/img/logo.png"></el-avatar> -->
           <el-button type="success" @click="logout" id='b_log' v-if="log_status === false">登录</el-button>
           <el-button type="error" @click="logout" id='b_log' v-else>退出</el-button>
@@ -147,9 +147,7 @@ export default {
   .el-main {
     // flex: 1;
     // background-color: rgb(6, 44, 64);
-    // background-image: linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0), url('../assets/login_background.jpg'))
-    background-image: url('../assets/img/login_background.jpg')
-    // 'linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0)),url(' + bgimg + ')'}"
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgb(0, 0, 0)), url(../assets/img/login_background.jpg);
   }
   // main <<<
   // footer >>>
