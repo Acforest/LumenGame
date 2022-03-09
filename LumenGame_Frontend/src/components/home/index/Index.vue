@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <!-- 轮播图 -->
-    <!-- <el-carousel :interval="3000" type="card" height="300px" @change="handleChange($event)">
+    <el-carousel :interval="3000" type="card" height="300px" @change="handleChange($event)">
       <el-carousel-item v-for="(item,index) in noticeList" :key="item.id">
         <div class="container" @click="showNotice(item,index)">
           <img :src="item.fields.url" alt="">
@@ -15,29 +15,7 @@
           </transition>
         </div>
       </el-carousel-item>
-    </el-carousel> -->
-
-    <div class="thumb-example">
-      <!-- swiper1 -->
-      <swiper class="swiper gallery-top" :options="swiperOptionTop" ref="swiperTop">
-        <swiper-slide class="slide-1"></swiper-slide>
-        <swiper-slide class="slide-2"></swiper-slide>
-        <swiper-slide class="slide-3"></swiper-slide>
-        <swiper-slide class="slide-4"></swiper-slide>
-        <swiper-slide class="slide-5"></swiper-slide>
-        <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
-        <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
-      </swiper>
-      <!-- swiper2 Thumbs -->
-      <swiper class="swiper gallery-thumbs" :options="swiperOptionThumbs" ref="swiperThumbs">
-        <swiper-slide class="slide-1"></swiper-slide>
-        <swiper-slide class="slide-2"></swiper-slide>
-        <swiper-slide class="slide-3"></swiper-slide>
-        <swiper-slide class="slide-4"></swiper-slide>
-        <swiper-slide class="slide-5"></swiper-slide>
-      </swiper>
-    </div>
-
+    </el-carousel>
     <!-- 功能模块 -->
     <!-- <ul class="f-main">
       <li class="f-item" v-for="(item, index) in content" :key="index">

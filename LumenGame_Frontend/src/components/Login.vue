@@ -169,7 +169,8 @@ export default {
           this.$message({
             message: '登陆成功',
             type: 'success',
-            offset: 350
+            offset: 300,
+            duration: 1000
           })
           this.setCurrentUser({
             id: data['id'],

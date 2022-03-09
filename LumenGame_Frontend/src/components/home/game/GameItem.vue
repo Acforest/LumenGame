@@ -11,15 +11,16 @@
             </div>
             <div class="g-content">
               <h3 class="g-title">{{item.fields.name}}</h3>
-              <!-- <img src="../../../assets/img/like.png"/> -->
-              <p class="g-company">{{item.fields.publisher.split(',')[0]}}
+              <div class="g-company">{{item.fields.publisher.split(',')[0]}}
                 <span class="g-tag">
                   <el-button type="mini" v-for="(tag, idx) in item.fields.popular_tags.split(',').slice(0, 5)"
                     :key="idx" @click="handleClick(tag)">
                     {{tag}}
                   </el-button>
                 </span>
-              </p>
+              </div>
+              <img src="../../../assets/img/like-active.png" v-if="likeSet.has(item.fields.name)" width="30px" height="30px" style="cursor: pointer" @click="handleCancelLike(item.fields.name)"/>
+              <img src="../../../assets/img/like.png" v-else width="30px" height="30px" style="cursor: pointer" @click="handleLike(item.fields.name)"/>
             </div>
           </a>
         </li>
@@ -53,28 +54,80 @@
 </template>
 
 <script>
-import { bindURL } from '@utils'
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { bindURL, convertParams } from '@utils'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import { _likeGame, _cancelLikeGame } from '@api'
 
 export default {
   props: {
     list: Array,
     type: String,
+    like: Set
+  },
+  data() {
+    return {
+      likeSet: null
+    }
   },
   methods: {
     bindURL,
-    ...mapActions(['fetchAllCategory']),
-    ...mapMutations(['setCurrentGame']),
+    // ...mapActions(['fetchAllCategory']),
+    // ...mapMutations(['setCurrentGame']),
     handleClick(tag) {
       this.$emit('click', tag)
     },
     goGameDetail(name) {
       this.setCurrentGame(name)
       this.$router.push('/game/' + name)
+    },
+    async handleLike(game_name) {
+      const { status, message, data } = await _likeGame(convertParams({'user_id': this.currentUser.id, 'game_name': game_name}))
+      if (status) {
+        // this.$emit('addLike', game_name)
+        this.likeSet.add(game_name)
+        this.$message({
+          message: '收藏成功',
+          type: 'success',
+          offset: 300
+        })
+      } else {
+        this.$message({
+          message: '收藏失败',
+          type: 'error',
+          offset: 300
+        })
+      }
+    },
+    async handleCancelLike(game_name) {
+      const { status, message, data } = await _cancelLikeGame(convertParams({'user_id': this.currentUser.id, 'game_name': game_name}))
+      if (status) {
+        // this.$emit('deleteLike', game_name)
+        this.likeSet.delete(game_name)
+        this.$message({
+          message: '取消收藏成功',
+          type: 'success',
+          offset: 300
+        })
+      } else {
+        this.$message({
+          message: '取消收藏失败',
+          type: 'error',
+          offset: 300
+        })
+      }
+    }
+  },
+  watch: {
+    likeSet: {
+      handler: function(newVal, oldVal) {
+        console.log('change!')
+      },
+      deep: true
     }
   },
   computed: {
     ...mapGetters(['getMiniCategoryList']),
+    ...mapState(['currentUser']),
     blankNum() {
       return this.allNum % 4 === 0 ? 0 : 4 - (this.allNum % 4)
     },
@@ -92,9 +145,7 @@ export default {
     }
   },
   created() {
-    if (this.type === 'card') {
-      this.fetchAllCategory()
-    }
+    this.likeSet = this.like
   }
 }
 </script>
