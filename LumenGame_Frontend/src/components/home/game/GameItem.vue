@@ -11,16 +11,15 @@
             </div>
             <div class="g-content">
               <h3 class="g-title">{{item.fields.name}}</h3>
-              <div class="g-company">{{(item.fields.publisher || '').split(',')[0]}}
-                <div class="g-tag">
-                  <el-button type="mini" v-for="(tag, idx) in (item.fields.popular_tags || '').split(',').slice(0, 5)"
-                    :key="idx" v-on:click.stop="handleClick(tag)">
-                    {{tag}}
-                  </el-button>
-                </div>
-              </div>
+              <div class="g-company">{{(item.fields.publisher || '').split(',')[0]}}</div>
               <img src="../../../assets/img/like-active.png" v-if="likeSet.has(item.fields.name)" width="30px" height="30px" style="cursor: pointer" v-on:click.stop="handleCancelLike(item.fields.name)"/>
               <img src="../../../assets/img/like.png" v-else width="30px" height="30px" style="cursor: pointer" v-on:click.stop="handleLike(item.fields.name)"/>
+              <div class="g-tag">
+                <el-button type="mini" v-for="(tag, idx) in (item.fields.popular_tags || '').split(',').slice(0, 5)"
+                  :key="idx" v-on:click.stop="handleClick(tag)">
+                  {{tag}}
+                </el-button>
+              </div>
             </div>
           </a>
         </li>
@@ -174,21 +173,24 @@ export default {
       .g-content {
         box-sizing: border-box;
         width: 100%;
-        background-color: #1aa7b785;    // 卡片底色
+        height: 200px;
+        background-color: #1aa7b721;    // 卡片底色
         border: 1px solid #1aa7b785;
         border-top: none;
         // .box-shadow-tx(#eee, #eee);
       }
       .g-title {
+        margin-top: 0px;
         margin-bottom: 10px;
+        padding-top: 10px;
         font-size: 500;
         color: #ebebeb;                 // 游戏名颜色
         overflow: hidden;
         .text-ellipsis();
       }
       .g-company {
-        height: 100px;
         color: #1AA6B7;
+        padding-bottom: 5px;
         font-weight: 300;
         // overflow: hidden;
         // .text-ellipsis();
@@ -197,7 +199,7 @@ export default {
         .el-button {
           background-color: rgba(0, 0, 0, 0.253);
           border: 0px;
-          color: rgba(202, 202, 202, 0.527);
+          color: rgba(240, 231, 231, 0.726);
           margin-top: 5px;
         }
       }
