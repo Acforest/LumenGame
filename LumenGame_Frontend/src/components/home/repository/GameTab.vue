@@ -73,7 +73,7 @@ export default {
         top: 3px;
         width: 1px;
         height: 24px;
-        background-color: #ccc;
+        background-color: rgb(212, 50, 50);
       }
       &:active {
         color: @main-orange;

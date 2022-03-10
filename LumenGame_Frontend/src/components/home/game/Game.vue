@@ -140,6 +140,9 @@ export default {
   .g-search-wrap {
     position: relative;
     margin: 0;
+    .el-input {
+      opacity: 0.9;
+    }
     // overflow: hidden;
     input {
       width: 500px;

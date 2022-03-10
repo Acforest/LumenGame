@@ -103,13 +103,15 @@ export default {
     height: 30px;
     line-height: 30px;
     padding: 8px 10px;
-    color: #666;
+    color: #5290aa;
     &:hover {
-      background-color: #f4f4f4;
+      background-color: #3fc9d877;
+      color: #002D40;
     }
   }
   .ranks-tag-active {
-    background-color: #f4f4f4;
+    background-color: #3fc9d8;
+    color: #002D40;
   }
 }
 </style>
