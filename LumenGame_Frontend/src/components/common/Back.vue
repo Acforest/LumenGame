@@ -23,8 +23,8 @@ export default {
   display: inline-block;
   border-radius: 50%;
   padding: 6px 4px;
-  border: 2px double rgba(64, 158, 255, 0.5);
-  color: #409eff;
+  border: 2px double rgba(7, 14, 20, 0.5);
+  color: #0f253b;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   i {
@@ -32,7 +32,7 @@ export default {
   }
   &:hover {
     box-shadow: 0 0 0 3px rgba(64, 158, 255, 0.5);
-    background-color: #409eff;
+    background-color: rgb(13, 54, 75);
     color: #fff;
     transform: scale(1.2);
   }

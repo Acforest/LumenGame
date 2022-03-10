@@ -16,7 +16,7 @@
             <span v-if="item.fields.discount_price" class="r-lx" style="color: green;">{{item.fields.discount_pct}} ↓</span>
           </div>
         </a>
-        <pTips :type="item.fields.rank_type" :date="item.fields.publish_date"/>
+        <!-- <pTips :type="item.fields.rank_type" :date="item.fields.publish_date"/> -->
       </li>
     </ul>
   </div>

@@ -12,12 +12,12 @@
             <div class="g-content">
               <h3 class="g-title">{{item.fields.name}}</h3>
               <div class="g-company">{{(item.fields.publisher || '').split(',')[0]}}
-                <span class="g-tag">
+                <div class="g-tag">
                   <el-button type="mini" v-for="(tag, idx) in (item.fields.popular_tags || '').split(',').slice(0, 5)"
                     :key="idx" v-on:click.stop="handleClick(tag)">
                     {{tag}}
                   </el-button>
-                </span>
+                </div>
               </div>
               <img src="../../../assets/img/like-active.png" v-if="likeSet.has(item.fields.name)" width="30px" height="30px" style="cursor: pointer" v-on:click.stop="handleCancelLike(item.fields.name)"/>
               <img src="../../../assets/img/like.png" v-else width="30px" height="30px" style="cursor: pointer" v-on:click.stop="handleLike(item.fields.name)"/>
@@ -194,7 +194,6 @@ export default {
         // .text-ellipsis();
       }
       .g-tag {
-        float: left;
         .el-button {
           background-color: rgba(0, 0, 0, 0.253);
           border: 0px;

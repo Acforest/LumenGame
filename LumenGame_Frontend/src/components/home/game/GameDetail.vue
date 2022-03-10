@@ -2,9 +2,7 @@
   <el-container class="g-detail">
     <el-aside width="300px">
       <div class="g-cover">
-        <img :src="game_detail[0].fields.img_url || 
-        'https://cdn1.epicgames.com/spt-assets/a7ecccc8ca084febb744ca0d141b8061/download-amelie-offer-1tdkw.jpg?h=854&resize=1&w=640'" alt="">
-        <!-- <img src="https://cdn1.epicgames.com/spt-assets/a7ecccc8ca084febb744ca0d141b8061/download-amelie-offer-1tdkw.jpg?h=854&resize=1&w=640" alt=""> -->
+        <img :src="game_detail[0].fields.img_url" alt="">
       </div>
     </el-aside>
     <el-main>
@@ -12,18 +10,24 @@
         <div class="g-title">{{game_detail[0].fields.name}}</div>
       </div>
       <div class="g-bd">
-        <div class="g-desc">{{game_detail[0].fields.desc_snippet}}</div>
+        <!-- <div class="g-desc">{{game_detail[0].fields.desc_snippet}}</div> -->
+        <div class="g-desc">{{game_detail[0].fields.game_description}}</div>
       </div>
       <div class="g-tips">
-        <span class="g-lx">{{game_detail[0].fields.name}}</span>
-        <span class="g-company icon-home iconfont">{{game_detail[0].fields.developer}}</span>
+        <span class="g-lx" v-if="game_detail[0].fields.minimum_requirements">{{game_detail[0].fields.minimum_requirements}}</span>
+        <span class="g-lx" v-if="game_detail[0].fields.recommended_requirements">{{game_detail[0].fields.recommended_requirements}}</span>
+        <span class="g-company el-icon-s-platform" v-if="game_detail[0].fields.types">  {{game_detail[0].fields.types}}</span>
+        <span class="g-company el-icon-chat-line-round" v-if="game_detail[0].fields.languages">  {{game_detail[0].fields.languages}}</span>
+        <span class="g-company el-icon-collection-tag" v-if="game_detail[0].fields.genre">  {{game_detail[0].fields.genre}}</span>
+        <span class="g-company el-icon-office-building" v-if="game_detail[0].fields.developer">  {{game_detail[0].fields.developer}}</span>
+        <span class="g-company el-icon-warning-outline" v-if="game_detail[0].fields.mature_conten">  {{game_detail[0].fields.mature_content}}</span>
       </div>
       <div class="g-btn">
-        <button class="g-download" @click="download(game_detail[0].fields.url)"><i class="iconfont icon-thunderbolt"></i>Download</button>
+        <button class="g-download" @click="download(game_detail[0].fields.url)"><i class="iconfont icon-thunderbolt"></i> Download</button>
         <button class="g-star" @click="like ? handleCancelLike(game_detail[0].fields.name) : handleLike(game_detail[0].fields.name)">
           <img src="../../../assets/img/like-active.png" v-if="like" width="15px" height="15px" style="cursor: pointer"/>
           <img src="../../../assets/img/like.png" v-else width="15px" height="15px" style="cursor: pointer"/>
-          {{like ? 'Cancel Like' : 'Like'}}
+          {{like ? ' Cancel Like' : ' Like'}}
         </button>
       </div>
       <pTime :date="game_detail[0].fields.release_date"></pTime>
@@ -117,7 +121,7 @@ export default {
 @import '~@css/variables.less';
 .el-container {
   display: flex;
-  background-color: #fff;
+  background-color: rgba(225, 240, 241, 0.651);
   padding: 20px;
 }
 .el-aside {
@@ -146,7 +150,7 @@ export default {
   .g-bd {
     padding-right: 200px;
     .g-desc {
-      color: #3c3c3c;
+      color: #130c0c;
       line-height: 1.8;
     }
   }
@@ -154,7 +158,7 @@ export default {
     .g-lx {
       display: inline-block;
       padding: 4px 10px;
-      border: 1px solid #ccc;
+      border: 1px solid rgba(204, 204, 204, 0.459);
       border-radius: 4px;
       font-size: 14px;
     }
@@ -162,7 +166,7 @@ export default {
       display: block;
       margin-top: 20px;
       letter-spacing: 2px;
-      color: #6c757d;
+      color: #1d2227;
     }
   }
   .g-btn {
@@ -186,21 +190,30 @@ export default {
       }
     }
     .g-star {
-      border: 0.2px solid #eb4d4b;
-      color: #eb4d4b;
+      border: 0.2px solid #0b0f13;
+      color: #0b0f13;
       &:hover {
         box-shadow: 0 0 0 3px rgba(235, 77, 75, 0.5);
         background-color: #eb4d4b;
         color: #fff;
       }
     }
+    // .g-star {
+    //   border: 0.2px solid #eb4d4b;
+    //   color: #eb4d4b;
+    //   &:hover {
+    //     box-shadow: 0 0 0 3px rgba(235, 77, 75, 0.5);
+    //     background-color: #eb4d4b;
+    //     color: #fff;
+    //   }
+    // }
     .g-star-active {
       background-color: #eb4d4b;
       color: #fff;
     }
     .g-download {
-      border: 0.2px solid #6c757d;
-      color: #6c757d;
+      border: 0.2px solid #0b0f13;
+      color: #0b0f13;
       &:hover {
         box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.5);
         background-color: #6c757d;
