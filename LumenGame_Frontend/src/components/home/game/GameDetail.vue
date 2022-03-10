@@ -20,7 +20,7 @@
       </div>
       <div class="g-btn">
         <button class="g-download" @click="download(game_detail[0].fields.url)"><i
-            class="iconfont icon-thunderbolt"></i>下载</button>
+            class="iconfont icon-thunderbolt"></i>Download</button>
         <button class="g-star" @click="starGame()" :class="{'g-star-active': like}"><i
             class="iconfont icon-icon-test2"></i>122</button>
       </div>
