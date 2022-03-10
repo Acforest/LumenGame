@@ -2,7 +2,7 @@
   <div class="p-time">
     <div class="warp">
       <div class="text">{{date|formatDate(1)}}</div>
-      <div class="desc">上传时间</div>
+      <div class="desc">发布时间</div>
     </div>
   </div>
 </template>

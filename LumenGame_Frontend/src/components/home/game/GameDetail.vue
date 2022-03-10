@@ -19,10 +19,12 @@
         <span class="g-company icon-home iconfont">{{game_detail[0].fields.developer}}</span>
       </div>
       <div class="g-btn">
-        <button class="g-download" @click="download(game_detail[0].fields.url)"><i
-            class="iconfont icon-thunderbolt"></i>Download</button>
-        <button class="g-star" @click="starGame()" :class="{'g-star-active': like}"><i
-            class="iconfont icon-icon-test2"></i>122</button>
+        <button class="g-download" @click="download(game_detail[0].fields.url)"><i class="iconfont icon-thunderbolt"></i>Download</button>
+        <button class="g-star" @click="like ? handleCancelLike(game_detail[0].fields.name) : handleLike(game_detail[0].fields.name)">
+          <img src="../../../assets/img/like-active.png" v-if="like" width="15px" height="15px" style="cursor: pointer"/>
+          <img src="../../../assets/img/like.png" v-else width="15px" height="15px" style="cursor: pointer"/>
+          {{like ? 'Cancel Like' : 'Like'}}
+        </button>
       </div>
       <pTime :date="game_detail[0].fields.release_date"></pTime>
       <pBack />
@@ -32,7 +34,8 @@
 
 <script>
 import {  mapState } from 'vuex'
-import { _getGameDetail } from '@api'
+import { _getGameDetail, _likeGame, _cancelLikeGame } from '@api'
+import { convertParams } from '@utils'
 import pTime from '@/components/common/Time'
 import pBack from '@/components/common/Back'
 export default {
@@ -64,32 +67,40 @@ export default {
       console.log(this.game_detail)
     },
     // 收藏游戏
-    async starGame() {
-      if (this.hasStar === true) {
-        // 取消收藏
-        if (this.currentStar && this.currentStar.id) {
-          console.log(123)
-          const { success } = await _deleteStar(this.currentStar.id)
-          if (success) {
-            this.$message.success('取消收藏')
-            this.fetchAllStar()
-          } else {
-            this.$message.error('取消失败')
-          }
-        } else {
-          console.log('cancel star error')
-        }
-      } else if (this.hasStar === false) {
-        // 收藏
-        const { success } = await _addStar(this.handleStar())
-        if (success) {
-          this.$message.success('收藏成功')
-          this.fetchAllStar()
-        } else {
-          this.$message.error('收藏失败')
-        }
+    async handleLike() {
+      const { status, message, data } = await _likeGame(convertParams({'user_id': this.currentUser.id, 'game_name': this.$route.query.game_name}))
+      if (status) {
+        this.like = true
+        this.$forceUpdate()
+        this.$message({
+          message: '收藏成功',
+          type: 'success',
+          offset: 300
+        })
       } else {
-        console.log('star error')
+        this.$message({
+          message: '收藏失败',
+          type: 'error',
+          offset: 300
+        })
+      }
+    },
+    async handleCancelLike(game_name) {
+      const { status, message, data } = await _cancelLikeGame(convertParams({'user_id': this.currentUser.id, 'game_name': this.$route.query.game_name}))
+      if (status) {
+        this.like = false
+        this.$forceUpdate()
+        this.$message({
+          message: '取消收藏成功',
+          type: 'success',
+          offset: 300
+        })
+      } else {
+        this.$message({
+          message: '取消收藏失败',
+          type: 'error',
+          offset: 300
+        })
       }
     },
   },

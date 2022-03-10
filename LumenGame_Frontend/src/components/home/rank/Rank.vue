@@ -33,8 +33,8 @@ export default {
     return {
       ranks: [
         { name: '最高热度', tag: 'hot', icon: 'el-icon-trophy' },
-        // { name: '口碑佳作', tag: 'score' },
-        { name: '最新上架', tag: 'new', icon: 'el-icon-time' }
+        { name: '最新上架', tag: 'new', icon: 'el-icon-time' },
+        { name: '特别优惠', tag: 'special', icon: 'el-icon-shopping-bag-2' },
       ],
       currentIndex: 'hot',
       currentPage: 1,

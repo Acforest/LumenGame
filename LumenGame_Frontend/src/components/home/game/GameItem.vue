@@ -83,6 +83,8 @@ export default {
       if (status) {
         // this.$emit('addLike', game_name)
         this.likeSet.add(game_name)
+        this.$forceUpdate()
+        // this.likeSet = new Set()
         this.$message({
           message: '收藏成功',
           type: 'success',
@@ -101,6 +103,8 @@ export default {
       if (status) {
         // this.$emit('deleteLike', game_name)
         this.likeSet.delete(game_name)
+        this.$forceUpdate()
+        // this.likeSet = new Set()
         this.$message({
           message: '取消收藏成功',
           type: 'success',

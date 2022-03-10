@@ -1,17 +1,18 @@
 <template>
   <div class="p-tips">
-    <div class="warp" v-if="type==='new'">
-      <div class="text">{{date|formatDate(1)}}</div>
-      <div class="desc">上传时间</div>
+    <div class="warp">
+      
+      <div class="text">发布时间</div>
+      <div class="desc">{{date || '未知'}}</div>
     </div>
-    <div class="warp" v-else-if="type==='score'">
+    <!-- <div class="warp" v-else-if="type==='score'">
       <div class="text">{{score || 0}} 分</div>
       <div class="desc">当前评分</div>
     </div>
     <div class="warp" v-else-if="type==='star'">
       <div class="text">{{star}}</div>
       <div class="desc">收藏数量</div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -20,13 +21,7 @@
 export default {
   props: {
     date: {
-      type: Number
-    },
-    score: {
       type: String
-    },
-    star: {
-      type: Number
     },
     type: {
       type: String

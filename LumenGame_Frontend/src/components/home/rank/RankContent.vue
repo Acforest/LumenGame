@@ -9,10 +9,14 @@
           </div>
           <div class="r-content">
             <p class="r-name"> {{item.fields.name}}</p>
-            <span class="r-lx">{{item.fields.price}}</span>
+            
+            <span class="r-lx" v-if="item.fields.discount_price" :style="'text-decoration: line-through;'">{{item.fields.price}}</span>
+            <span class="r-lx" v-else>{{item.fields.price}}</span>
+            <span v-if="item.fields.discount_price" class="r-lx" style="color: green;">{{item.fields.discount_price}}</span>
+            <span v-if="item.fields.discount_price" class="r-lx" style="color: green;">{{item.fields.discount_pct}} ↓</span>
           </div>
         </a>
-        <pTips :type="item.fields.rank_type"/>
+        <pTips :type="item.fields.rank_type" :date="item.fields.publish_date"/>
       </li>
     </ul>
   </div>

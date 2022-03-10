@@ -102,6 +102,9 @@ class GameRank(models.Model):
     img_url = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
     rank_type = models.CharField(max_length=255, default='hot')
+    discount_price = models.CharField(max_length=255, blank=True, null=True)
+    discount_pct = models.CharField(max_length=255, blank=True, null=True)
+    publish_date = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = True
