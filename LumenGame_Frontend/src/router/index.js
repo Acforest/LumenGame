@@ -8,23 +8,21 @@ const Game = () => import(/*  webpackChunkName: "home_game" */ '@/components/hom
 const Index = () => import(/*  webpackChunkName: "home_index" */ '@/components/home/index/Index')
 const info = () => import(/*  webpackChunkName: "home_info" */ '@/components/home/info/Info')
 const Rank = () => import(/*  webpackChunkName: "home_rank" */ '@/components/home/rank/Rank')
-// const Repository = () => import(/*  webpackChunkName: "home_repository" */ '@/components/home/repository/Repository')
+const Repository = () => import(/*  webpackChunkName: "home_repository" */ '@/components/home/repository/Repository')
 const Share = () => import(/*  webpackChunkName: "home_share" */ '@/components/home/share/Share')
 // --
 const GameDetail = () => import(/*  webpackChunkName: "home_game" */ '@/components/home/game/GameDetail')
-const AddPost = () => import(/*  webpackChunkName: "home_share" */ '@/components/home/share/AddPost')
-const PostDetail = () => import(/*  webpackChunkName: "home_share" */ '@/components/home/share/PostDetail')
+// const PostDetail = () => import(/*  webpackChunkName: "home_share" */ '@/components/home/share/PostDetail')
 // -
-const Admin = () => import(/*  webpackChunkName: "login_home_admin" */ '@/components/Admin')
+// const Admin = () => import(/*  webpackChunkName: "login_home_admin" */ '@/components/Admin')
 // --
-const aCategory = () => import(/*  webpackChunkName: "admin_category" */ '@/components/admin/category/Category')
-const aComment = () => import(/*  webpackChunkName: "admin_comment" */ '@/components/admin/comment/Comment')
-const aGame = () => import(/*  webpackChunkName: "admin_game" */ '@/components/admin/game/Game')
-const aLog = () => import(/*  webpackChunkName: "admin_log" */ '@/components/admin/log/Log')
-const aPost = () => import(/*  webpackChunkName: "admin_post" */ '@/components/admin/post/Post')
-const aAddPost = () => import(/*  webpackChunkName: "admin_addPost" */ '@/components/admin/post/addPost')
-const aUser = () => import(/*  webpackChunkName: "admin_user" */ '@/components/admin/user/User')
-const aNotice = () => import(/*  webpackChunkName: "admin_notice" */ '@/components/admin/notice/Notice')
+// const aCategory = () => import(/*  webpackChunkName: "admin_category" */ '@/components/admin/category/Category')
+// const aComment = () => import(/*  webpackChunkName: "admin_comment" */ '@/components/admin/comment/Comment')
+// const aGame = () => import(/*  webpackChunkName: "admin_game" */ '@/components/admin/game/Game')
+// const aLog = () => import(/*  webpackChunkName: "admin_log" */ '@/components/admin/log/Log')
+// const aPost = () => import(/*  webpackChunkName: "admin_post" */ '@/components/admin/post/Post')
+// const aUser = () => import(/*  webpackChunkName: "admin_user" */ '@/components/admin/user/User')
+// const aNotice = () => import(/*  webpackChunkName: "admin_notice" */ '@/components/admin/notice/Notice')
 // -
 const Login = () => import(/*  webpackChunkName: "login_home_admin" */ '@/components/Login')
 // -
@@ -49,29 +47,26 @@ const routes = [
       { path: '/index', component: Index },
       { path: '/info', component: info },
       { path: '/rank', component: Rank },
-      // { path: '/repository', component: Repository },
-      { path: '/share', component: Share },
-      { path: '/share/:id', component: PostDetail, props: true },
-      { path: '/addPost', component: AddPost }
+      { path: '/repository', component: Repository },
+      // { path: '/share', component: Share },
+      // { path: '/share/:id', component: PostDetail, props: true },
     ]
   },
-  {
-    path: '/admin',
-    name: 'Admin',
-    component: Admin,
-    redirect: '/_user',
-    children: [
-      { path: '/_category', component: aCategory },
-      { path: '/_comment', component: aComment },
-      { path: '/_game', component: aGame },
-      { path: '/_log', component: aLog },
-      { path: '/_post', component: aPost },
-      { path: '/_dPost/:id', component: aAddPost, props: true },
-      { path: '/_dPost', component: aAddPost, props: true },
-      { path: '/_user', component: aUser },
-      { path: '/_notice', component: aNotice }
-    ]
-  },
+  // {
+  //   path: '/admin',
+  //   name: 'Admin',
+  //   component: Admin,
+  //   redirect: '/_user',
+  //   children: [
+  //     { path: '/_category', component: aCategory },
+  //     { path: '/_comment', component: aComment },
+  //     { path: '/_game', component: aGame },
+  //     { path: '/_log', component: aLog },
+  //     { path: '/_post', component: aPost },
+  //     { path: '/_user', component: aUser },
+  //     { path: '/_notice', component: aNotice }
+  //   ]
+  // },
   {
     path: '/login',
     name: 'Login',
@@ -92,26 +87,13 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const path = '/' + to.path.split('/')[1]
   console.log(to.path, from.path, path)
-  switch (path) {
-    case '/_category':
-    case '/_comment':
-    case '/_game':
-    case '/_log':
-    case '/_post':
-    case '/_AddPost':
-    case '/_user':
-    case '/_notice':
-      window.sessionStorage.setItem('aCurrentIndex', path)
-      break
-    case '/game':
-    case '/index':
-    case '/info':
-    case '/rank':
-    case '/repository':
-    case '/share':
-      window.sessionStorage.setItem('hCurrentIndex', path)
-      break
-  }
+  // switch (path) {
+  //   case '/game':
+  //   case '/index':
+  //   case '/info':
+  //   case '/rank':
+  //   case '/repository':
+  // }
 
   // if (to.meta.requieAuth) {
   //   if (sessionStorage.getItem('currentUser') === null) {
@@ -125,7 +107,7 @@ router.beforeEach((to, from, next) => {
 
   // 添加未登录时跳转到登录界面
   if (sessionStorage.getItem('currentUser') === null) {
-    if (to.path === '/game' || to.path === '/share' || to.path === '/info') {
+    if (to.path === '/game' || to.path === '/repository' || to.path === '/info') {
       next({
         path: '/login',
         query: { redirect: to.fullPath }

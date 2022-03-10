@@ -7,7 +7,7 @@
           <!-- <a href="javascript:;" @click="goGameDetail(item.name)"> -->
           <a style="cursor: pointer" @click="goGameDetail(item.fields.name)">
             <div class="g-cover">
-              <img :src="item.photo" alt="">
+              <img :src="item.fields.img_url" alt="">
             </div>
             <div class="g-content">
               <h3 class="g-title">{{item.fields.name}}</h3>
@@ -25,7 +25,7 @@
           </a>
         </li>
         <!-- 占位 -->
-        <li v-for="(item, index) in blankNum" class="g-list" :key="index"></li>
+        <!-- <li v-for="(item, index) in blankNum" class="g-list" :key="index"></li> -->
       </ul>
       <!-- <ul v-else-if="type === 'card'"> -->
         <!-- card -->

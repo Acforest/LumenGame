@@ -250,7 +250,7 @@ export default {
 }
 
 .g-header {
-  background-color: #a4ccdcc5;   // 显示搜索到内容的底色
+  background-color: rgb(35, 85, 101);   // 显示搜索到内容的底色
   padding: 0;
   margin: 0 20px;
   color: #ffffff;                 // 搜索条数字体的颜色

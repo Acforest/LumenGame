@@ -29,11 +29,14 @@ import rankContent from './RankContent'
 import { mapActions, mapState } from 'vuex'
 import { _getRank } from '@api'
 export default {
+  props: {
+    tag: String
+  },
   data() {
     return {
       ranks: [
-        { name: '最高热度', tag: 'hot', icon: 'el-icon-trophy' },
-        { name: '最新上架', tag: 'new', icon: 'el-icon-time' },
+        { name: '热门推荐', tag: 'hot', icon: 'el-icon-trophy' },
+        { name: '最新发布', tag: 'new', icon: 'el-icon-time' },
         { name: '特别优惠', tag: 'special', icon: 'el-icon-shopping-bag-2' },
       ],
       currentIndex: 'hot',
@@ -78,7 +81,12 @@ export default {
     rankContent
   },
   created() {
-    this.currentIndex = 'hot'
+    if (this.$route.params.tag)
+      this.currentIndex = this.$route.params.tag
+    else {
+      this.currentIndex = 'hot'
+    }
+    console.log(this.currentIndex)
     this.fetchGameRank()
   }
 }

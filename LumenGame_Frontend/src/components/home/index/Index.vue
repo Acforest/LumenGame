@@ -25,6 +25,7 @@
         <swiper-slide class="slide-3"></swiper-slide>
         <swiper-slide class="slide-4"></swiper-slide>
         <swiper-slide class="slide-5"></swiper-slide>
+        <swiper-slide class="slide-6"></swiper-slide>
         <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
         <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
       </swiper>
@@ -35,6 +36,7 @@
         <swiper-slide class="slide-3"></swiper-slide>
         <swiper-slide class="slide-4"></swiper-slide>
         <swiper-slide class="slide-5"></swiper-slide>
+        <swiper-slide class="slide-6"></swiper-slide>
       </swiper>
     </div>
 
@@ -68,14 +70,16 @@
           <h2 class="home_page_content_title">
             热门推荐
             <span class="hot_more">
-              <router-link :to="{path:'/rank'}">浏览更多</router-link>
+              <router-link :to="{path:'/rank', params: {'tag': 'hot'}}">浏览更多</router-link>
             </span>
           </h2>
           <swiper :options="swiperOption" ref="mySwiper">
               <swiper-slide class="slide-1">1</swiper-slide>
-              <swiper-slide class="slide-2">Slide 2</swiper-slide>
-              <swiper-slide class="slide-3">Slide 3</swiper-slide>
-              <swiper-slide class="slide-4">Slide 4</swiper-slide>
+              <swiper-slide class="slide-2">2</swiper-slide>
+              <swiper-slide class="slide-3">3</swiper-slide>
+              <swiper-slide class="slide-4">4</swiper-slide>
+              <swiper-slide class="slide-5">5</swiper-slide>
+              <swiper-slide class="slide-6">6</swiper-slide>
               <!-- <swiper-slide v-for="(item, index) in hotList" :key="item.id"></swiper-slide> -->
               <div class="swiper-pagination" slot="pagination"></div>
               <div class="swiper-button-prev" slot="button-prev"></div>
@@ -83,23 +87,46 @@
           </swiper>
     </div>
 
-    <div class="hot_index">
+    <div class="new_index">
           <h2 class="home_page_content_title">
             最新发布
-            <span class="hot_more">
-              <router-link :to="{path:'/rank'}">浏览更多</router-link>
+            <span class="new_more">
+              <router-link :to="{path:'/rank', params: {'tag': 'new'}}">浏览更多</router-link>
             </span>
           </h2>
           <swiper :options="swiperOption" ref="mySwiper">
-              <swiper-slide>Slide 1</swiper-slide>
-              <swiper-slide>Slide 2</swiper-slide>
-              <swiper-slide>Slide 3</swiper-slide>
-              <swiper-slide>Slide 4</swiper-slide>
+              <swiper-slide class="slide-1">1</swiper-slide>
+              <swiper-slide class="slide-2">2</swiper-slide>
+              <swiper-slide class="slide-3">3</swiper-slide>
+              <swiper-slide class="slide-4">4</swiper-slide>
+              <swiper-slide class="slide-5">5</swiper-slide>
+              <swiper-slide class="slide-6">6</swiper-slide>
               <!-- <swiper-slide v-for="(item, index) in hotList" :key="item.id"></swiper-slide> -->
               <div class="swiper-pagination" slot="pagination"></div>
               <div class="swiper-button-prev" slot="button-prev"></div>
               <div class="swiper-button-next" slot="button-next"></div>
           </swiper>
+    </div>
+
+    <div class="special_index">
+      <h2 class="home_page_content_title">
+        特别优惠
+        <span class="special_more">
+          <router-link :to="{path:'/rank', params: {'tag': 'special'}}">浏览更多</router-link>
+        </span>
+      </h2>
+      <swiper :options="swiperOption" ref="mySwiper">
+          <swiper-slide class="slide-1">1</swiper-slide>
+          <swiper-slide class="slide-2">2</swiper-slide>
+          <swiper-slide class="slide-3">3</swiper-slide>
+          <swiper-slide class="slide-4">4</swiper-slide>
+          <swiper-slide class="slide-5">5</swiper-slide>
+          <swiper-slide class="slide-6">6</swiper-slide>
+          <!-- <swiper-slide v-for="(item, index) in hotList" :key="item.id"></swiper-slide> -->
+          <div class="swiper-pagination" slot="pagination"></div>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
+      </swiper>
     </div>
 
     <!-- <pRecommend></pRecommend> -->
@@ -206,7 +233,8 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+  },
   created() {
     this.fetchNotice()
   },
@@ -430,19 +458,164 @@ export default {
     background-size: cover;
 
     &.slide-1 {
-      background-image:url('https://cdn.akamai.steamstatic.com/steam/apps/735290/header_alt_assets_2.jpg?t=1646322786')
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg?t=1646817776')
     }
     &.slide-2 {
-      background-image:url('https://cdn.akamai.steamstatic.com/steam/apps/1097150/header.jpg?t=1645126741')
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1475810/header.jpg?t=1645724017')
     }
     &.slide-3 {
-      background-image:url('https://cdn.akamai.steamstatic.com/steam/apps/1222140/header_schinese.jpg?t=1625648054')
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1740720/header.jpg?t=1646876461')
     }
     &.slide-4 {
-      background-image:url('/src/assets/temp.jpg')
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1244460/header_alt_assets_0.jpg?t=1646758010')
     }
     &.slide-5 {
-      background-image:url('/src/assets/temp.jpg')
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/982290/header.jpg?t=1646750735')
+    }
+    &.slide-6 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/534380/header_schinese.jpg?t=1645792973')
+    }
+  }
+}
+
+.special_index {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 40px;
+
+  .home_page_content_title {
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 0 10px;
+    letter-spacing: 0.03em;
+    font-weight: normal;
+    padding-top: 2px;
+    justify-content: space-between;
+    text-align: left;
+
+    .special_more {
+      float: right;
+      text-transform: none;
+      letter-spacing: normal;
+      display: inline-block;
+      position: relative;
+      top: -3px;
+      font-size: 14px;
+    }
+  }
+  .router-link-active {
+    text-decoration: none;
+    color: rgb(104, 105, 156);
+  }
+  a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.822);
+  }
+  .swiper-slide {
+    width: 30%;
+    line-height: 220px;
+    // background: rgb(245, 255, 225);
+    color: rgba(0, 0, 0, 0);
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+    border: 2px solid #1AA6B7;
+    border-radius: 10px ;
+
+    background-position: center;
+    background-size: cover;
+
+    &.slide-1 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/460930/header.jpg?t=1602605434')
+    }
+    &.slide-2 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/731490/header.jpg?t=1568841571')
+    }
+    &.slide-3 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/996580/header.jpg?t=1588789018')
+    }
+    &.slide-4 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/728880/header_schinese.jpg?t=1643298085')
+    }
+    &.slide-5 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1135690/header.jpg?t=1645702509')
+    }
+    &.slide-6 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1644960/header.jpg?t=1645805127')
+    }
+  }
+}
+
+.new_index {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 40px;
+
+  .home_page_content_title {
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 0 10px;
+    letter-spacing: 0.03em;
+    font-weight: normal;
+    padding-top: 2px;
+    justify-content: space-between;
+    text-align: left;
+
+    .new_more {
+      float: right;
+      text-transform: none;
+      letter-spacing: normal;
+      display: inline-block;
+      position: relative;
+      top: -3px;
+      font-size: 14px;
+    }
+  }
+  .router-link-active {
+    text-decoration: none;
+    color: rgb(104, 105, 156);
+  }
+  a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.822);
+  }
+  .swiper-slide {
+    width: 30%;
+    line-height: 220px;
+    // background: rgb(245, 255, 225);
+    color: rgba(0, 0, 0, 0);
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+    border: 2px solid #1AA6B7;
+    border-radius: 10px ;
+
+    background-position: center;
+    background-size: cover;
+
+    &.slide-1 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1115050/header.jpg?t=1646869683')
+    }
+    &.slide-2 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1868300/header.jpg?t=1646909037')
+    }
+    &.slide-3 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1148560/header.jpg?t=1646686828')
+    }
+    &.slide-4 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1256230/header.jpg?t=1646643585')
+    }
+    &.slide-5 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1621690/header_alt_assets_2_schinese.jpg?t=1646915732')
+    }
+    &.slide-6 {
+      background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1570010/header.jpg?t=1646917253')
     }
   }
 }
@@ -460,19 +633,22 @@ export default {
       background-repeat:no-repeat;
 
       &.slide-1 {
-        background-image:url('https://cdn.akamai.steamstatic.com/steam/apps/1418630/header.jpg?t=1646709871');
+        background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg?t=1646817776');
       }
       &.slide-2 {
-        background-image:url('https://cdn.akamai.steamstatic.com/steam/apps/1245620/ss_ae44317e3bd07b7690b4d62cc5d0d1df30367a91.600x338.jpg?t=1646770182');
+        background-image:url('https://cdn.akamai.steamstatic.com/steam/apps/1418630/header.jpg?t=1646709871');
       }
       &.slide-3 {
-        background-image:url('/images/example/4.jpg');
+        background-image:url('https://cdn.akamai.steamstatic.com/steam/apps/1245620/ss_ae44317e3bd07b7690b4d62cc5d0d1df30367a91.600x338.jpg?t=1646770182');
       }
       &.slide-4 {
-        background-image:url('/images/example/5.jpg');
+        background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1115050/header.jpg?t=1646869683');
       }
       &.slide-5 {
-        background-image:url('/images/example/6.jpg');
+        background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1656780/header.jpg?t=1646879477');
+      }
+      &.slide-6 {
+        background-image:url('https://cdn.cloudflare.steamstatic.com/steam/apps/1531540/header.jpg?t=1646837004');
       }
     }
 

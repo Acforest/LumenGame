@@ -3,27 +3,27 @@
     <el-form :model="userInfoForm" :rules="userInfoRules" ref="userInfoForm"
       label-width="100px" size="small" :hide-required-asterisk="true">
       <el-form-item prop="id">
-        <span slot="label">ID</span>
+        <span slot="label" class="info-label">ID</span>
         <el-input v-model="userInfoForm.id" disabled></el-input>
       </el-form-item>
       <el-form-item prop="username">
-        <span slot="label">用户名</span>
+        <span slot="label" class="info-label">用户名</span>
         <el-input v-model="userInfoForm.username"></el-input>
       </el-form-item>
       <el-form-item prop="phone">
-        <span slot="label">手机号码</span>
+        <span slot="label" class="info-label">手机号码</span>
         <el-input v-model="userInfoForm.phone"></el-input>
       </el-form-item>
       <el-form-item prop="qq">
-        <span slot="label">QQ</span>
+        <span slot="label" class="info-label">QQ</span>
         <el-input v-model="userInfoForm.qq"></el-input>
       </el-form-item>
       <el-form-item prop="email">
-        <span slot="label">邮箱</span>
+        <span slot="label" class="info-label">邮箱</span>
         <el-input v-model="userInfoForm.email"></el-input>
       </el-form-item>
       <el-form-item prop="avatarImgUrl">
-        <span slot="label">头像</span>
+        <span slot="label" class="info-label">头像</span>
         <el-upload class="avatar-uploader" :action="bindURL('uploadfile')"
           :show-file-list="false" :on-success="handleEditAvatarSuccess" name="files">
           <img v-if="userInfoForm.avatarImgUrl" :src="userInfoForm.avatarImgUrl"
@@ -32,7 +32,7 @@
         </el-upload>
       </el-form-item>
       <el-form-item prop="description">
-        <span slot="label">自我描述</span>
+        <span slot="label" class="info-label">自我描述</span>
         <el-input v-model="userInfoForm.description" type="textarea"
           :autosize="{ minRows: 3, maxRows: 6 }" resize="none"></el-input>
       </el-form-item>
@@ -117,9 +117,12 @@ export default {
     }
   }
   .el-input {
-    opacity: 0.7;
+    // opacity: 0.7;
     // border: 1px solid #3fc9d8;
     background-color: #002D40;
+  }
+  .info-label {
+    color: #3fc9d8;
   }
 }
 </style>

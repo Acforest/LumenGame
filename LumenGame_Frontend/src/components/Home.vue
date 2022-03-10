@@ -17,8 +17,8 @@
               default-active="currentIndex" router>
           <el-menu-item index="index"><i class="el-icon-s-home"></i>首页</el-menu-item>
           <el-menu-item index="rank"><i class="el-icon-sell"></i>热门推荐</el-menu-item>
-          <el-menu-item index="game"><i class="el-icon-star-on"></i>个人推荐</el-menu-item>
-          <el-menu-item index="share"><i class="el-icon-folder-opened"></i>游戏库</el-menu-item>
+          <el-menu-item index="game"><i class="el-icon-star-on"></i>个性推荐</el-menu-item>
+          <el-menu-item index="repository"><i class="el-icon-folder-opened"></i>游戏库</el-menu-item>
           <el-menu-item index="info"><i class="el-icon-user"></i>个人中心</el-menu-item>
         </el-menu>
         <div>

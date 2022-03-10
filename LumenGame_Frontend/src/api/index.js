@@ -26,6 +26,8 @@ const _cancelLikeGame = _post('/game/cancel_like_game/')
 const _getGameDetail = _get('/game/get_game_detail/')
 // repository
 const _getRepositoryGame = _get('/repository/get_repository_game/')
+const _searchRepositoryGame = _get('/repository/search_repository_game/')
+const _searchRepositoryTag = _get('/repository/search_repository_tag/')
 // banner
 const _getBannerList = _get('/banner/get_banner/')
 const _getBannerDetail = _get('/banner/getBannerDetailByBannerID/')
@@ -70,6 +72,8 @@ export {
     _getGameDetail,
     // repository
     _getRepositoryGame,
+    _searchRepositoryGame,
+    _searchRepositoryTag,
     // banner
     _getBannerList,
     _getBannerDetail,

@@ -17,5 +17,7 @@ urlpatterns = [
     path('game/cancel_like_game/', views.cancel_like_game, name='cancel_like_game'),
     path('game/get_game_detail/', views.get_game_detail, name='get_game_detail'),
     path('repository/get_repository_game/', views.get_repository_game, name='get_repository_game'),
+    path('repository/search_repository_game/', views.search_repository_game, name='search_repository_game'),
+    path('repository/search_repository_tag/', views.search_repository_tag, name='search_repository_tag'),
     # path('bulk/', views.bulk, name='bulk'),
 ]

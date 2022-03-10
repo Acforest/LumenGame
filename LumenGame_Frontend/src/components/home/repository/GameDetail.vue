@@ -2,8 +2,7 @@
   <el-container class="g-detail">
     <el-aside width="300px">
       <div class="g-cover">
-        <img :src="game_detail[0].fields.img_url || 
-        'https://cdn1.epicgames.com/spt-assets/a7ecccc8ca084febb744ca0d141b8061/download-amelie-offer-1tdkw.jpg?h=854&resize=1&w=640'" alt="">
+        <img :src="game_detail[0].fields.img_url" alt="">
         <!-- <img src="https://cdn1.epicgames.com/spt-assets/a7ecccc8ca084febb744ca0d141b8061/download-amelie-offer-1tdkw.jpg?h=854&resize=1&w=640" alt=""> -->
       </div>
     </el-aside>
@@ -54,7 +53,7 @@ export default {
   methods: {
     // 返回
     backToLast() {
-      history.go(-1)
+      this.$router.push('/game')
     },
     // 下载
     download(url) {

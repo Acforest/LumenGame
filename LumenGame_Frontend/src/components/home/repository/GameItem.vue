@@ -1,49 +1,30 @@
 <template>
   <div class="game-item">
     <template v-if="allNum">
-      <!-- list -->
-      <ul class="list">
-        <li class="g-list" v-for="(item, index) in list" :key="index">
-          <!-- <a href="javascript:;" @click="goGameDetail(item.name)"> -->
-          <a>
+      <ul>
+        <!-- card -->
+        <li class="g-card" v-for="(item, index) in list" :key="index">
+          <a style="cursor: pointer" @click="goGameDetail(item.fields.name)">
             <div class="g-cover">
-              <img :src="item.photo" alt="">
+              <img :src="item.fields.img_url" alt="">
             </div>
             <div class="g-content">
               <h3 class="g-title">{{item.fields.name}}</h3>
-              <!-- <img src="../../../assets/img/like.png"/> -->
-              <p class="g-company">{{item.fields.publisher.split(',')[0]}}
-                <span class="g-tag">
-                  <el-button type="mini" v-for="(tag, idx) in item.fields.popular_tags.split(',').slice(0, 5)"
-                    :key="idx" @click="handleClick(tag)">
+              <div class="g-company">{{(item.fields.publisher || '').split(',')[0]}}
+                <span class="g-lx">
+                  <el-button type="mini" v-for="(tag, idx) in (item.fields.popular_tags || '').split(',').slice(0, 5)"
+                    :key="idx" v-on:click.stop="handleClick(tag)">
                     {{tag}}
                   </el-button>
                 </span>
-              </p>
+              </div>
+            </div>
+            <div class="g-time">
+              {{item.fields.release_date !== 'NaN' ? item.fields.release_date : '未知'}}
             </div>
           </a>
         </li>
-        <!-- 占位 -->
-        <!-- <li v-for="item in blankNum" class="g-list"></li> -->
       </ul>
-      <!-- <ul v-else-if="type === 'card'"> -->
-        <!-- card -->
-        <!-- <li class="g-card" v-for="item in filterList" :key="item"> -->
-          <!-- <a href="javascript:;" @click="goGameDetail(item)"> -->
-            <!-- <div class=" g-cover"> -->
-              <!-- <img :src="item.photo" alt=""> -->
-            <!-- </div> -->
-            <!-- <div class="g-content"> -->
-              <!-- <h3 class="g-title">{{item.fields.name}}</h3> -->
-              <!-- <p class="g-company">{{item.fields.publisher.split(',')[0]}}</p> -->
-              <!-- <span class="g-lx" @click="handleClick(item)">{{item.fields.popular_tags}}</span> -->
-            <!-- </div> -->
-            <!-- <div class="g-time">
-              {{item.createTime | formatDate(1)}}
-            </div> -->
-          <!-- </a> -->
-        <!-- </li> -->
-      <!-- </ul> -->
     </template>
     <template v-else>
       暂无游戏
@@ -53,48 +34,90 @@
 </template>
 
 <script>
-import { bindURL } from '@utils'
-import { mapActions, mapGetters, mapMutations } from 'vuex'
+import { bindURL, convertParams } from '@utils'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
+import { _likeGame, _cancelLikeGame } from '@api'
 
 export default {
   props: {
     list: Array,
     type: String,
+    like: Set
+  },
+  data() {
+    return {
+      likeSet: null
+    }
   },
   methods: {
-    bindURL,
-    ...mapActions(['fetchAllCategory']),
-    ...mapMutations(['setCurrentGame']),
+    // ...mapActions(['fetchAllCategory']),
+    // ...mapMutations(['setCurrentGame']),
     handleClick(tag) {
       this.$emit('click', tag)
     },
     goGameDetail(name) {
-      this.setCurrentGame(name)
-      this.$router.push('/game/' + name)
+      this.$router.push({path: '/game/' + name, query: {'game_name': name}})
+    },
+    async handleLike(game_name) {
+      const { status, message, data } = await _likeGame(convertParams({'user_id': this.currentUser.id, 'game_name': game_name}))
+      if (status) {
+        // this.$emit('addLike', game_name)
+        this.likeSet.add(game_name)
+        this.$forceUpdate()
+        // this.likeSet = new Set()
+        this.$message({
+          message: '收藏成功',
+          type: 'success',
+          offset: 300
+        })
+      } else {
+        this.$message({
+          message: '收藏失败',
+          type: 'error',
+          offset: 300
+        })
+      }
+    },
+    async handleCancelLike(game_name) {
+      const { status, message, data } = await _cancelLikeGame(convertParams({'user_id': this.currentUser.id, 'game_name': game_name}))
+      if (status) {
+        // this.$emit('deleteLike', game_name)
+        this.likeSet.delete(game_name)
+        this.$forceUpdate()
+        // this.likeSet = new Set()
+        this.$message({
+          message: '取消收藏成功',
+          type: 'success',
+          offset: 300
+        })
+      } else {
+        this.$message({
+          message: '取消收藏失败',
+          type: 'error',
+          offset: 300
+        })
+      }
+    }
+  },
+  watch: {
+    likeSet: {
+      handler: function(newVal, oldVal) {
+        console.log('change!')
+      },
+      deep: true
     }
   },
   computed: {
-    ...mapGetters(['getMiniCategoryList']),
+    ...mapState(['currentUser']),
     blankNum() {
       return this.allNum % 4 === 0 ? 0 : 4 - (this.allNum % 4)
     },
     allNum() {
       return this.list.length
     },
-    filterList() {
-      return this.list.map((i) => {
-        const item = this.getMiniCategoryList().find(
-          (j) => j.id === Number(i.lx)
-        )
-        i.lxName = item.name
-        return i
-      })
-    }
   },
   created() {
-    if (this.type === 'card') {
-      this.fetchAllCategory()
-    }
+    this.likeSet = this.like
   }
 }
 </script>
@@ -174,8 +197,8 @@ export default {
   .g-card {
     height: 160px;
     width: 100%;
-    background-color: rgb(255, 255, 255);
-    border: 1px solid #eee;
+    background-color: rgba(41, 126, 145, 0.568);
+    border: 1px solid rgb(175, 206, 231);
     .box-shadow-tx(#eee, #eee);
     margin-bottom: 10px;
     a {
@@ -194,17 +217,17 @@ export default {
       .g-content {
         flex: 1;
         text-align: left;
-        color: #000;
+        color: rgb(255, 255, 255);
         text-indent: 2em;
         .g-title {
-          font-weight: 400;
+          font-weight: 520;
         }
         .g-company {
-          color: #777;
+          color: rgb(255, 255, 255);
         }
         .g-lx {
           display: inline-block;
-          border: 1px solid #ccc;
+          // border: 1px solid rgb(94, 87, 87);
           padding: 0.5em 1em;
           text-indent: 0;
           font-size: 14px;
@@ -219,8 +242,8 @@ export default {
         position: absolute;
         right: 20px;
         top: 20px;
-        color: #909399;
-        font-size: 14px;
+        color: #ffffff;
+        font-size: 16px;
         letter-spacing: 0.1em;
       }
       &:hover {
@@ -228,7 +251,7 @@ export default {
           transform: scale(1.1);
         }
         .g-content {
-          background-color: #f4f4f4;
+          background-color: #50959e7a;
         }
       }
     }

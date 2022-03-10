@@ -211,6 +211,30 @@ def get_repository_game(request):
         return json_response(1, '获取游戏库成功', repository_json)
 
 
+def search_repository_game(request):
+    if request.method == 'GET':
+        keyword = request.GET['keyword']
+        user_id = request.GET['user_id']
+        repository_query = models.GameInfo.objects.raw(
+            'SELECT game_info.* FROM game_info, repository WHERE game_info.name = repository.game_name AND repository.user_id = %s AND LOCATE(%s, game_info.name) > 0',
+            [user_id, keyword]
+        )
+        repository_json = serializers.serialize('json', repository_query)
+        return json_response(1, '获取游戏库成功', repository_json)
+
+
+def search_repository_tag(request):
+    if request.method == 'GET':
+        tag = request.GET['tag']
+        user_id = request.GET['user_id']
+        repository_query = models.GameInfo.objects.raw(
+            'SELECT game_info.* FROM game_info, repository WHERE game_info.name = repository.game_name AND repository.user_id = %s AND LOCATE(%s, game_info.popular_tags) > 0',
+            [user_id, tag]
+        )
+        repository_json = serializers.serialize('json', repository_query)
+        return json_response(1, '获取游戏库成功', repository_json)
+
+
 def like_game(request):
     if request.method == 'POST':
         try:
