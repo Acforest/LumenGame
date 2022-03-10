@@ -174,7 +174,7 @@ export default {
         box-sizing: border-box;
         width: 100%;
         height: 200px;
-        background-color: #1aa7b721;    // 卡片底色
+        background-color: #1aa7b785;    // 卡片底色
         border: 1px solid #1aa7b785;
         border-top: none;
         // .box-shadow-tx(#eee, #eee);
