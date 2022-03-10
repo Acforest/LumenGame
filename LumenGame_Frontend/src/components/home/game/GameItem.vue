@@ -170,24 +170,33 @@ export default {
       .g-content {
         box-sizing: border-box;
         width: 100%;
-        background-color: #daebeca6;
-        border: 1px solid #daebeca6;
+        background-color: #1aa7b785;    // 卡片底色
+        border: 1px solid #1aa7b785;
         border-top: none;
         // .box-shadow-tx(#eee, #eee);
       }
       .g-title {
-        font-weight: 400;
+        margin-bottom: 10px;
+        font-size: 500;
+        color: #ebebeb;                 // 游戏名颜色
         overflow: hidden;
         .text-ellipsis();
       }
       .g-company {
         height: 100px;
-        color: #000;
+        color: #1AA6B7;
+        font-weight: 300;
         // overflow: hidden;
         // .text-ellipsis();
       }
       .g-tag {
         float: left;
+        .el-button {
+          background-color: rgba(0, 0, 0, 0.253);
+          border: 0px;
+          color: rgba(202, 202, 202, 0.527);
+          margin-top: 5px;
+        }
       }
     }
     &:hover {
@@ -195,7 +204,7 @@ export default {
         transform: scale(1.05);
       }
       .g-content {
-        background: #f4f4f4;
+        background: #056c7785;
       }
     }
   }
@@ -204,7 +213,7 @@ export default {
   .g-card {
     height: 160px;
     width: 100%;
-    background-color: rgb(179, 33, 33);
+    background-color: rgb(255, 255, 255);
     border: 1px solid #eee;
     .box-shadow-tx(#eee, #eee);
     margin-bottom: 10px;

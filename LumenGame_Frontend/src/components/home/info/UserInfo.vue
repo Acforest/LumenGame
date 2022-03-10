@@ -99,7 +99,7 @@ export default {
   text-align: left;
   /deep/.el-upload {
     position: relative;
-    border: 2px solid #ccc;
+    border: 2px solid #3fc9d8;
     line-height: 0;
     border-radius: 2px;
     width: 120px;
@@ -115,6 +115,11 @@ export default {
       .center-x-y();
       font-size: 20px;
     }
+  }
+  .el-input {
+    opacity: 0.7;
+    // border: 1px solid #3fc9d8;
+    background-color: #002D40;
   }
 }
 </style>

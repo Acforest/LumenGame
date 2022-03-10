@@ -99,14 +99,14 @@ export default {
       }
     }
     &:hover {
-      background-color: #f4f4f4;
+      background-color: #226b8a91;
       .r-cover img {
         transform: scale(1.05);
       }
     }
     .r-content {
       text-align: left;
-      color: #666;
+      color: rgba(255, 255, 255, 0.836);
       margin-left: 2em;
       .r-name {
         font-size: 24px;

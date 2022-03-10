@@ -2,23 +2,48 @@
   <div class="game-item">
     <template v-if="allNum">
       <!-- list -->
-      <ul v-if="type === 'list'" class="list">
+      <ul class="list">
         <li class="g-list" v-for="(item, index) in list" :key="index">
-          <a href="javascript:;" @click="goGameDetail(item.name)">
+          <!-- <a href="javascript:;" @click="goGameDetail(item.name)"> -->
+          <a>
             <div class="g-cover">
               <img :src="item.photo" alt="">
             </div>
             <div class="g-content">
               <h3 class="g-title">{{item.fields.name}}</h3>
+              <!-- <img src="../../../assets/img/like.png"/> -->
               <p class="g-company">{{item.fields.publisher.split(',')[0]}}
                 <span class="g-tag">
-                  <el-button type="mini" v-for="(tag, idx) in item.fields.popular_tags.split(',').slice(0, 5)" :key="idx">{{tag}}</el-button>
+                  <el-button type="mini" v-for="(tag, idx) in item.fields.popular_tags.split(',').slice(0, 5)"
+                    :key="idx" @click="handleClick(tag)">
+                    {{tag}}
+                  </el-button>
                 </span>
               </p>
             </div>
           </a>
         </li>
+        <!-- 占位 -->
+        <!-- <li v-for="item in blankNum" class="g-list"></li> -->
       </ul>
+      <!-- <ul v-else-if="type === 'card'"> -->
+        <!-- card -->
+        <!-- <li class="g-card" v-for="item in filterList" :key="item"> -->
+          <!-- <a href="javascript:;" @click="goGameDetail(item)"> -->
+            <!-- <div class=" g-cover"> -->
+              <!-- <img :src="item.photo" alt=""> -->
+            <!-- </div> -->
+            <!-- <div class="g-content"> -->
+              <!-- <h3 class="g-title">{{item.fields.name}}</h3> -->
+              <!-- <p class="g-company">{{item.fields.publisher.split(',')[0]}}</p> -->
+              <!-- <span class="g-lx" @click="handleClick(item)">{{item.fields.popular_tags}}</span> -->
+            <!-- </div> -->
+            <!-- <div class="g-time">
+              {{item.createTime | formatDate(1)}}
+            </div> -->
+          <!-- </a> -->
+        <!-- </li> -->
+      <!-- </ul> -->
     </template>
     <template v-else>
       暂无游戏
@@ -30,8 +55,7 @@
 <script>
 import { bindURL } from '@utils'
 import { mapActions, mapGetters, mapMutations } from 'vuex'
-// list
-// card
+
 export default {
   props: {
     list: Array,
@@ -41,8 +65,8 @@ export default {
     bindURL,
     ...mapActions(['fetchAllCategory']),
     ...mapMutations(['setCurrentGame']),
-    handleClick(lxId) {
-      this.$emit('click', Number(lxId))
+    handleClick(tag) {
+      this.$emit('click', tag)
     },
     goGameDetail(name) {
       this.setCurrentGame(name)
@@ -107,24 +131,33 @@ export default {
       .g-content {
         box-sizing: border-box;
         width: 100%;
-        background-color: #fff;
-        border: 1px solid #eee;
+        background-color: #1aa7b785;    // 卡片底色
+        border: 1px solid #1aa7b785;
         border-top: none;
-        .box-shadow-tx(#eee, #eee);
+        // .box-shadow-tx(#eee, #eee);
       }
       .g-title {
-        font-weight: 400;
+        margin-bottom: 10px;
+        font-size: 500;
+        color: #ebebeb;                 // 游戏名颜色
         overflow: hidden;
         .text-ellipsis();
       }
       .g-company {
         height: 100px;
-        color: #000;
+        color: #1AA6B7;
+        font-weight: 300;
         // overflow: hidden;
         // .text-ellipsis();
       }
       .g-tag {
         float: left;
+        .el-button {
+          background-color: rgba(0, 0, 0, 0.253);
+          border: 0px;
+          color: rgba(202, 202, 202, 0.527);
+          margin-top: 5px;
+        }
       }
     }
     &:hover {
@@ -132,7 +165,7 @@ export default {
         transform: scale(1.05);
       }
       .g-content {
-        background: #f4f4f4;
+        background: #056c7785;
       }
     }
   }
@@ -141,7 +174,7 @@ export default {
   .g-card {
     height: 160px;
     width: 100%;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
     border: 1px solid #eee;
     .box-shadow-tx(#eee, #eee);
     margin-bottom: 10px;

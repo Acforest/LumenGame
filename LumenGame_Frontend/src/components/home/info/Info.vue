@@ -162,6 +162,8 @@ export default {
   // 用户信息
   .user-info {
     margin-bottom: 20px;
+    background-color: #002d404d;
+    border-color: #1AA6B7;
     /deep/ .el-card__body {
       padding-bottom: 0;
     }
@@ -179,7 +181,7 @@ export default {
       margin: 20px 0;
       h4 {
         font-size: 24px;
-        color: #333;
+        color: #1AA6B7;
         margin-bottom: 10px;
         text-shadow: 1px 1px 1px rgb(236 216 216);
       }
@@ -197,6 +199,8 @@ export default {
   }
   // 左侧导航栏
   .menu-nav {
+    background-color: #002d404d;
+    border-color: #1AA6B7;
     li {
       a {
         display: inline-block;
@@ -205,20 +209,20 @@ export default {
         line-height: 32px;
         letter-spacing: 4px;
         text-align: center;
-        color: #2c2c54;
+        color: #5290aa;
         transition: all cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
         border-radius: 4px;
         margin-bottom: 6px;
       }
       a:hover {
-        background-color: #e7e7e7;
-        color: #2c2c54;
+        background-color: #3fc9d877;
+        color: #002D40;
         transform: scale(1.02);
       }
       a.active {
-        color: #eff3f5;
-        // background-color: #6e6666;
-        background-color: @main-green;
+        color: #002D40;
+        background-color: #3fc9d8;
+        // background-color: @main-green;
       }
 
       i {
@@ -228,6 +232,8 @@ export default {
   }
   // 右侧内容
   .content {
+    background-color: #002d404d;
+    border-color: #3fc9d8;
     .el-form-item {
       span {
         font-size: 16px;
