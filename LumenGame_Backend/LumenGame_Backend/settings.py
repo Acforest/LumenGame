@@ -110,10 +110,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'LumenGame',
-        'HOST': '39.106.73.145',
+        'HOST': '*.*.*.*',
         'PORT': '3306',
         'USER': 'root',
-        'PASSWORD': 'vip923202114'
+        'PASSWORD': '******'
     }
 }
 
