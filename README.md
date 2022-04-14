@@ -29,8 +29,11 @@ python manage.py runserver 127.0.0.1:8080
 python manage.py inspectdb > models.py
 ```
 将 `LumenGame_Backend` 目录下新生成的 `models.py`中的model替换或添加到 `/LumenGame_Backend/api/models.py` 中的model
+
 将 `meta class` 中的 `managed = False` 修改为 `True`
+
 将 `sql` 文件夹中的 `LumenGame.sql` 导入数据库
+
 删除新生成的models.py，输入如下命令:
 ```bash
 python manage.py migrate
